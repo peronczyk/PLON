@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>RICH TEXT EDITOR &mdash; Streamline</title>
+
+	<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+
+	<link rel="stylesheet" type="text/css" href="../../dist/styles/layout.css">
+	<link rel="stylesheet" type="text/css" href="../../dist/styles/theme-basic.css">
+	<link rel="stylesheet" type="text/css" href="style.css">
+
+	<script type="text/javascript" src="../../dist/scripts/jquery-3.1.0.js"></script>
+	<script type="text/javascript" async src="../../dist/scripts/jquery-richtexteditor.js"></script>
+	<script type="text/javascript" async src="custom.js"></script>
+</head>
+<body>
+
+	<div class="wrapper">
+
+		<form action="" style="display:block; margin:auto; max-width:800px;">
+
+			<!-- Rich Text Editor 1 -->
+			<textarea name="richtext1" style="width:100%; height:200px;" data-richtext>
+				<h3>Proin glon noi eprom</h3>
+				<p>Lorem ipsum <strong>dolor sit</strong> amet</p>
+				<ul>
+					<li>Adipiscing elit</li>
+					<li>Pallentesque eget spirallis</li>
+				</ul>
+			</textarea>
+
+			<br>
+
+			<!-- Rich Text Editor 2 -->
+			<textarea name="richtext2" style="width:100%; height:200px;" data-richtext>
+				<h1>Lalalalla</h1>
+			</textarea>
+
+			<br>
+			<button type="submit">Wyślij</button>
+		</form>
+
+	</div>
+</body>
+</html>

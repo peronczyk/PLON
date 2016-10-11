@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>GALLERY SLIDER &mdash; Streamline</title>
+
+	<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+
+	<link rel="stylesheet" type="text/css" href="../../dist/styles/layout.css">
+	<link rel="stylesheet" type="text/css" href="../../dist/styles/theme-basic.css">
+
+	<script type="text/javascript" src="../../dist/scripts/jquery-3.1.0.js"></script>
+	<script type="text/javascript" async src="../../dist/scripts/jquery-galleryslider.js"></script>
+	<script type="text/javascript" async src="custom.js"></script>
+
+	<style>
+		.o_gallery-slider {
+			position: relative;
+			overflow: hidden;
+			white-space: nowrap;
+		}
+
+			.o_gallery-slider__prev,
+			.o_gallery-slider__next {
+				position: absolute;
+				top: 0;
+				width: 20%;
+				height: 100%;
+				background-color: #3b3b3b;
+				opacity: 0;
+				transition: all .3s;
+			}
+
+			.o_gallery-slider__prev { left: 0; }
+			.o_gallery-slider__next { right: 0; }
+
+			.o_gallery-slider__prev:hover,
+			.o_gallery-slider__next:hover {
+				opacity: .2;
+			}
+
+			.o_gallery-slider__list {
+				transition: all .3s;
+				font-size: 0;
+				will-change: transform;
+				transform: stranslateX(0);
+			}
+
+				.o_gallery-slider__list figure {
+					display: inline-block;
+					width: 20%;
+					height: 100%;
+					vertical-align: top;
+					white-space: normal;
+				}
+
+					.o_gallery-slider__list figure a {
+						display: block;
+						height: 300px;
+					}
+
+					.o_gallery-slider__list figure img {
+						width: 100%;
+						height: auto;
+					}
+
+					.o_gallery-slider__list figure figcaption {
+						display: block;
+						padding: 20px 10px 15px 10px;
+						font-size: 14px;
+					}
+	</style>
+</head>
+
+<body>
+
+	<div class="o_gallery-slider">
+		<div class="o_gallery-slider__list">
+			<figure>
+				<a href="#" class="t_orange"><!-- Put IMG here --></a>
+				<figcaption>Lorem ipsum dolor sit amet consectetur</figcaption>
+			</figure>
+
+			<figure>
+				<a href="#" class="t_dark"><!-- Put IMG here --></a>
+				<figcaption>Lorem ipsum dolor sit amet consectetur</figcaption>
+			</figure>
+
+			<figure>
+				<a href="#" class="t_emerald"><!-- Put IMG here --></a>
+				<figcaption>Lorem ipsum dolor sit amet consectetur</figcaption>
+			</figure>
+
+			<figure>
+				<a href="#" class="t_gray"><!-- Put IMG here --></a>
+				<figcaption>Lorem ipsum dolor sit amet consectetur</figcaption>
+			</figure>
+
+			<figure>
+				<a href="#" class="t_blue"><!-- Put IMG here --></a>
+				<figcaption>Lorem ipsum dolor sit amet consectetur adipiscing elit unequat es bibendum nunc apllentesque eget</figcaption>
+			</figure>
+
+			<figure>
+				<a href="#" class="t_dark"><!-- Put IMG here --></a>
+				<figcaption>Lorem ipsum dolor sit amet consectetur</figcaption>
+			</figure>
+
+			<figure>
+				<a href="#" class="t_orange-dark"><!-- Put IMG here --></a>
+				<figcaption>Lorem ipsum dolor sit amet consectetur</figcaption>
+			</figure>
+
+			<figure>
+				<a href="#" class="t_orange"><!-- Put IMG here --></a>
+				<figcaption>Lorem ipsum dolor sit amet consectetur</figcaption>
+			</figure>
+
+			<figure>
+				<a href="#" class="t_gray-dark"><!-- Put IMG here --></a>
+				<figcaption>Lorem ipsum dolor sit amet consectetur</figcaption>
+			</figure>
+
+			<figure>
+				<a href="#" class="t_emerald"><!-- Put IMG here --></a>
+				<figcaption>Lorem ipsum dolor sit amet consectetur</figcaption>
+			</figure>
+		</div>
+
+		<a href="#" class="o_gallery-slider__prev"></a>
+		<a href="#" class="o_gallery-slider__next"></a>
+	</div>
+
+</body>
+
+</html>

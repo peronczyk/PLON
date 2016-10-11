@@ -1,0 +1,11 @@
+.DS_Store
+.idea
+.log
+.project
+bower_modules
+desktop.ini
+dist
+node_modules
+temp
+Thumbs.db
+tmp

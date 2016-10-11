@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>MODAL &mdash; Streamline</title>
+
+	<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+
+	<link rel="stylesheet" type="text/css" href="../../dist/styles/layout.css">
+	<link rel="stylesheet" type="text/css" href="../../dist/styles/theme-basic.css">
+
+	<script type="text/javascript" src="../../dist/scripts/jquery-3.1.0.js"></script>
+	<script type="text/javascript" async src="../../dist/scripts/jquery-modal.js"></script>
+	<script type="text/javascript" async src="custom.js"></script>
+
+	<style>
+		.is_modal-open {
+			overflow: hidden;
+		}
+
+		.is_modal-open .wrapper {
+			filter: blur(4px);
+		}
+
+		.c_modal {
+			display: block;
+			visibility: hidden;
+			position: fixed;
+			top: 0;
+			left: 0;
+			z-index: 1000;
+			padding: 40px;
+			width: 100%;
+			height: 100%;
+			overflow: auto;
+			background-color: rgba(32,32,32,.8);
+			text-align: center;
+			opacity: 0;
+			transition: all .3s;
+		}
+
+		.is_modal-open .c_modal {
+			visibility: visible;
+			opacity: 1;
+		}
+
+			.c_modal:before {
+				content: '';
+				display: inline-block;
+				vertical-align: middle;
+				width: 0;
+				height: 100%;
+				margin-left: -0.5em;
+			}
+
+			.c_modal__window {
+				display: inline-block;
+				vertical-align: middle;
+				width: 100%;
+				position: relative;
+				min-height: 60px;
+				max-width: 800px;
+				background-color: #fff;
+				transform: scale(.6);
+				transition: all .3s;
+			}
+
+			.is_modal-open .c_modal__window {
+				transform: scale(1);
+			}
+
+				.c_modal__close {
+					position: absolute;
+					top: -8px;
+					right: -8px;
+				}
+
+				.c_modal__content {
+					padding: 30px;
+					overflow: hidden;
+					text-align: left;
+				}
+	</style>
+</head>
+
+<body>
+
+	<div class="wrapper">
+		<div class="u_inner">
+			<h1>JQ Modal</h1>
+			<hr>
+			<table>
+				<tr>
+					<td style="width:180px;"><a href="test.html" class="btn u_width-full" data-modal="url">Open: URL</a></td>
+					<td class="u_pad-left">Open modal and insert text received <strong>asynchronously</strong> from url passed to href</td>
+				</tr>
+				<tr>
+					<td><a href="" class="btn u_width-full" data-modal="title" title="Some example text taken from title of the link">Open: Title</a></td>
+					<td class="u_pad-left">Open modal and insert text from <strong>link title</strong></td>
+				</tr>
+				<tr>
+					<td><a href="" class="btn u_width-full" data-modal="image">Open: Image</a></td>
+					<td class="u_pad-left">Open modal and insert <strong>image</strong></td>
+				</tr>
+				<tr>
+					<td><a href="" class="btn u_width-full" data-modal="youtube">Open: YouTube</a></td>
+					<td class="u_pad-left">Try to open modal youtube video</td>
+				</tr>
+				<tr>
+					<td><a href="" class="btn u_width-full is_error" data-modal="lorem">Open: Unknown</a></td>
+					<td class="u_pad-left">Try to open modal with <strong>unknown mode</strong></td>
+				</tr>
+			</table>
+
+			<br><hr>
+			<div style="height: 1000px;"></div>
+		</div>
+	</div>
+
+	<dialog class="c_modal" role="modal" aria-hidden="true">
+		<div class="c_modal__window">
+			<a class="c_modal__close btn" data-modal="close">close</a>
+			<div class="c_modal__content"></div>
+		</div>
+	</dialog>
+
+</body>
+</html>

@@ -1,0 +1,26 @@
+{
+  "name": "streamline",
+  "version": "1.0.0",
+  "description": "Simple CSS+JS framework based on jQuery and Gulp",
+  "scripts": {
+    "watch": "gulp watch",
+    "serve": "gulp serve",
+    "production": "gulp"
+  },
+  "author": "peronczyk.com",
+  "license": "ISC",
+  "devDependencies": {
+    "browser-sync": "^2.13.0",
+    "del": "^2.2.0",
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^3.1.0",
+    "gulp-concat": "^2.6.0",
+    "gulp-notify": "^2.2.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^2.3.1",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-uglify": "^1.5.3",
+    "gulp-util": "^3.0.7",
+    "run-sequence": "^1.2.1"
+  }
+}

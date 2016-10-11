@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>REVEAL &mdash; Streamline</title>
+
+	<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+
+	<link rel="stylesheet" type="text/css" href="../../dist/styles/layout.css">
+	<link rel="stylesheet" type="text/css" href="../../dist/styles/theme-basic.css">
+
+	<script type="text/javascript" src="../../dist/scripts/jquery-3.1.0.js"></script>
+	<script type="text/javascript" async src="../../dist/scripts/jquery-reveal.js"></script>
+	<script type="text/javascript" async src="custom.js"></script>
+
+	<style>
+		.js_reveal {
+			will-change: transform;
+			transform: translate3D(0,0,0);
+			transition: all 2s cubic-bezier(0.52, 0, 0.2, 0.60);
+		}
+
+		.js_reveal-top		{ opacity: 0; transform: translateY(-60px); }
+		.js_reveal-bottom	{ opacity: 0; transform: translateY(60px); }
+		.js_reveal-left		{ opacity: 0; transform: translateX(-60px); }
+		.js_reveal-right	{ opacity: 0; transform: translateX(60px); }
+	</style>
+</head>
+<body>
+
+	<div class="wrapper">
+
+		<div class="inner">
+			<div style="height:400px;">
+				<h3>Scroll down</h3>
+			</div>
+
+			<div class="flex-grid">
+				<div class="row">
+					<div class="col-6">
+						<div class="t_dark" data-reveal="js_reveal-top" style="height:160px;"></div>
+					</div>
+					<div class="col-6">
+						<div class="t_emerald" data-reveal="js_reveal-bottom" style="height:200px; margin-top:80px;"></div>
+					</div>
+				</div>
+
+				<div class="row" style="margin-top:100px">
+					<div class="col-6">
+						<div class="t_blue" data-reveal="js_reveal-left" style="height:230px; margin-top:60px;"></div>
+					</div>
+					<div class="col-6">
+						<div class="t_orange" data-reveal="js_reveal-right" style="height:210px;"></div>
+					</div>
+				</div>
+
+				<div class="row" style="margin-top:100px">
+					<div class="col-3">
+						<div class="t_dark" data-reveal="js_reveal-top" style="height:180px; margin-top:200px;"></div>
+					</div>
+					<div class="col-3">
+						<div class="t_orange-dark" data-reveal="js_reveal-bottom" style="height:280px;"></div>
+					</div>
+					<div class="col-6">
+						<div class="t_blue" data-reveal="js_reveal-right" style="height:280px;"></div>
+					</div>
+				</div>
+
+				<div class="row" style="margin-top:100px">
+					<div class="col-6">
+						<div class="t_gray" data-reveal="js_reveal-left" style="height:180px; margin-top:200px;"></div>
+					</div>
+					<div class="col-6">
+						<div class="t_dark" data-reveal="js_reveal-top" style="height:280px;"></div>
+					</div>
+				</div>
+
+				<div class="row" style="margin-top:100px">
+					<div class="col-6">
+						<div class="t_emerald" data-reveal="js_reveal-left" style="height:280px;"></div>
+					</div>
+					<div class="col-3">
+						<div class="t_gray-dark" data-reveal="js_reveal-top" style="height:180px; margin-top:200px;"></div>
+					</div>
+					<div class="col-3">
+						<div class="t_orange" data-reveal="js_reveal-bottom" style="height:280px;"></div>
+					</div>
+				</div>
+			</div>
+
+			<div style="height:200px;"></div>
+
+		</div>
+
+	</div>
+
+</body>
+
+</html>
