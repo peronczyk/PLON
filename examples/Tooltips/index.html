@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>TOLTIPS &mdash; Streamline</title>
+
+	<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+
+	<link rel="stylesheet" type="text/css" href="../../dist/styles/layout.css">
+	<link rel="stylesheet" type="text/css" href="../../dist/styles/theme-basic.css">
+
+	<script type="text/javascript" src="../../dist/scripts/jquery-3.1.0.js"></script>
+	<script type="text/javascript" async src="../../dist/scripts/jquery-tooltips.js"></script>
+	<script type="text/javascript" async src="custom.js"></script>
+
+	<style>
+		button {
+			margin-right: 20px;
+		}
+	</style>
+</head>
+
+<body>
+
+	<div class="wrapper">
+		<div class="u_inner u_text-center" style="padding-top:100px;">
+			<h1>Tooltips</h1>
+
+			<p>Hover with your mouse elements below</p>
+			<br>
+
+			<button title="Lorem ipsum dolor sit amet consectetur" data-tooltip>Short title</button>
+
+			<button title="Phasellus et placerat arcu, a pharetra lorem. Quisque vel augue viverra libero interdum condimentum. Integer a ex in odio lobortis bibendum. Vestibulum lobortis est sit amet justo vestibulum, dignissim iaculis est suscipit. Interdum et malesuada fames ac ante ipsum primis." data-tooltip>Long title</button>
+
+			<button class="is_error" data-tooltip>No title</button>
+		</div>
+	</div>
+
+</body>
+
+</html>
