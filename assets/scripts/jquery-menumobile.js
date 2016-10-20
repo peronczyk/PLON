@@ -4,7 +4,6 @@
  *	JQ: MENU MOBILE
  *
  *	Author			: Bartosz Perończyk
- *	Contributors	: Future Processing Design Team
  *	Created			: 2016-05-11
  *	Modified		: 2016-07-19
  *

@@ -4,7 +4,6 @@
  *	JQ: MOVIE AUTO PAUSE
  *
  *	Script author	: Bartosz Perończyk
- *	Contributors	: Future Processing Design Team
  *	Created			: 2015-08-14
  *	Modified		: 2016-07-26
  *

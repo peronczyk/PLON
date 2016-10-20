@@ -4,7 +4,6 @@
  *	JQ: TABS
  *
  *	Author			: Bartosz Perończyk
- *	Contributors	: Future Processing Design Team
  *	Created			: 2015-08-26
  *	Modified		: 2016-07-19
  *
