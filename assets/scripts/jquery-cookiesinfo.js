@@ -15,7 +15,7 @@
  *	--------------------------------------------------------------------------------
  *	INSTALATION:
  *
- *	$('.some-element').cookiesInfo({'visibleClassName': 'is-open'});
+ *	$('.some-element').cookiesInfo({'visibleClassName': 'is-Open'});
  *		some-element - DOM element, that contains cookies law info
  *			and <button> inside it
  *		visibleClassName - CSS class name, that makes 'some-element' visible
@@ -33,7 +33,7 @@
 
 	var defaults = {
 			debug				: 0,
-			visibleClassName	: 'is-open', // Name of CSS class name, that makes cookies bar visible
+			visibleClassName	: 'is-Open', // Name of CSS class name, that makes cookies bar visible
 			acceptButton		: 'button', // DOM element inside cookie bar, that accepts cookie law
 			cookieName			: 'cookies_accept', // Cookie name stored in visitor's computer
 			cookieExpiresAfter	: 90, // Number of days after which cookies will be expired

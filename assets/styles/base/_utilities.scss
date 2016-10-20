@@ -11,13 +11,13 @@
 
 
 
-.u_hero {
+.u-Hero {
 	width: 100%;
 	height: 100%;
 	height: 100vh;
 }
 
-.u_clear:after {
+.u-Clear:after {
 	content: '';
 	display: block;
 	clear: both;
@@ -28,25 +28,27 @@
  *	ALIGNMENTS
  */
 
-.u_text {
+.u-Text {
 	&-left		{ text-align: left !important; }
 	&-center	{ text-align: center !important; }
 	&-right		{ text-align: right !important; }
 	&-justify	{ text-align: justify !important; }
 }
 
-.u_valign {
+.u-Valign {
 	&-top		{ vertical-align: top; }
 	&-middle	{ vertical-align: middle; }
 	&-bottom	{ vertical-align: bottom; }
 }
 
-.u_box-center {
-	margin-left: auto;
-	margin-right: auto;
+.u-Box {
+	&-center {
+		margin-left: auto;
+		margin-right: auto;
+	}
 }
 
-.u_float {
+.u-Float {
 	&-left		{ float: left; }
 	&-right		{ float: right; }
 }
@@ -56,13 +58,13 @@
  *	POSITIONS
  */
 
-.u_relative		{ position: relative; }
-.u_absolute		{ position: absolute; }
-.u_fixed		{ position: fixed; }
+.u-Relative		{ position: relative; }
+.u-Absolute		{ position: absolute; }
+.u-Fixed		{ position: fixed; }
 
-.u_z {
-	&-plus		{ z-index: +1; }
-	&-minus		{ z-index: -1; }
+.u-z {
+	&Plus		{ z-index: +1; }
+	&Minus		{ z-index: -1; }
 }
 
 
@@ -70,38 +72,41 @@
  *	DISPLAY
  */
 
-.u_hidden			{ visibility: hidden; }
+.u-Hidden			{ visibility: hidden; }
 
-.u_disabled			{ pointer-events: none; }
+.u-Disabled			{ pointer-events: none; }
 
-.u_block			{ display: block; }
-.u_not-displayed	{ display: none; }
-.u_inline			{ display: inline; }
-.u_table			{ display: table; }
+.u-Block			{ display: block; }
+.u-notDisplayed		{ display: none; }
+.u-Inline			{ display: inline; }
 
-	.u_table-row 	{ display: table-row; }
+.u-Table {
+	display: table;
 
-		.u_table-row > *,
-		.u_table-cell {
-			display: table-cell;
-			vertical-align: middle;
-		}
+	&__row { display: table-row; }
 
-.u_not-selectable { user-select: none; }
+	&__row > *,
+	&__cell {
+		display: table-cell;
+		vertical-align: middle;
+	}
+}
+
+.u-notSelectable { user-select: none; }
 
 
 /*	----------------------------------------------------------------------------
  *	SIZES
  */
 
-.u_width {
+.u-Width {
 	&-full			{ width: 100%; }
-	&-50			{ width: 50%; }
+	&-half			{ width: 50%; }
 }
 
-.u_height {
+.u-Height {
 	&-full			{ height: 100%; }
-	&-50			{ height: 50%; }
+	&-half			{ height: 50%; }
 }
 
 
@@ -109,7 +114,7 @@
  *	TRANSFORMATIONS
  */
 
-.u_rotate {
+.u-Rotate {
 	&-90			{ transform: rotate(90deg); }
 	&-180			{ transform: rotate(180deg); }
 	&-270			{ transform: rotate(270deg); }
@@ -121,11 +126,11 @@
  *	OTHER
  */
 
-.is-clickable		{ cursor: pointer; }
+.u-Clickable		{ cursor: pointer; }
 
-.u_overflow {
-	&-hidden	{ overflow: hidden; }
-	&-scroll	{ overflow: scroll; }
+.u-Overflow {
+	&-hidden		{ overflow: hidden; }
+	&-scroll		{ overflow: scroll; }
 }
 
-.u_no-transition { transition: none !important; }
+.u-noTransition		{ transition: none !important; }

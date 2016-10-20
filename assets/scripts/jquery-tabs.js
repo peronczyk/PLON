@@ -36,7 +36,7 @@
 
 	var defaults = {
 			'debug'			: 0,
-			'openClassName'	: 'is-active'
+			'openClassName'	: 'is-Active'
 		},
 		tabName, containerID, $clickedLink, $container, $tabContent;
 

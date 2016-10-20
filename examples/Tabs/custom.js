@@ -2,7 +2,7 @@ var debug = 1;
 
 $(function() {
 
-	$('.o_tabs').tabs({
+	$('.o-Tabs').tabs({
 		'debug': debug
 	});
 

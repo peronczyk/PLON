@@ -102,11 +102,11 @@
 
 				if (blocks[i].columns) {
 					blocks[i].elem.find('th').each(function(j) {
-						blocks[i].columns[j].width = $(this).outerWidth();
+						blocks[i].columns[j].width = this.outerWidth();
 					});
 					if (blocks[i].clone) {
 						blocks[i].clone.find('th').each(function(j) {
-							$(this).css({'width': blocks[i].columns[j].width});
+							this.css({'width': blocks[i].columns[j].width});
 						});
 					}
 				}
@@ -117,15 +117,15 @@
 		// Method fired once when script is loaded
 		// Collects all sticky elements and sets their params in memory
 
-		init = function() {
-			if ($(this).length > 0) {
-				$(this).each(function(i) {
+		init = function(config) {
+			if (this.length > 0) {
+				this.each(function(i) {
 
 					// Set up block's basic params
 
 					blocks[i] = {
-						'elem'	: $(this),
-						'width'	: $(this).outerWidth(),
+						'elem'	: this,
+						'width'	: this.outerWidth(),
 					};
 
 					// If sticky element is a table header get widths of all of it's columns
@@ -134,8 +134,8 @@
 						blocks[i].columns = [];
 						blocks[i].elem.find('th').each(function(j) {
 							blocks[i].columns[j] = {
-								'elem'	: $(this),
-								'width'	: $(this).outerWidth()
+								'elem'	: this,
+								'width'	: this.outerWidth()
 							};
 						});
 					}
@@ -144,7 +144,7 @@
 				$document.on('scroll', function() { window.requestAnimationFrame(onScroll); });
 				$window.on('resize', function() { requestAnimationFrame(onResize); });
 
-				return $(this);
+				return this;
 			}
 			else if (config.debug) console.error('jQ.StickyBlocks: no sticky elements selected');
 		};

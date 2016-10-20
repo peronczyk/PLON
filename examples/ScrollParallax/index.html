@@ -15,7 +15,7 @@
 	<script type="text/javascript" async src="custom.js"></script>
 
 	<style>
-		.sections {
+		.Sections {
 			height: 180vh;
 			overflow: hidden;
 		}
@@ -27,7 +27,7 @@
 				height: 100vh;
 			}
 
-				.layer-container {
+				.Layer__container {
 					position: absolute;
 					top: 50%;
 					transform: translateY(-50%);
@@ -35,7 +35,7 @@
 					width: 100%;
 				}
 
-					.layer {
+					.Layer {
 						padding: 20px;
 						height: 50px;
 						width: 100%;
@@ -45,7 +45,7 @@
 						will-change: transform;
 					}
 
-				.stripe {
+				.Stripe {
 					position: fixed;
 					z-index: -1;
 					height: 100%;
@@ -56,55 +56,55 @@
 
 <body>
 
-	<div class="sections">
+	<div class="Sections">
 
 		<section>
-			<div class="layer-container">
-				<div class="layer t_blue">No parallax</div>
+			<div class="Layer__container">
+				<div class="Layer t-Blue">No parallax</div>
 			</div>
-			<div class="stripe"></div>
+			<div class="Stripe"></div>
 		</section>
 
 		<section>
-			<div class="layer-container">
-				<div class="layer t_dark" data-parallax="0">0</div>
+			<div class="Layer__container">
+				<div class="Layer t-Dark" data-parallax="-0.2">-0.2</div>
 			</div>
-			<div class="stripe t_gray"></div>
+			<div class="Stripe t-Gray"></div>
 		</section>
 
 		<section>
-			<div class="layer-container">
-				<div class="layer t_emerald" data-parallax="0.3">0.3</div>
+			<div class="Layer__container">
+				<div class="Layer t-Emerald" data-parallax="0.3">0.3</div>
 			</div>
-			<div class="stripe"></div>
+			<div class="Stripe"></div>
 		</section>
 
 		<section>
-			<div class="layer-container">
-				<div class="layer t_dark" data-parallax>Default: 0.7</div>
+			<div class="Layer__container">
+				<div class="Layer t-Dark" data-parallax>Default: 0.7</div>
 			</div>
-			<div class="stripe t_gray"></div>
+			<div class="Stripe t-Gray"></div>
 		</section>
 
 		<section>
-			<div class="layer-container">
-				<div class="layer t_emerald" data-parallax="1">1</div>
+			<div class="Layer__container">
+				<div class="Layer t-Emerald" data-parallax="1">1</div>
 			</div>
-			<div class="stripe"></div>
+			<div class="Stripe"></div>
 		</section>
 
 		<section>
-			<div class="layer-container">
-				<div class="layer t_dark" data-parallax="1.3">1.3</div>
+			<div class="Layer__container">
+				<div class="Layer t-Dark" data-parallax="1.3">1.3</div>
 			</div>
-			<div class="stripe t_gray"></div>
+			<div class="Stripe t-Gray"></div>
 		</section>
 
 		<section>
-			<div class="layer-container">
-				<div class="layer t_emerald" data-parallax="1.8">1.8</div>
+			<div class="Layer__container">
+				<div class="Layer t-Emerald" data-parallax="1.8">1.8</div>
 			</div>
-			<div class="stripe"></div>
+			<div class="Stripe"></div>
 		</section>
 
 	</div>

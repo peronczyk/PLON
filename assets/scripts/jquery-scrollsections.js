@@ -31,7 +31,7 @@
 
 	var defaults = {
 			'debug'				: 0,
-			'activeClassName'	: 'is-active',
+			'activeClassName'	: 'is-Active',
 		},
 		$document			= $(document),
 		$window				= $(window),

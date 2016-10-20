@@ -100,7 +100,7 @@ input[type="checkbox"] {
  */
 
 button,
-.btn,
+.Btn,
 label,
 input[type=button],
 input[type=submit],
@@ -108,15 +108,8 @@ input[type=file] {
 	-webkit-appearance: none;
 	-moz-appearance: none;
 	cursor: pointer;
-}
 
-button:hover,
-.btn:hover,
-label:hover,
-input[type=button]:hover,
-input[type=submit]:hover,
-input[type=file]:hover {
-	z-index: +1;
+	&:hover { z-index: +1; }
 }
 
 [disabled] { cursor: default; }

@@ -22,7 +22,7 @@
  *		2.	Setup script this way:
  *			$.reveal();
  *		3.	Add supporting CSS classes.
- *			.u_no-transition - disables animation when blocks are hidden after
+ *			.u-noTransition - disables animation when blocks are hidden after
  *				page was loaded. Class name can be changed in configuration.
  *			.your-class-name - class that hides your element.
  *
@@ -47,14 +47,14 @@
 			'debug': 0,
 
 			// data-xxx selector that defines class name to be added to the element,
-			// eg.: data-reveal="js_reveal-left"
+			// eg.: data-reveal="js-Reveal-left"
 			'selector': 'data-reveal',
 
 			// Class name added to all elements that will be revealed
-			'defaultClassName': 'js_reveal',
+			'defaultClassName': 'js-Reveal',
 
 			// Class name turning CSS animations off
-			'noTransitionClassName': 'u_no-transition',
+			'noTransitionClassName': 'u-noTransition',
 
 			// How many pixels need to be scrolled after element will show
 			'diff': 300,

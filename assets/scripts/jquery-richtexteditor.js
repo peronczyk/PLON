@@ -29,10 +29,10 @@
 
 	var defaults = {
 			classNames: {
-				wrapper	: 'o_rte',
-				toolbar	: 'o_rte__toolbar',
-				editor	: 'o_rte__editor',
-				hidden	: 'u_hidden',
+				wrapper	: 'o-Rte',
+				toolbar	: 'o-Rte__toolbar',
+				editor	: 'o-Rte__editor',
+				hidden	: 'u-Hidden',
 			}
 		},
 		key, subKey,
@@ -46,16 +46,16 @@
 				{label: 'Header H2', exec: 'formatBlock', argument: 'h2'},
 				{label: 'Kod', exec: 'formatBlock', argument: 'pre', title: 'Code block'}
 			]},
-			{label: 'B', exec: 'insertHTML', argument: '<strong>{selection}</strong>', icon: 'bold', title: 'Bold text'},
-			{label: 'I', exec: 'italic', icon: 'italic', title: 'Italic text'},
-			{label: 'U', exec: 'underline', icon: 'underline', title: 'Underlined text'},
-			{label: 'Ul', exec: 'insertUnorderedList', icon: 'unordered-list', title: 'Unordered list'},
-			{label: 'Ol', exec: 'insertOrderedList', icon: 'ordered-list', title: 'Ordered list'},
-			{label: 'A', exec: 'link', icon: 'link', title: 'Link to online resource'},
-			{label: 'Undo', exec: 'undo', icon: 'undo', title: 'Undo last action'},
-			{label: 'Redo', exec: 'redo', icon: 'redo', title: 'Redo last action'},
-			{label: 'Clear', exec: 'clearFormatting', icon: 'clear-formatting', title: 'Clear formatting'},
-			{label: 'HTML', exec: 'showHTML', icon: 'html', title: 'Show HTML source'}
+			{label: 'B', exec: 'insertHTML', argument: '<strong>{selection}</strong>', icon: 'Bold', title: 'Bold text'},
+			{label: 'I', exec: 'italic', icon: 'Italic', title: 'Italic text'},
+			{label: 'U', exec: 'underline', icon: 'Underline', title: 'Underlined text'},
+			{label: 'Ul', exec: 'insertUnorderedList', icon: 'Unordered-list', title: 'Unordered list'},
+			{label: 'Ol', exec: 'insertOrderedList', icon: 'Ordered-list', title: 'Ordered list'},
+			{label: 'A', exec: 'link', icon: 'Link', title: 'Link to online resource'},
+			{label: 'Undo', exec: 'undo', icon: 'Undo', title: 'Undo last action'},
+			{label: 'Redo', exec: 'redo', icon: 'Redo', title: 'Redo last action'},
+			{label: 'Clear', exec: 'clearFormatting', icon: 'Clear-formatting', title: 'Clear formatting'},
+			{label: 'HTML', exec: 'showHTML', icon: 'Html', title: 'Show HTML source'}
 		];
 
 

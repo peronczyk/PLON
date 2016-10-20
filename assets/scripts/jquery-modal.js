@@ -43,11 +43,11 @@
 			'debug'	: 0,
 
 			// Modal display elements selectors
-			'wrapper'			: '.c_modal', // CSS selector for modal wrapper element
-			'window'			: '.c_modal__window',
-			'content'			: '.c_modal__content',
+			'wrapper'			: '.c-Modal', // CSS selector for modal wrapper element
+			'window'			: '.c-Modal__window',
+			'content'			: '.c-Modal__content',
 			'dataSelector'		: 'data-modal', // Data attribute name for DOM elements that should open modals
-			'openBodyClassName' : 'is_modal-open',
+			'openBodyClassName' : 'is-Modal-open',
 		},
 		$document = $('document'),
 		$body = $('body');

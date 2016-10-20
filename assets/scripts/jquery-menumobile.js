@@ -41,7 +41,7 @@
 			'toggleElem'			: null,
 			'openClassName'			: null, // CSS class added to toggle and menu container
 			'openDataName'			: 'menumobile-open', // Data atribute name to indicate whether menu is open or closed
-			'openBodyClassName'		: 'menu-mobile_is-open', // CSS class added to body element when menu is open. Used for disabling scroll
+			'openBodyClassName'		: 'Menu-mobile_is-Open', // CSS class added to body element when menu is open. Used for disabling scroll
 			'eventsNamespace'		: 'menumobile',
 			'closeByClickingOutside': true,
 			'closeByClickingBack'	: true,

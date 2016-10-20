@@ -37,7 +37,7 @@
 	var defaults = {
 			'debug'			: 0,
 			'tooltipID'		: 'tooltip', // CSS ID of tooltip DOM element
-			'openClassName'	: 'is-open', // CSS class that indicates open state
+			'openClassName'	: 'is-Open', // CSS class that indicates open state
 		},
 		offset, text, $hoveredElem;
 
@@ -63,7 +63,7 @@
 		if ($tooltip.length < 1) {
 			var $tooltip	= $('<div/>', {
 					'id'			: config.tooltipID,
-					'class'			: 'c_tooltip',
+					'class'			: 'c-Tooltip',
 					'role'			: 'tooltip',
 					'aria-hidden'	: 'true'
 				}),
