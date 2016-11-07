@@ -49,106 +49,38 @@
  *	COLUMN SiZES FOR BOTH GRID SYSTEMS
  */
 
+@mixin columns($screen-size:'') {
 
-.Col-1  { width: 8.333%;  flex-basis: 8.333%; }
-.Col-2  { width: 16.667%; flex-basis: 16.66%; }
-.Col-3  { width: 25%;     flex-basis: 25%; }
-.Col-4  { width: 33.333%; flex-basis: 33.333%; }
-.Col-5  { width: 41.667%; flex-basis: 41.667%; }
-.Col-6  { width: 50%;     flex-basis: 50%; }
-.Col-7  { width: 58.333%; flex-basis: 58.333%; }
-.Col-8  { width: 66.667%; flex-basis: 66.667%; }
-.Col-9  { width: 75%;     flex-basis: 75%; }
-.Col-10 { width: 83.333%; flex-basis: 83.333%; }
-.Col-11 { width: 91.667%; flex-basis: 91.667%; }
-.Col-12 { width: 100%;    flex-basis: 100%; }
+	@for $i from 1 through 12 {
 
-.Col-hide { display: none; }
+		.Col-#{$i}#{$screen-size} {
+			width: percentage($i/12);
+			flex-basis: percentage($i/12);
+		}
+	}
 
-
-/* Screen size: LG */
-
-@media screen and (width: $breakpoint-h-lg) {
-
-	.Col-lg-1  { width: 8.333%;  flex-basis: 8.333%; }
-	.Col-lg-2  { width: 16.667%; flex-basis: 16.667%; }
-	.Col-lg-3  { width: 25%;     flex-basis: 25%; }
-	.Col-lg-4  { width: 33.333%; flex-basis: 33.333%; }
-	.Col-lg-5  { width: 41.667%; flex-basis: 41.667%; }
-	.Col-lg-6  { width: 50%;     flex-basis: 50%; }
-	.Col-lg-7  { width: 58.333%; flex-basis: 58.333%; }
-	.Col-lg-8  { width: 66.667%; flex-basis: 66.667%; }
-	.Col-lg-9  { width: 75%;     flex-basis: 75%; }
-	.Col-lg-10 { width: 83.333%; flex-basis: 83.333%; }
-	.Col-lg-11 { width: 91.667%; flex-basis: 91.667%; }
-	.Col-lg-12 { width: 100%;    flex-basis: 100%; }
-
-	.Col-lg-hide { display: none; }
-
+	.Col-hide#{$screen-size} { display: none; }
 }
 
+// Default screen size
+@include columns();
 
-/* Screen size: MD */
-
-@media screen and (width: $breakpoint-h-md) {
-
-	.Col-md-1  { width: 8.333%;  flex-basis: 8.333%; }
-	.Col-md-2  { width: 16.667%; flex-basis: 16.667%; }
-	.Col-md-3  { width: 25%;     flex-basis: 25%; }
-	.Col-md-4  { width: 33.333%; flex-basis: 33.333%; }
-	.Col-md-5  { width: 41.667%; flex-basis: 41.667%; }
-	.Col-md-6  { width: 50%;     flex-basis: 50%; }
-	.Col-md-7  { width: 58.333%; flex-basis: 58.333%; }
-	.Col-md-8  { width: 66.667%; flex-basis: 66.667%; }
-	.Col-md-9  { width: 75%;     flex-basis: 75%; }
-	.Col-md-10 { width: 83.333%; flex-basis: 83.333%; }
-	.Col-md-11 { width: 91.667%; flex-basis: 91.667%; }
-	.Col-md-12 { width: 100%;    flex-basis: 100%; }
-
-	.Col-md-hide { display: none; }
-
+// Screen size: LG
+@media (max-width: $breakpoint-h-lg) {
+	@include columns('\\@LG');
 }
 
-
-/* Screen size: SM */
-
-@media screen and (width: $breakpoint-h-sm) {
-
-	.Col-sm-1  { width: 8.333%;  flex-basis: 8.333%; }
-	.Col-sm-2  { width: 16.667%; flex-basis: 16.667%; }
-	.Col-sm-3  { width: 25%;     flex-basis: 25%; }
-	.Col-sm-4  { width: 33.333%; flex-basis: 33.333%; }
-	.Col-sm-5  { width: 41.667%; flex-basis: 41.667%; }
-	.Col-sm-6  { width: 50%;     flex-basis: 50%; }
-	.Col-sm-7  { width: 58.333%; flex-basis: 58.333%; }
-	.Col-sm-8  { width: 66.667%; flex-basis: 66.667%; }
-	.Col-sm-9  { width: 75%;     flex-basis: 75%; }
-	.Col-sm-10 { width: 83.333%; flex-basis: 83.333%; }
-	.Col-sm-11 { width: 91.667%; flex-basis: 91.667%; }
-	.Col-sm-12 { width: 100%;    flex-basis: 100%; }
-
-	.Col-sm-hide { display: none; }
-
+// Screen size: MD
+@media (max-width: $breakpoint-h-md) {
+	@include columns('\\@MD');
 }
 
+// Screen size: SM
+@media (max-width: $breakpoint-h-sm) {
+	@include columns('\\@SM');
+}
 
-/* Screen size: XS */
-
-@media screen and (width: $breakpoint-h-xs) {
-
-	.Col-xs-1  { width: 8.333%;  flex-basis: 8.333%; }
-	.Col-xs-2  { width: 16.667%; flex-basis: 16.667%; }
-	.Col-xs-3  { width: 25%;     flex-basis: 25%; }
-	.Col-xs-4  { width: 33.333%; flex-basis: 33.333%; }
-	.Col-xs-5  { width: 41.667%; flex-basis: 41.667%; }
-	.Col-xs-6  { width: 50%;     flex-basis: 50%; }
-	.Col-xs-7  { width: 58.333%; flex-basis: 58.333%; }
-	.Col-xs-8  { width: 66.667%; flex-basis: 66.667%; }
-	.Col-xs-9  { width: 75%;     flex-basis: 75%; }
-	.Col-xs-10 { width: 83.333%; flex-basis: 83.333%; }
-	.Col-xs-11 { width: 91.667%; flex-basis: 91.667%; }
-	.Col-xs-12 { width: 100%;    flex-basis: 100%; }
-
-	.Col-xs-hide { display: none; }
-
+// Screen size: XS
+@media (max-width: $breakpoint-h-xs) {
+	@include columns('\\@XS');
 }
