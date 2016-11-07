@@ -4,7 +4,6 @@
  *	JQ: TABS
  *
  *	Author			: Bartosz Perończyk
- *	Contributors	: Future Processing Design Team
  *	Created			: 2015-08-26
  *	Modified		: 2016-07-19
  *
@@ -36,7 +35,7 @@
 
 	var defaults = {
 			'debug'			: 0,
-			'openClassName'	: 'is-active'
+			'openClassName'	: 'is-Active'
 		},
 		tabName, containerID, $clickedLink, $container, $tabContent;
 

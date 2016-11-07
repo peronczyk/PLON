@@ -37,7 +37,7 @@
 
 	var defaults = {
 			debug				: 0,
-			scrolledClassName	: 'is-scrolled', // CSS class name added after reaching scrollRange
+			scrolledClassName	: 'is-Scrolled', // CSS class name added after reaching scrollRange
 			classChangeTarget	: 'body', // Which DOM element will get scrolled class name
 			scrollRange			: 10, // After how many pixels class name will be changed
 			debounceTime		: 200 // Miliseconds

@@ -2,9 +2,9 @@ var debug = 1; // Debug mode
 
 $(function() {
 
-	$('.main-menu').menuMobile({
+	$('.c-Main-menu').menuMobile({
 		'debug'			: debug,
-		'toggleElem'	: '.main-menu__toggle',
+		'toggleElem'	: '.c-Main-menu__toggle',
 	});
 
 });

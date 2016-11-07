@@ -15,15 +15,15 @@
 	<script type="text/javascript" async src="custom.js"></script>
 
 	<style>
-		.is_modal-open {
+		.is-Modal-open {
 			overflow: hidden;
 		}
 
-		.is_modal-open .wrapper {
+		.is-Modal-open .wrapper {
 			filter: blur(4px);
 		}
 
-		.c_modal {
+		.c-Modal {
 			display: block;
 			visibility: hidden;
 			position: fixed;
@@ -40,12 +40,12 @@
 			transition: all .3s;
 		}
 
-		.is_modal-open .c_modal {
+		.is-Modal-open .c-Modal {
 			visibility: visible;
 			opacity: 1;
 		}
 
-			.c_modal:before {
+			.c-Modal:before {
 				content: '';
 				display: inline-block;
 				vertical-align: middle;
@@ -54,7 +54,7 @@
 				margin-left: -0.5em;
 			}
 
-			.c_modal__window {
+			.c-Modal__window {
 				display: inline-block;
 				vertical-align: middle;
 				width: 100%;
@@ -66,17 +66,17 @@
 				transition: all .3s;
 			}
 
-			.is_modal-open .c_modal__window {
+			.is-Modal-open .c-Modal__window {
 				transform: scale(1);
 			}
 
-				.c_modal__close {
+				.c-Modal__close {
 					position: absolute;
 					top: -8px;
 					right: -8px;
 				}
 
-				.c_modal__content {
+				.c-Modal__content {
 					padding: 30px;
 					overflow: hidden;
 					text-align: left;
@@ -86,30 +86,30 @@
 
 <body>
 
-	<div class="wrapper">
-		<div class="u_inner">
+	<div class="Wrapper">
+		<div class="u-Inner">
 			<h1>JQ Modal</h1>
 			<hr>
 			<table>
 				<tr>
-					<td style="width:180px;"><a href="test.html" class="btn u_width-full" data-modal="url">Open: URL</a></td>
-					<td class="u_pad-left">Open modal and insert text received <strong>asynchronously</strong> from url passed to href</td>
+					<td style="width:180px;"><a href="test.html" class="Btn u-Width-full" data-modal="url">Open: URL</a></td>
+					<td class="u-Pad-left">Open modal and insert text received <strong>asynchronously</strong> from url passed to href</td>
 				</tr>
 				<tr>
-					<td><a href="" class="btn u_width-full" data-modal="title" title="Some example text taken from title of the link">Open: Title</a></td>
-					<td class="u_pad-left">Open modal and insert text from <strong>link title</strong></td>
+					<td><a href="" class="Btn u-Width-full" data-modal="title" title="Some example text taken from title of the link">Open: Title</a></td>
+					<td class="u-Pad-left">Open modal and insert text from <strong>link title</strong></td>
 				</tr>
 				<tr>
-					<td><a href="" class="btn u_width-full" data-modal="image">Open: Image</a></td>
-					<td class="u_pad-left">Open modal and insert <strong>image</strong></td>
+					<td><a href="" class="Btn u-Width-full" data-modal="image">Open: Image</a></td>
+					<td class="u-Pad-left">Open modal and insert <strong>image</strong></td>
 				</tr>
 				<tr>
-					<td><a href="" class="btn u_width-full" data-modal="youtube">Open: YouTube</a></td>
-					<td class="u_pad-left">Try to open modal youtube video</td>
+					<td><a href="" class="Btn u-Width-full" data-modal="youtube">Open: YouTube</a></td>
+					<td class="u-Pad-left">Try to open modal youtube video</td>
 				</tr>
 				<tr>
-					<td><a href="" class="btn u_width-full is_error" data-modal="lorem">Open: Unknown</a></td>
-					<td class="u_pad-left">Try to open modal with <strong>unknown mode</strong></td>
+					<td><a href="" class="Btn u-Width-full is-error" data-modal="lorem">Open: Unknown</a></td>
+					<td class="u-Pad-left">Try to open modal with <strong>unknown mode</strong></td>
 				</tr>
 			</table>
 
@@ -118,10 +118,10 @@
 		</div>
 	</div>
 
-	<dialog class="c_modal" role="modal" aria-hidden="true">
-		<div class="c_modal__window">
-			<a class="c_modal__close btn" data-modal="close">close</a>
-			<div class="c_modal__content"></div>
+	<dialog class="c-Modal" role="modal" aria-hidden="true">
+		<div class="c-Modal__window">
+			<a class="c-Modal__close Btn" data-modal="close">close</a>
+			<div class="c-Modal__content"></div>
 		</div>
 	</dialog>
 

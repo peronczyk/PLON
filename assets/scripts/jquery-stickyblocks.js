@@ -4,7 +4,8 @@
  *	JQ: STICKY BLOCKS
  *
  *	Script author	: Bartosz Perończyk (peronczyk.com)
- *	Date			: 2016-02-25
+ *	Created			: 2016-02-25
+ *	Modified		: 2016-11-07
  *
  *	--------------------------------------------------------------------------------
  *	DESCRIPTION:
@@ -118,6 +119,7 @@
 		// Collects all sticky elements and sets their params in memory
 
 		init = function() {
+
 			if ($(this).length > 0) {
 				$(this).each(function(i) {
 
@@ -158,16 +160,13 @@
 
 		var
 			// Setup configuration
-			config = $.extend({}, defaults, options),
-
-			// Definitions
-			_self = $(this);
+			config = $.extend({}, defaults, options);
 
 		if (config.debug) console.info('Plugin loaded: stickyBlocks');
 
-		init.apply(_self, config);
+		init.apply(this, config);
 
-		return _self;
+		return $(this);
 	}
 
 })(jQuery);

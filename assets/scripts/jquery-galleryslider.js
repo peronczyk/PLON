@@ -32,9 +32,9 @@
 	var defaults = {
 			'debug'			: 0,
 			'classNames'	: {
-				'imageList'		: 'o_gallery-slider__list',
-				'prev'			: 'o_gallery-slider__prev',
-				'next'			: 'o_gallery-slider__next'
+				'imageList'		: 'o-Gallery-slider__list',
+				'prev'			: 'o-Gallery-slider__prev',
+				'next'			: 'o-Gallery-slider__next'
 			}
 		},
 		dir;

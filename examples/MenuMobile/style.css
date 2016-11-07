@@ -9,7 +9,7 @@ nav {
 	text-align: right;
 }
 
-.menu-mobile_is-open {
+.Menu-mobile_is-Open {
 	overflow: hidden;
 }
 
@@ -22,7 +22,7 @@ nav {
 
 /* NAV MENU */
 
-.main-menu {
+.c-Main-menu {
 	visibility: hidden;
 	position: absolute;
 	top: 0;
@@ -37,33 +37,33 @@ nav {
 	box-shadow: 0 1px 30px 0 rgba(0,0,0,.4);
 }
 
-.menu-mobile_is-open .main-menu {
+.Menu-mobile_is-Open .c-Main-menu {
 	visibility: visible;
 	transform: translateX(0);
 	opacity: 1;
 }
 
-	.main-menu ul {
+	.c-Main-menu ul {
 		height: 100%;
 		list-style-type: none;
 		text-align: left;
 	}
 
-		.main-menu ul a {
+		.c-Main-menu ul a {
 			display: block;
 			position: relative;
 			padding: 25px 30px;
 			transition: all .2s cubic-bezier(0.40, 0.14, 0.50, 0.78);
 		}
 
-		.main-menu ul li a:hover {
+		.c-Main-menu ul li a:hover {
 			background-color: #e5e5e5;
 		}
 
 
 /* NAV MENU - TOGGLE */
 
-.main-menu__toggle {
+.c-Main-menu__toggle {
 	display: inline-block;
 	position: relative;
 	width: 42px;
@@ -71,9 +71,9 @@ nav {
 	transition: all .2s cubic-bezier(0.40, 0.14, 0.50, 0.78);
 }
 
-.main-menu__toggle:hover { border-color: #8f8f8f; }
+.c-Main-menu__toggle:hover { border-color: #8f8f8f; }
 
-	.main-menu__toggle hr {
+	.c-Main-menu__toggle hr {
 		position: absolute;
 		left: 11px;
 		width: 18px;
@@ -83,10 +83,10 @@ nav {
 		transition: all .3s cubic-bezier(0.40, 0.14, 0.50, 0.78);
 	}
 
-	.main-menu__toggle hr:nth-child(1) { top: 12px; }
-	.main-menu__toggle hr:nth-child(2) { top: 19px; }
-	.main-menu__toggle hr:nth-child(3) { top: 26px; }
+	.c-Main-menu__toggle hr:nth-child(1) { top: 12px; }
+	.c-Main-menu__toggle hr:nth-child(2) { top: 19px; }
+	.c-Main-menu__toggle hr:nth-child(3) { top: 26px; }
 
-	.menu-mobile_is-open .main-menu__toggle hr:nth-child(1) { top: 20px; transform: rotate(45deg); }
-	.menu-mobile_is-open .main-menu__toggle hr:nth-child(2) { left: 30px; opacity: 0; }
-	.menu-mobile_is-open .main-menu__toggle hr:nth-child(3) { top: 20px; transform: rotate(-45deg); }
+	.Menu-mobile_is-Open .c-Main-menu__toggle hr:nth-child(1) { top: 20px; transform: rotate(45deg); }
+	.Menu-mobile_is-Open .c-Main-menu__toggle hr:nth-child(2) { left: 30px; opacity: 0; }
+	.Menu-mobile_is-Open .c-Main-menu__toggle hr:nth-child(3) { top: 20px; transform: rotate(-45deg); }

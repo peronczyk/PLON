@@ -3,7 +3,7 @@ var debug = 1;
 $(function() {
 
 	// Run plugin
-	$('.is-sticky').stickyBlocks({
+	$('.is-Sticky').stickyBlocks({
 		'debug': debug
 	});
 

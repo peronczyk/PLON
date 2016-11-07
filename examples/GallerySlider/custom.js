@@ -2,7 +2,7 @@ var debug = 1;
 
 $(function() {
 
-	$('.o_gallery-slider').gallerySlider({
+	$('.o-Gallery-slider').gallerySlider({
 		'debug': debug
 	});
 
