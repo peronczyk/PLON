@@ -1,0 +1,295 @@
+
+/*	================================================================================
+ *	OBJECTS
+ *
+ *	May be used in any number of unrelated contexts.
+ *	Making modifications to these types of class could potentially have knock-on
+ *	effects in a lot of other unrelated places. Tread carefully.
+ *	================================================================================ */
+
+
+.o-Options-bar {
+	position: fixed;
+	width: 100%;
+	height: 70px;
+	background-color: #fff;
+	z-index: +1;
+
+	.logo {
+		float: left;
+
+		svg {
+			margin-top: 25px;
+			margin-right: 20px;
+			float: left;
+			width: 27px;
+			height: 18px;
+		}
+
+		h1 {
+			float: left;
+			margin: 16px 0 0 0;
+			font-size: 18px;
+			font-weight: normal;
+			color: #7b7b7b;
+		}
+	}
+
+	.menu {
+		float: right;
+		height: 100%;
+		list-style: none;
+
+		& > li {
+			height: 100%;
+			display: inline-block;
+			vertical-align: middle;
+
+			& > a {
+				display: block;
+				position: relative;
+				padding: 18px 16px 0 16px;
+				height: 100%;
+				font-size: 15px;
+				line-height: 30px;
+				color: #7b7b7b;
+				transition: all .2s ease-out;
+
+				&:hover { color: #000; }
+
+				&:after {
+					content: '';
+					display: block;
+					position: absolute;
+					top: 0;
+					left: 50%;
+					height: 3px;
+					width: 100%;
+					opacity: 0;
+					background-color: $color-blue;
+					transform: translateX(-50%) scaleX(0);
+					transition: all .2s ease-out;
+				}
+
+				&:hover:after {
+					opacity: 1;
+					transform: translateX(-50%) scaleX(1);
+				}
+			}
+		}
+
+		.badge {
+			.badge-photo {
+				display: inline-block;
+				margin-right: 8px;
+				vertical-align: middle;
+				width: 30px;
+				height: 30px;
+				background-color: $color-gray;
+			}
+
+			ul {
+				list-style: none;
+				visibility: hidden;
+				opacity: 0;
+				background-color: #fff;
+				transition: all .2s;
+				border-color: $color-line;
+				border-style: solid;
+				border-width: 0 1px 1px 1px;
+
+				a {
+					display: block;
+					padding: 12px 12px;
+				}
+			}
+
+			&:hover {
+				ul {
+					visibility: visible;
+					opacity: 1;
+				}
+			}
+		}
+	}
+}
+
+
+.o-Sample-text {
+	font-size: 14px;
+	line-height: 20px;
+	position: relative;
+
+	&:after {
+		content: '';
+		position: absolute;
+		top: 0;
+		bottom: 40px;
+		left: 0;
+		right: 0;
+		z-index: +1;
+		background: -moz-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%);
+		background: -webkit-linear-gradient(top, rgba(255,255,255,1) 0%,rgba(255,255,255,0) 100%);
+		background: linear-gradient(to bottom, rgba(255,255,255,1) 0%,rgba(255,255,255,0) 100%);
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#00ffffff',GradientType=0 );
+	}
+}
+
+
+.o-Tabs {
+	margin-top: 20px;
+	margin-bottom: 10px;
+	height: 40px;
+	border-bottom: 1px solid $color-line;
+
+	p { font-weight: bold; }
+
+	ul {
+		height: 100%;
+		list-style-type: none;
+
+		li {
+			margin-left: 10px;
+			float: left;
+			height: 100%;
+
+			&:last-child { margin-right: 10px; }
+
+			a {
+				display: block;
+				padding: 12px 20px 0 20px;
+				height: 100%;
+				border: 1px solid $color-line;
+				border-bottom: 0;
+				color: #484848;
+				background-color: #fff;
+				transition: all .2s;
+			}
+
+			&.is-Active {
+				height: calc(100% + 1px);
+
+				a { cursor: default; }
+			}
+
+			&:not(.is-Active) a:hover {
+				margin-top: -4px;
+				height: calc(100% + 4px);
+				background-color: $color-gray;
+			}
+		}
+	}
+
+	&.with-caption {
+		p { float: left; }
+		ul { float: right; }
+	}
+
+	&__container {
+		margin-bottom: 20px;
+		border: 1px solid $color-line;
+		overflow: hidden;
+		transition: height .3s;
+
+		& > div {
+			padding: 30px;
+			display: none;
+		}
+
+		& > .is-Active {
+			display: block;
+			animation: fadein 0.5s;
+		}
+	}
+}
+
+
+/*	--------------------------------------------------------------------------------
+ *	RICH TEXT EDITOR
+ */
+
+.o-Rte {
+	position: relative;
+	border: 1px solid $color-line;
+
+	&.is-Active { border-color: #00a8ff; }
+
+	&__toolbar {
+		list-style-type: none;
+		height: 45px;
+		border-bottom: 1px solid $color-line;
+
+		& > li {
+			position: relative;
+			display: inline-block;
+			vertical-align: top;
+		}
+
+		button {
+			display: inline-block;
+			padding: 0 12px;
+			min-width: 44px;
+			height: 44px;
+			background-color: transparent;
+			border: none;
+			color: $color-gray-dark;
+
+			&:hover { background-color: $color-gray; }
+
+			&.sublist {
+				border-right: 1px solid $color-line;
+
+				&:after {
+					content: '';
+					display: inline-block;
+					margin-left: 4px;
+					width: 0;
+					height: 0;
+					border-style: solid;
+					border-width: 5px 3.5px 0 3.5px;
+					border-color: $color-gray-dark transparent transparent transparent;
+				}
+			}
+		}
+
+		li > ul {
+			list-style-type: none;
+			position: absolute;
+			top: 40px;
+			left: -1px;
+			min-width: 110px;
+			background-color: #fff;
+			border: 1px solid $color-line;
+			border-top: none;
+			box-shadow: 0 1px 5px rgba(0,0,0,.1);
+
+			button {
+				width: 100%;
+				border: none;
+				border-bottom: 1px solid $color-gray;
+				text-align: left;
+			}
+
+			li:last-child button {
+				border-bottom: none;
+			}
+		}
+	}
+
+	&__editor {
+		padding: 16px 12px;
+		min-height: 160px;
+		font-size: 14px;
+
+		ul { list-style-type: disc; }
+
+		ol { list-style-type: decimal; }
+
+		ul li,
+		ol li {
+			padding-bottom: 5px;
+			margin-left: 25px;
+			padding-left: 5px;
+		}
+	}
+}
