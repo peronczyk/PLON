@@ -52,9 +52,9 @@
 
 	// Vertical columns alignments applied to each column in grid
 	&.Grid {
-		&-top		{ align-items: flex-start; }
-		&-center	{ align-items: center; }
-		&-bottom	{ align-items: flex-end; }
+		&-top		{ .Row { align-items: flex-start; } }
+		&-center	{ .Row { align-items: center; } }
+		&-bottom	{ .Row { align-items: flex-end; } }
 	}
 }
 
