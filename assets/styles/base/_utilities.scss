@@ -100,13 +100,13 @@
  */
 
 .u-Width {
-	&-full			{ width: 100%; }
-	&-half			{ width: 50%; }
+	&-full			{ width: 100% !important; }
+	&-half			{ width: 50% !important; }
 }
 
 .u-Height {
-	&-full			{ height: 100%; }
-	&-half			{ height: 50%; }
+	&-full			{ height: 100% !important; }
+	&-half			{ height: 50% !important; }
 }
 
 
