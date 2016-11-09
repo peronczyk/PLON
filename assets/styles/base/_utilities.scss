@@ -134,3 +134,12 @@
 }
 
 .u-noTransition		{ transition: none !important; }
+
+.u-Reset-styles {
+	font-family: initial;
+
+	* {
+		margin: 0;
+		padding: 0;
+	}
+}
