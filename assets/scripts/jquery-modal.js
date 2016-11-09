@@ -47,7 +47,7 @@
 			'window'			: '.c-Modal__window',
 			'content'			: '.c-Modal__content',
 			'dataSelector'		: 'data-modal', // Data attribute name for DOM elements that should open modals
-			'openBodyClassName' : 'is-Modal-open',
+			'openBodyClassName' : 'c-Modal__is-Open',
 		},
 		$document = $('document'),
 		$body = $('body');
