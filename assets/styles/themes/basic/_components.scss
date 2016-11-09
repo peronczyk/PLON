@@ -8,12 +8,123 @@
  *	================================================================================ */
 
 
-.Wrapper {
-	margin: 0 auto;
-	padding: $gutter;
-	width: 1000px;
-	max-width: 100%;
+/*	----------------------------------------------------------------------------
+ *	HEADER
+ *	Horizontal bar used at the top of the page to provide major navigation
+ *	and information about actually used application
+ */
+
+.c-Header {
+	position: fixed;
+	width: 100%;
+	height: 70px;
+	background-color: #fff;
+	z-index: +1;
+
+	&__logo {
+		float: left;
+
+		svg {
+			margin-top: 25px;
+			margin-right: 20px;
+			float: left;
+			width: 27px;
+			height: 18px;
+		}
+
+		h1 {
+			float: left;
+			margin: 16px 0 0 0;
+			font-size: 18px;
+			font-weight: normal;
+			color: #7b7b7b;
+		}
+	}
+
+	&__menu {
+		float: right;
+		height: 100%;
+		list-style: none;
+
+		& > li {
+			height: 100%;
+			display: inline-block;
+			vertical-align: middle;
+
+			& > a {
+				display: block;
+				position: relative;
+				padding: 18px 16px 0 16px;
+				height: 100%;
+				font-size: 14px;
+				line-height: 30px;
+				color: #7b7b7b;
+				transition: all .2s ease-out;
+
+				&:hover { color: #000; }
+
+				&:after {
+					content: '';
+					display: block;
+					position: absolute;
+					top: 0;
+					left: 50%;
+					height: 3px;
+					width: 100%;
+					opacity: 0;
+					background-color: $color-blue;
+					transform: translateX(-50%) scaleX(0);
+					transition: all .2s ease-out;
+				}
+
+				&:hover:after {
+					opacity: 1;
+					transform: translateX(-50%) scaleX(1);
+				}
+			}
+		}
+	}
+
+	&__badge {
+		ul {
+			list-style: none;
+			visibility: hidden;
+			opacity: 0;
+			background-color: #fff;
+			transition: all .2s;
+			border-color: $color-line;
+			border-style: solid;
+			border-width: 0 1px 1px 1px;
+
+			a {
+				display: block;
+				padding: 12px 12px;
+			}
+		}
+
+		&:hover {
+			ul {
+				visibility: visible;
+				opacity: 1;
+			}
+		}
+	}
+
+	&__badge-photo {
+		display: inline-block;
+		margin-right: 8px;
+		vertical-align: middle;
+		width: 30px;
+		height: 30px;
+		background-color: $color-gray;
+	}
 }
+
+
+/*	----------------------------------------------------------------------------
+ *	SIDEBAR
+ *	Provides secondary level navigation or
+ */
 
 .c-Sidebar {
 	width: 400px;
@@ -30,16 +141,16 @@
 		right: 0;
 	}
 
-	@media screen and (max-width: $breakpoint-h-ul) {
+	@media (max-width: $breakpoint-h-ul) {
 		width: 350px;
 	}
 
-	@media screen and (max-width: $breakpoint-h-xl) {
+	@media (max-width: $breakpoint-h-xl) {
 		padding: $gutter/2 $gutter/2 0 $gutter/2;
 		width: 300px;
 	}
 
-	@media screen and (max-width: $breakpoint-h-md) {
+	@media (max-width: $breakpoint-h-md) {
 		float: none;
 	}
 }
@@ -58,15 +169,15 @@
 		left: 0;
 	}
 
-	@media screen and (max-width: $breakpoint-h-ul) {
+	@media (max-width: $breakpoint-h-ul) {
 		width: calc(100% - 350px);
 	}
 
-	@media screen and (max-width: $breakpoint-h-xl) {
+	@media (max-width: $breakpoint-h-xl) {
 		width: calc(100% - 300px);
 	}
 
-	@media screen and (max-width: $breakpoint-h-md) {
+	@media (max-width: $breakpoint-h-md) {
 		float: none;
 		position: static !important;
 		padding: $gutter/2 $gutter/2 $gutter/2 $gutter/2;

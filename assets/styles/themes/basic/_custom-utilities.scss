@@ -12,19 +12,31 @@
  *	LAYOUT
  */
 
-.u-Inner {
+.l-Wrapper {
+	margin: 0 auto;
+	padding: $gutter;
+	width: 1000px;
+	max-width: 100%;
+}
+
+.l-Inner {
 	margin-left: auto;
 	margin-right: auto;
 	max-width: 1200px;
 }
 
-.u-Pad {
+.l-Pad {
 	&			{ padding: $gutter; }
-	&-top		{ padding-top: $gutter; }
-	&-right		{ padding-right: $gutter; }
-	&-bottom	{ padding-bottom: $gutter; }
-	&-left		{ padding-left: $gutter; }
+	&_top		{ padding-top: $gutter; }
+	&_right		{ padding-right: $gutter; }
+	&_bottom	{ padding-bottom: $gutter; }
+	&_left		{ padding-left: $gutter; }
 }
+
+
+/*	--------------------------------------------------------------------------------
+ *	GRIDS
+ */
 
 .flexGrid.u-Gutter {
 
@@ -45,14 +57,14 @@
  */
 
 .u-Line {
-	&-left		{ border-left: 1px solid $color-line; }
-	&-right		{ border-right: 1px solid $color-line; }
-	&-top		{ border-top: 1px solid $color-line; }
-	&-bottom	{ border-bottom: 1px solid $color-line; }
+	&_left		{ border-left: 1px solid $color-line; }
+	&_right		{ border-right: 1px solid $color-line; }
+	&_top		{ border-top: 1px solid $color-line; }
+	&_bottom	{ border-bottom: 1px solid $color-line; }
 }
 
 .u-boxShadow {
-	&-1 { box-shadow: 0 1px 1px rgba(0,0,0,.15), 0 2px 30px rgba(0,0,0,.1); }
+	&_1 { box-shadow: 0 1px 1px rgba(0,0,0,.15), 0 2px 30px rgba(0,0,0,.1); }
 }
 
 
