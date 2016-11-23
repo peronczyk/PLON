@@ -107,7 +107,6 @@ input[type=submit],
 input[type=file] {
 	-webkit-appearance: none;
 	-moz-appearance: none;
-	cursor: pointer;
 
 	&:hover { z-index: +1; }
 }
