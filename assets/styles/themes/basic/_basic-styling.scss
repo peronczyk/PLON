@@ -85,6 +85,11 @@ p, figcaption {
 	line-height: 22px;
 }
 
+small {
+	font-size: 13px;
+	color: $color-gray-dark;
+}
+
 
 /*	--------------------------------------------------------------------------------
  *	LINKS
@@ -109,9 +114,10 @@ form {
 label,
 .Label {
 	display: block;
-	overflow: hidden;
 	margin-bottom: 14px;
+	overflow: hidden;
 	font-size: 14px;
+	line-height: 16px;
 }
 
 input[type=text],
