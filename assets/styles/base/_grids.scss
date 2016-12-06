@@ -79,22 +79,32 @@
 // Default screen size
 @include columns();
 
-// Screen size: LG
+// Screen size: Ultra large
+@media (max-width: $breakpoint-h-ul) {
+	@include columns('\\@UL');
+}
+
+// Screen size: Extra large
+@media (max-width: $breakpoint-h-xl) {
+	@include columns('\\@XL');
+}
+
+// Screen size: Large
 @media (max-width: $breakpoint-h-lg) {
 	@include columns('\\@LG');
 }
 
-// Screen size: MD
+// Screen size: Medium
 @media (max-width: $breakpoint-h-md) {
 	@include columns('\\@MD');
 }
 
-// Screen size: SM
+// Screen size: Small
 @media (max-width: $breakpoint-h-sm) {
 	@include columns('\\@SM');
 }
 
-// Screen size: XS
+// Screen size: Extra small
 @media (max-width: $breakpoint-h-xs) {
 	@include columns('\\@XS');
 }
