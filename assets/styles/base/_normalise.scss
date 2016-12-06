@@ -30,6 +30,12 @@ body {
 	line-height: 1;
 }
 
+// Scale window content to viewport size if window is extra small
+@viewport { width: device-width }
+@media screen and (max-width: $breakpoint-h-xs) {
+	@viewport { width: $breakpoint-h-xs; }
+}
+
 *:before, *:after { box-sizing: inherit; }
 
 article, aside, details, figure, figcaption, header, footer, hgroup, menu, nav, section, summary, hr { display: block; }
@@ -41,7 +47,7 @@ audio, canvas, progress, video {
 
 img { border: none; }
 
-svg:not(:root) { overflow: hidden; } /* Correct overflow not hidden in IE 9/10/11. */
+svg:not(:root) { overflow: hidden; } // Correct overflow not hidden in IE 9/10/11.
 
 
 /*	--------------------------------------------------------------------------------
