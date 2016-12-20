@@ -118,6 +118,8 @@ input[type=file] {
 	&:hover { z-index: +1; }
 }
 
+label { user-select: none; }
+
 [disabled] { cursor: default; }
 
 
