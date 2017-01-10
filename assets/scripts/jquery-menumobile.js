@@ -100,9 +100,9 @@
 
 				// Close menu if clicked outside menu object
 				else if (config.closeByClickingOutside && !$(event.target).closest(_self).length) {
+					event.preventDefault();
 					if (config.debug) console.log('menuMobile: Clicked outside opened menu');
 					toggleMenu(config, _self, $menuToggle);
-					return false;
 				}
 			});
 
@@ -163,9 +163,9 @@
 		}
 
 		// Handle menu toggle button click
-		$menuToggle.on('click.' + config.eventsNamespace, function() {
+		$menuToggle.on('click.' + config.eventsNamespace, function(event) {
+			event.preventDefault();
 			toggleMenu(config, _self, $menuToggle);
-			return false;
 		});
 
 		return _self;
