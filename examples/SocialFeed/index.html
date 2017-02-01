@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>SOCIAL FEED &mdash; Streamline</title>
+
+	<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+
+	<link rel="stylesheet" type="text/css" href="../../dist/styles/layout.css">
+	<link rel="stylesheet" type="text/css" href="../../dist/styles/theme-basic.css">
+
+	<script type="text/javascript" src="../../dist/scripts/jquery-3.1.0.js"></script>
+	<script type="text/javascript" async src="../../dist/scripts/jquery-socialfeed.js"></script>
+	<script type="text/javascript" async src="custom.js"></script>
+</head>
+
+<body>
+	<div class="u-Pad">
+		<div class="flexGrid u-Gutter">
+			<div class="Row">
+				<div class="Col-6">
+					<h3><strong>Facebook</strong> Feed</h3>
+
+					<!-- Start: Facebook feed -->
+
+					<div class="c-Feed" id="facebook-feed">
+
+						<div class="c-Feed__nav u-Clear u-Pad-bottom">
+							<a href="#0" class="c-Feed__prev u-Display-block u-Float-left">&lsaquo; Previous</a>
+							<a href="#0" class="c-Feed__next u-Display-block u-Float-right">Next &rsaquo;</a>
+						</div>
+
+						<!-- Start: Facebook feed / entries container -->
+
+						<div>
+							<!-- Start: Facebook feed / entry -->
+							<div id="facebook-feed__entry" class="u-Pad-bottom">
+								<hr>
+								<h5 data-entry="date"></h5>
+								<p data-entry="text"></p>
+								<a target="_blank" data-entry="link">View &raquo;</a>
+							</div>
+						</div>
+						<!-- End: Facebook feed / entries container -->
+
+					</div>
+				</div>
+
+
+				<div class="Col-6">
+					<h3><strong>Twitter</strong> Feed</h3>
+
+					<!-- Start: Twitter feed -->
+
+					<div class="c-Feed" id="youtube-feed">
+
+						<div class="c-Feed__nav u-Clear u-Pad-bottom">
+							<a href="#0" class="c-Feed__prev u-Display-block u-Float-left">&lsaquo; Previous</a>
+							<a href="#0" class="c-Feed__next u-Display-block u-Float-right">Next &rsaquo;</a>
+						</div>
+
+						<!-- Start: Twitter feed / entries container -->
+
+						<div>
+							<!-- Start: Twitter feed / entry -->
+							<div id="facebook-feed__entry" class="u-Pad-bottom">
+								<hr>
+								<h5 data-entry="date"></h5>
+								<p data-entry="text"></p>
+								<a target="_blank" data-entry="link">View &raquo;</a>
+							</div>
+							<!-- End: Twitter feed / entry -->
+						</div>
+
+						<!-- End: Twitter feed / entries container -->
+
+					</div>
+
+					<!-- End: Twitter feed -->
+				</div>
+			</div>
+		</div>
+
+	</div>
+</body>
+
+</html>
