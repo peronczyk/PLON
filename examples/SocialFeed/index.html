@@ -13,10 +13,14 @@
 	<script type="text/javascript" src="../../dist/scripts/jquery-3.1.0.js"></script>
 	<script type="text/javascript" async src="../../dist/scripts/jquery-socialfeed.js"></script>
 	<script type="text/javascript" async src="custom.js"></script>
+
+	<style>
+
+	</style>
 </head>
 
 <body>
-	<div class="u-Pad">
+	<div class="Wrapper">
 		<div class="flexGrid u-Gutter">
 			<div class="Row">
 				<div class="Col-6">
@@ -27,8 +31,8 @@
 					<div class="c-Feed" id="facebook-feed">
 
 						<div class="c-Feed__nav u-Clear u-Pad-bottom">
-							<a href="#0" class="c-Feed__prev u-Display-block u-Float-left">&lsaquo; Previous</a>
-							<a href="#0" class="c-Feed__next u-Display-block u-Float-right">Next &rsaquo;</a>
+							<a href="#0" class="c-Feed__prev Btn u-Display-block u-Float-left">&lsaquo; Previous</a>
+							<a href="#0" class="c-Feed__next Btn u-Display-block u-Float-right">Next &rsaquo;</a>
 						</div>
 
 						<!-- Start: Facebook feed / entries container -->
@@ -37,9 +41,10 @@
 							<!-- Start: Facebook feed / entry -->
 							<div id="facebook-feed__entry" class="u-Pad-bottom">
 								<hr>
-								<h5 data-entry="date"></h5>
-								<p data-entry="text"></p>
-								<a target="_blank" data-entry="link">View &raquo;</a>
+								<p><strong data-entry-element="date"></strong></p>
+								<img data-entry-element="image">
+								<p data-entry-element="text"></p>
+								<a target="_blank" data-entry-element="link">View &raquo;</a>
 							</div>
 						</div>
 						<!-- End: Facebook feed / entries container -->
@@ -49,35 +54,35 @@
 
 
 				<div class="Col-6">
-					<h3><strong>Twitter</strong> Feed</h3>
+					<h3><strong>YouTube</strong> Feed</h3>
 
-					<!-- Start: Twitter feed -->
+					<!-- Start: YouTube feed -->
 
 					<div class="c-Feed" id="youtube-feed">
 
 						<div class="c-Feed__nav u-Clear u-Pad-bottom">
-							<a href="#0" class="c-Feed__prev u-Display-block u-Float-left">&lsaquo; Previous</a>
-							<a href="#0" class="c-Feed__next u-Display-block u-Float-right">Next &rsaquo;</a>
+							<a href="#0" class="c-Feed__prev Btn u-Display-block u-Float-left">&lsaquo; Previous</a>
+							<a href="#0" class="c-Feed__next Btn u-Display-block u-Float-right">Next &rsaquo;</a>
 						</div>
 
-						<!-- Start: Twitter feed / entries container -->
+						<!-- Start: YouTube feed / entries container -->
 
 						<div>
-							<!-- Start: Twitter feed / entry -->
-							<div id="facebook-feed__entry" class="u-Pad-bottom">
+							<!-- Start: YouTube feed / entry -->
+							<div id="youtube-feed__entry" class="u-Pad-bottom">
 								<hr>
-								<h5 data-entry="date"></h5>
-								<p data-entry="text"></p>
-								<a target="_blank" data-entry="link">View &raquo;</a>
+								<p><strong data-entry-element="date"></strong></p>
+								<p data-entry-element="text"></p>
+								<a target="_blank" data-entry-element="link">View &raquo;</a>
 							</div>
-							<!-- End: Twitter feed / entry -->
+							<!-- End: YouTube feed / entry -->
 						</div>
 
-						<!-- End: Twitter feed / entries container -->
+						<!-- End: YouTube feed / entries container -->
 
 					</div>
 
-					<!-- End: Twitter feed -->
+					<!-- End: YouTube feed -->
 				</div>
 			</div>
 		</div>
