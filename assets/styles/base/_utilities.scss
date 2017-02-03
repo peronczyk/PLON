@@ -10,7 +10,6 @@
  *	================================================================================ */
 
 
-
 .u-Hero {
 	width: 100%;
 	height: 100%;
@@ -29,28 +28,28 @@
  */
 
 .u-Text {
-	&-left		{ text-align: left !important; }
-	&-center	{ text-align: center !important; }
-	&-right		{ text-align: right !important; }
-	&-justify	{ text-align: justify !important; }
+	&_left		{ text-align: left !important; }
+	&_center	{ text-align: center !important; }
+	&_right		{ text-align: right !important; }
+	&_justify	{ text-align: justify !important; }
 }
 
 .u-Valign {
-	&-top		{ vertical-align: top; }
-	&-middle	{ vertical-align: middle; }
-	&-bottom	{ vertical-align: bottom; }
+	&_top		{ vertical-align: top; }
+	&_middle	{ vertical-align: middle; }
+	&_bottom	{ vertical-align: bottom; }
 }
 
 .u-Box {
-	&-center {
+	&_center {
 		margin-left: auto;
 		margin-right: auto;
 	}
 }
 
 .u-Float {
-	&-left		{ float: left; }
-	&-right		{ float: right; }
+	&_left		{ float: left; }
+	&_right		{ float: right; }
 }
 
 
@@ -73,8 +72,6 @@
  */
 
 .u-Hidden			{ visibility: hidden; }
-
-.u-Disabled			{ pointer-events: none; }
 
 .u-Block			{ display: block; }
 .u-notDisplayed		{ display: none; }
@@ -100,13 +97,13 @@
  */
 
 .u-Width {
-	&-full			{ width: 100% !important; }
-	&-half			{ width: 50% !important; }
+	&_full			{ width: 100% !important; }
+	&_half			{ width: 50% !important; }
 }
 
 .u-Height {
-	&-full			{ height: 100% !important; }
-	&-half			{ height: 50% !important; }
+	&_full			{ height: 100% !important; }
+	&_half			{ height: 50% !important; }
 }
 
 
@@ -115,9 +112,9 @@
  */
 
 .u-Rotate {
-	&-90			{ transform: rotate(90deg); }
-	&-180			{ transform: rotate(180deg); }
-	&-270			{ transform: rotate(270deg); }
+	&_90			{ transform: rotate(90deg); }
+	&_180			{ transform: rotate(180deg); }
+	&_270			{ transform: rotate(270deg); }
 }
 
 
@@ -128,9 +125,11 @@
 
 .u-Clickable		{ cursor: pointer; }
 
+.u-Disabled			{ pointer-events: none; }
+
 .u-Overflow {
-	&-hidden		{ overflow: hidden; }
-	&-scroll		{ overflow: scroll; }
+	&_hidden		{ overflow: hidden; }
+	&_scroll		{ overflow: scroll; }
 }
 
 .u-noTransition		{ transition: none !important; }

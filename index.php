@@ -10,15 +10,15 @@
 </head>
 
 <body>
-	<div class="Wrapper">
-		<div class="u-Inner">
+	<div class="l-Wrapper">
+		<div class="l-Inner">
 			<h1><strong>Streamline</strong> script examples</strong></h1>
 
 			<table class="u-Lines_horizontal">
 				<thead>
 					<tr>
 						<th>Script name</th>
-						<th class="u-Text-center">Readme</th>
+						<th class="u-Text_center">Readme</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -32,7 +32,7 @@
 							if (file_exists('examples/' . $dir . '/index.html')) echo('<a href="examples/' . $dir . '">' . $dir . '</a>');
 							else echo($dir);
 
-							echo('</td><td class="u-Text-center">');
+							echo('</td><td class="u-Text_center">');
 
 							if (file_exists('examples/' . $dir . '/README.md')) echo('yes');
 

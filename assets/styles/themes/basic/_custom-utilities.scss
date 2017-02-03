@@ -1,0 +1,88 @@
+
+/*	================================================================================
+ *	CUSTOM UTILITIES
+ *
+ *	It has a very specific role (often providing only one declaration)
+ *	and should not be bound onto or changed. It can be reused and is not tied
+ *	to any specific piece of UI.
+ *	================================================================================ */
+
+
+/*	--------------------------------------------------------------------------------
+ *	LAYOUT
+ */
+
+.l-Wrapper {
+	margin: 0 auto;
+	padding: $gutter;
+	width: 1000px;
+	max-width: 100%;
+}
+
+.l-Inner {
+	margin-left: auto;
+	margin-right: auto;
+	max-width: 1200px;
+}
+
+.l-Pad {
+	&			{ padding: $gutter; }
+	&_top		{ padding-top: $gutter; }
+	&_right		{ padding-right: $gutter; }
+	&_bottom	{ padding-bottom: $gutter; }
+	&_left		{ padding-left: $gutter; }
+}
+
+
+/*	--------------------------------------------------------------------------------
+ *	GRIDS
+ */
+
+.flexGrid.u-Gutter {
+
+	.Row {
+		margin-left: -$gutter/2;
+		margin-right: -$gutter/2;
+
+		[class*='Col-'] {
+			padding-left: $gutter/2;
+			padding-right: $gutter/2;
+		}
+	}
+}
+
+
+/*	--------------------------------------------------------------------------------
+ *	VISUAL STYLING
+ */
+
+.u-Line {
+	&_left		{ border-left: 1px solid $color-line; }
+	&_right		{ border-right: 1px solid $color-line; }
+	&_top		{ border-top: 1px solid $color-line; }
+	&_bottom	{ border-bottom: 1px solid $color-line; }
+}
+
+.u-boxShadow {
+	&_1 { box-shadow: 0 1px 1px rgba(0,0,0,.15), 0 2px 30px rgba(0,0,0,.1); }
+}
+
+
+/*	--------------------------------------------------------------------------------
+ *	TABLES
+ */
+
+.u-Lines {
+	&_all {
+		td, th {
+			padding-left: 10px;
+			padding-right: 10px;
+			border: 1px solid $color-line;
+		}
+	}
+
+	&_horizontal {
+		th { border-bottom: 2px solid $color-line; }
+		td { border-bottom: 1px solid $color-line; }
+	}
+}
