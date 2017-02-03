@@ -39,7 +39,7 @@
 			'service': null,
 
 			// Node ID of facebook page
-			'sourceID': null,
+			'sourceId': null,
 
 			// Access token
 			// Generated per persona or per app (app_id|access_code)
@@ -66,10 +66,12 @@
 
 			// Predefined class names for script states
 			// They are added to selected wrapper element when script loads data
+			'loadingClassName'		: 'is-Loading',
 			'loadedClassName'		: 'is-Loaded',
 			'errorClassName'		: 'is-Error',
 			'hasNextClassName'		: 'has-Next',
-			'hasPreviousClassName'	: 'has-Previous',
+			'hasPrevClassName'		: 'has-Prev',
+			'disabledClassName'		: 'u-Disabled',
 		};
 
 
@@ -86,49 +88,82 @@
 	var services = {
 
 			// Facebook API
+
 			'facebook': {
-				'url': 'https://graph.facebook.com/v2.8/{sourceID}/posts?fields={fields}&limit={postsPerPage}&access_token={accessToken}',
 				'defaultFields': 'message,created_time,story,full_picture,picture,likes.summary(true).limit(0),comments.summary(true).limit(0),permalink_url,link',
 				'dataVariable': 'data',
-				'getDataValues': function(receivedData) {
-					if (!receivedData.data || receivedData.data.length < 1) return false;
+
+				'url': function(config) {
+					return 'https://graph.facebook.com/v2.8/' + config.sourceId + '/posts?fields=' + this.defaultFields + '&limit=' + config.postsPerPage + '&access_token=' + config.accessToken;
+				},
+
+				'urlPrev': function(config, receivedData) {
+					return (receivedData.paging.next) ? receivedData.paging.next : false;
+				},
+
+				'urlNext': function(config, receivedData) {
+					return (receivedData.nextPageToken) ? receivedData.nextPageToken : false;
+				},
+
+				'getDataValues': function(config, receivedData) {
 					var values = [];
-					for (var index in receivedData.data) {
-						values[index] = {
-							'link'		: receivedData.data[index].permalink_url,
-							'date'		: formatDate(receivedData.data[index].created_time),
-							'cover'		: receivedData.data[index].full_picture,
-							'text'		: receivedData.data[index].message,
-							'likes'		: (receivedData.data[index].likes) ? receivedData.data[index].likes.summary.total_count : 0,
-							'comments'	: (receivedData.data[index].comments) ? receivedData.data[index].comments.summary.total_count : 0
-						};
-					};
+					if (receivedData.data) {
+						var feedList = receivedData.data;
+						for (var i in feedList) {
+							values[i] = {
+								'link'		: feedList[i].permalink_url,
+								'date'		: formatDate(feedList[i].created_time),
+								'image'		: feedList[i].full_picture,
+								'text'		: feedList[i].message,
+								'likes'		: (feedList[i].likes) ? feedList[i].likes.summary.total_count : 0,
+								'comments'	: (feedList[i].comments) ? feedList[i].comments.summary.total_count : 0
+							};
+						}
+					}
 					return values;
 				},
 			},
 
-			// YouTube API
-			'youtube': {
-				'url': 'https://www.googleapis.com/youtube/v3/search?channelId={sourceID}&order=date&part={fields}&maxResults={postsPerPage}&key={accessToken}',
-				'defaultFields': 'snippet',
-				'getDataValues': function(receivedData) {
-					if (!receivedData.items || receivedData.items.length < 1) return false;
-					return [];
-				}
-			},
 
-			'twitter': {
-				'url': 'https://api.twitter.com/1.1/'
+			// YouTube API
+
+			'youtube': {
+				'defaultFields': 'snippet',
+
+				'url': function(config) {
+					return 'https://www.googleapis.com/youtube/v3/search?channelId=' + config.sourceId + '&order=date&part=' + this.defaultFields + '&maxResults=' + config.postsPerPage + '&key=' + config.accessToken;
+				},
+
+				'urlPrev': function(config, receivedData) {
+					if (receivedData.nextPageToken) {
+						return this.url(config) + '&pageToken=' + receivedData.nextPageToken;
+					}
+					else return false;
+				},
+
+				'urlNext': function(config, receivedData) {
+					if (receivedData.prevPageToken) {
+						return this.url(config) + '&pageToken=' + receivedData.prevPageToken;
+					}
+					else return false;
+				},
+
+				'getDataValues': function(config, receivedData) {
+					var values = [];
+					if (receivedData.items) {
+						var feedList = receivedData.items;
+						for (var i in feedList) {
+							values[i] = {
+								'link'		: 'https://youtu.be/' + feedList[i].id.videoId,
+								'image'		: feedList[i].snippet.thumbnails.high.url,
+								'text'		: feedList[i].snippet.title,
+							};
+						}
+					}
+					return values;
+				},
 			}
 		};
-
-	var prepareUrl = function(config) {
-		return services[config.service].url
-			.replace('{sourceID}', config.sourceID)
-			.replace('{accessToken}', config.accessToken)
-			.replace('{fields}', (config.fields) ? config.fields : services[config.service].defaultFields)
-			.replace('{postsPerPage}', config.postsPerPage);
-	}
 
 	// Get DOM entry element and search child elements specified by data selector
 	var prepareEntryElements = function($entry, selector) {
@@ -150,24 +185,34 @@
 	 *	GET FEED ENTRIES
 	 */
 
-	var getFeedEntries = function(config, $entriesWrapper, $entry, entryElements) {
-		var preparedUrl = prepareUrl(config),
-			result = $.ajax({
-				'url': preparedUrl
-			});
+	var getFeedEntries = function(config, $self, $entriesWrapper, $entry, entryElements, $navigation, url) {
+
+		$self.addClass(config.loadingClassName);
+
+		var preparedUrl = (url) ? url : services[config.service].url(config),
+			result = $.ajax({'url': preparedUrl});
 
 		result.then(
 
 			// Success
 			function(data, textStatus, jqXHR) {
-				if (config.debug) console.log('socialFeed: Data received succesully from: ' + preparedUrl);
+				if (config.debug) {
+					console.log('socialFeed: Data received succesully from: ' + preparedUrl);
+					console.log(jqXHR.responseJSON);
+				}
 
-				var dataValues = services[config.service].getDataValues(jqXHR.responseJSON);
+				var dataValues = services[config.service].getDataValues(config, jqXHR.responseJSON);
 
-				if (dataValues === false) {
-					if (config.debug) console.warn('socialFeed: Could not process received data. Data is empty or broken.');
+				if (dataValues.length < 1) {
+					if (config.debug) console.warn('socialFeed [' + config.service + ']: Could not process received data. Data is empty or broken.');
 					return;
 				}
+
+				$entriesWrapper.empty();
+
+				$self
+					.removeClass(config.loadingClassName)
+					.addClass(config.loadedClassName);
 
 				// Prepare entries and insert them into entries wrapper
 				for (var index in dataValues) {
@@ -184,12 +229,48 @@
 					}
 					$entriesWrapper.append($entry.clone());
 				};
+
+				var urlPrev = services[config.service].urlPrev(config, jqXHR.responseJSON),
+					urlNext = services[config.service].urlNext(config, jqXHR.responseJSON);
+
+				//console.log('P/N: ' + urlPrev + ' / ' + urlNext);
+
+				// Check if there are previous page of feed
+				if (urlPrev) {
+					console.log('PREV: Tak');
+					$self.addClass(config.hasPrevClassName);
+					if ($navigation.prev) $navigation.prev.attr('href', urlPrev);
+				}
+				else {
+					console.log('PREV: Nie');
+					$self.removeClass(config.hasPrevClassName);
+					if ($navigation.prev) $navigation.prev.attr('href', '#0');
+				}
+
+				// Check if there are next page of feed
+				if (urlNext) {
+					console.log('NEXT: Tak');
+					$self.addClass(config.hasPrevClassName);
+					if ($navigation.next) $navigation.prev.attr('href', urlNext);
+				}
+				else {
+					console.log('NEXT: Nie');
+					$self.removeClass(config.hasPrevClassName);
+					if ($navigation.next) $navigation.prev.attr('href', '#0');
+				}
+
 			},
 
 			// Error
-			function(test) {
-				console.log('ERROR');
-				console.log(test);
+			function(jqXHR, textStatus, errorThrown) {
+				$self
+					.removeClass(config.loadingClassName)
+					.addClass(config.errorClassName);
+
+				if (config.debug) {
+					console.warn('socialFeed: Request to ' + preparedUrl + ' ended with error: ' + errorThrown);
+					if (jqXHR.responseJSON) console.log(jqXHR.responseJSON);
+				}
 			}
 		);
 	}
@@ -206,7 +287,8 @@
 			config = $.extend({}, defaults, options),
 
 			// Definitions
-			$self = $(this);
+			$self = $(this),
+			$navigation = {};
 
 		if (config.debug) console.info('Plugin loaded: socialFeed [' + config.service + ']');
 
@@ -226,7 +308,39 @@
 
 		$entry.detach();
 
-		getFeedEntries(config, $entriesWrapper, $entry, entryElements);
+		getFeedEntries(config, $self, $entriesWrapper, $entry, entryElements, $navigation, null);
+
+
+		// Button: PREVIOUS
+
+		if (config.btnPrevious) {
+			$navigation.prev = $self.find(config.btnPrevious);
+			if ($navigation.prev.length > 0) {
+				$navigation.prev.on('click.socialfeed', function(event) {
+					event.preventDefault();
+					var href = $(this).attr('href');
+					getFeedEntries(config, $self, $entriesWrapper, $entry, entryElements, $navigation, ((href.length > 2) ? href : null));
+					if (config.debug) console.info('socialFeed: Button previous clicked');
+				});
+			}
+			else if (config.debug) console.warn('socialFeed: Button previous was set but not found in document');
+		}
+
+
+		// Button: NEXT
+
+		if (config.btnNext) {
+			$navigation.next = $self.find(config.btnNext);
+			if ($navigation.next.length > 0) {
+				$navigation.next.on('click.socialfeed', function(event) {
+					event.preventDefault();
+					var href = $(this).attr('href');
+					getFeedEntries(config, $self, $entriesWrapper, $entry, entryElements, $navigation, ((href.length > 2) ? href : null));
+					if (config.debug) console.info('socialFeed: Button next clicked');
+				});
+			}
+			else if (config.debug) console.warn('socialFeed: Button next was set but not found in document');
+		}
 
 		return $self;
 	}
