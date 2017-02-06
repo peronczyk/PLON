@@ -228,10 +228,7 @@
 
 			// Success
 			function(data, textStatus, jqXHR) {
-				if (config.debug) {
-					console.log('socialFeed: Data received succesully from: ' + preparedUrl);
-					console.log(jqXHR.responseJSON);
-				}
+				if (config.debug) console.log('socialFeed: Data received succesully from: ' + preparedUrl);
 
 				var dataValues = services[config.service].getDataValues(config, jqXHR.responseJSON);
 
@@ -369,7 +366,5 @@
 
 		return $self;
 	}
-
-
 
 })(jQuery);
