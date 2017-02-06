@@ -102,7 +102,7 @@
 				},
 
 				'urlNext': function(config, receivedData) {
-					return (receivedData.nextPageToken) ? receivedData.nextPageToken : false;
+					return (receivedData.paging.previous) ? receivedData.paging.previous : false;
 				},
 
 				'getDataValues': function(config, receivedData) {
@@ -165,7 +165,12 @@
 			}
 		};
 
-	// Get DOM entry element and search child elements specified by data selector
+
+	/*	----------------------------------------------------------------------------
+	 *	PREPARE FEED ENTRY ELEMENTS
+	 *	Get DOM entry element and search child elements specified by data selector
+	 */
+
 	var prepareEntryElements = function($entry, selector) {
 		var entryElements = [];
 		$entry.find('[' + selector + ']').each(function(i, elem) {
@@ -174,7 +179,12 @@
 		return entryElements;
 	}
 
-	// Format date: YYYY-MM-DD HH:MM
+
+	/*	----------------------------------------------------------------------------
+	 *	DATE FORMATTING HELPER
+	 *	Format: YYYY-MM-DD HH:MM
+	 */
+
 	var formatDate = function(date) {
 		var date = new Date(date);
 		return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + ' ' + date.getHours() + ':' + date.getMinutes();
@@ -182,10 +192,30 @@
 
 
 	/*	----------------------------------------------------------------------------
+	 *	SET VALUE TO ENTRY ELEMENT
+	 */
+
+	var setEntryElementValue = function($elem, value) {
+		switch($elem.prop('nodeName')) {
+			case 'A':
+				(value) ? $elem.attr('href', value).show() : $elem.attr('href', '').hide();
+				break;
+
+			case 'IMG':
+				(value) ? $elem.attr('src', value).show() : $elem.attr('src', '').hide();
+				break;
+
+			default:
+				$elem.html(value);
+		}
+	}
+
+
+	/*	----------------------------------------------------------------------------
 	 *	GET FEED ENTRIES
 	 */
 
-	var getFeedEntries = function(config, $self, $entriesWrapper, $entry, entryElements, $navigation, url) {
+	var getFeedEntries = function(config, $self, $entriesWrapper, $entry, entryElements, $navigation, url, pageNum) {
 
 		$self.addClass(config.loadingClassName);
 
@@ -217,15 +247,7 @@
 				// Prepare entries and insert them into entries wrapper
 				for (var index in dataValues) {
 					for (var type in entryElements) {
-						if (dataValues[index][type]) {
-							if (entryElements[type].is('a'))
-								entryElements[type].attr('href', dataValues[index][type]);
-
-							else if (entryElements[type].is('img'))
-								entryElements[type].attr('src', dataValues[index][type]);
-
-							else entryElements[type].html(dataValues[index][type]);
-						}
+						setEntryElementValue(entryElements[type], dataValues[index][type]);
 					}
 					$entriesWrapper.append($entry.clone());
 				};
@@ -233,30 +255,24 @@
 				var urlPrev = services[config.service].urlPrev(config, jqXHR.responseJSON),
 					urlNext = services[config.service].urlNext(config, jqXHR.responseJSON);
 
-				//console.log('P/N: ' + urlPrev + ' / ' + urlNext);
-
 				// Check if there are previous page of feed
 				if (urlPrev) {
-					console.log('PREV: Tak');
 					$self.addClass(config.hasPrevClassName);
 					if ($navigation.prev) $navigation.prev.attr('href', urlPrev);
 				}
 				else {
-					console.log('PREV: Nie');
 					$self.removeClass(config.hasPrevClassName);
 					if ($navigation.prev) $navigation.prev.attr('href', '#0');
 				}
 
 				// Check if there are next page of feed
-				if (urlNext) {
-					console.log('NEXT: Tak');
-					$self.addClass(config.hasPrevClassName);
-					if ($navigation.next) $navigation.prev.attr('href', urlNext);
+				if (urlNext && pageNum > 0) {
+					$self.addClass(config.hasNextClassName);
+					if ($navigation.next) $navigation.next.attr('href', urlNext);
 				}
 				else {
-					console.log('NEXT: Nie');
-					$self.removeClass(config.hasPrevClassName);
-					if ($navigation.next) $navigation.prev.attr('href', '#0');
+					$self.removeClass(config.hasNextClassName);
+					if ($navigation.next) $navigation.next.attr('href', '#0');
 				}
 
 			},
@@ -288,7 +304,8 @@
 
 			// Definitions
 			$self = $(this),
-			$navigation = {};
+			$navigation = {},
+			pageNum = 0; // Points to number of loaded feed entries.
 
 		if (config.debug) console.info('Plugin loaded: socialFeed [' + config.service + ']');
 
@@ -308,7 +325,7 @@
 
 		$entry.detach();
 
-		getFeedEntries(config, $self, $entriesWrapper, $entry, entryElements, $navigation, null);
+		getFeedEntries(config, $self, $entriesWrapper, $entry, entryElements, $navigation, null, pageNum);
 
 
 		// Button: PREVIOUS
@@ -319,8 +336,11 @@
 				$navigation.prev.on('click.socialfeed', function(event) {
 					event.preventDefault();
 					var href = $(this).attr('href');
-					getFeedEntries(config, $self, $entriesWrapper, $entry, entryElements, $navigation, ((href.length > 2) ? href : null));
-					if (config.debug) console.info('socialFeed: Button previous clicked');
+					if (href.length > 2) {
+						pageNum++;
+						getFeedEntries(config, $self, $entriesWrapper, $entry, entryElements, $navigation, href, pageNum);
+						if (config.debug) console.info('socialFeed: Button previous clicked');
+					}
 				});
 			}
 			else if (config.debug) console.warn('socialFeed: Button previous was set but not found in document');
@@ -335,8 +355,11 @@
 				$navigation.next.on('click.socialfeed', function(event) {
 					event.preventDefault();
 					var href = $(this).attr('href');
-					getFeedEntries(config, $self, $entriesWrapper, $entry, entryElements, $navigation, ((href.length > 2) ? href : null));
-					if (config.debug) console.info('socialFeed: Button next clicked');
+					if (href.length > 2) {
+						if (pageNum > 0) pageNum--;
+						getFeedEntries(config, $self, $entriesWrapper, $entry, entryElements, $navigation, href, pageNum);
+						if (config.debug) console.info('socialFeed: Button next clicked');
+					}
 				});
 			}
 			else if (config.debug) console.warn('socialFeed: Button next was set but not found in document');

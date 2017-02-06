@@ -1,3 +1,5 @@
+'use strict';
+
 var debug = 1;
 
 $(function() {
@@ -18,7 +20,7 @@ $(function() {
 	// YouTube movies
 
 	$('#youtube-feed').socialFeed({
-		'debug'			: debug,
+		'debug'			: 0,
 		'service'		: 'youtube',
 		'sourceId'		: 'UCL8ZULXASCc1I_oaOT0NaOQ',
 		'accessToken'	: 'AIzaSyAVboOKc2owBE-5QzuNAV1I3nbypylT2Nc',
