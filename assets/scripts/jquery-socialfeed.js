@@ -2,23 +2,23 @@
  *	================================================================================
  *
  *	JQ: SOCIAL FEED
- *
- *	Script author: Bartosz Perończyk (peronczyk.com)
+ *	Sorce: https://github.com/peronczyk/Streamline
  *
  *	--------------------------------------------------------------------------------
  *	DESCRIPTION:
  *
- *
+ *	This script displays entries from social feed taken from popular social networks
  *
  *	--------------------------------------------------------------------------------
  *	INSTALATION:
  *
- *
+ *	$('#feed-wrapper).socialFeed({ options });
+ *	Options are described below (plugin default configuration)
  *
  *	--------------------------------------------------------------------------------
  *	TODO
  *
- *
+ *	Connecting to Twitter. This API requires OA login :/
  *
  *	================================================================================
  */
@@ -35,14 +35,15 @@
 	var defaults = {
 			'debug': 0,
 
-			// Service type (facebook, twitter, youtube)
+			// Service type (facebook or youtube)
 			'service': null,
 
-			// Node ID of facebook page
+			// Node ID of social page
+			// eg.: http://facebook.com/sourceid
 			'sourceId': null,
 
 			// Access token
-			// Generated per persona or per app (app_id|access_code)
+			// Generated per persona or per app. Check API documentation.
 			'accessToken': null,
 
 			// List of variables that describes each post
@@ -80,7 +81,8 @@
 	 *
 	 *	@url - API endpoint URL
 	 *	@defaultFields - String that contains list of variables to be received with
-	 *		each of feed posts (eg.: title, photo, date, etc)
+	 *		each of feed posts (eg.: title, photo, date, etc). More info are
+	 *		available in API documentation.
 	 *	@getDataValues - Method that return universal element names
 	 *		with parsed values bind to them
 	 */
