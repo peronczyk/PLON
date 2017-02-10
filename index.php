@@ -13,6 +13,7 @@
 	<div class="l-Wrapper">
 		<div class="l-Inner">
 			<h1><strong>Streamline</strong> script examples</strong></h1>
+			<p><strong>Github</strong>: <a href="https://github.com/peronczyk/Streamline" target="_blank">github.com/peronczyk/Streamline</a></p>
 
 			<table class="u-Lines_horizontal">
 				<thead>
