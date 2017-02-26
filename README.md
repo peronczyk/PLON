@@ -10,7 +10,7 @@ Simple SCSS+JS framework based on jQuery and Gulp
 
 ## Gulp installation
 
-Install required npm packages
+Instal required npm packages
 ```bash
 $ npm install
 ```
@@ -19,7 +19,7 @@ Than you can generate dist files by entering:
 ```bash
 $ gulp
 ```
-or any other gulp command from list below.
+or any other gulp command from "Gulp commands" section.
 
 ## Scripts installation
 
