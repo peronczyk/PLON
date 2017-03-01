@@ -7,7 +7,8 @@
  *	and should not be bound onto or changed. It can be reused and is not tied
  *	to any specific piece of UI.
  *
- *	================================================================================ */
+ *	================================================================================
+ */
 
 
 .u-Hero {
@@ -49,7 +50,7 @@
 
 .u-Float {
 	&--left		{ float: left; }
-	&--right		{ float: right; }
+	&--right	{ float: right; }
 }
 
 
@@ -71,12 +72,12 @@
  *	DISPLAY
  */
 
-.u-Hidden			{ visibility: hidden; }
-.u-Visible			{ visibility: visible; }
+.u-Hidden		{ visibility: hidden; }
+.u-Visible		{ visibility: visible; }
 
-.u-Block			{ display: block; }
-.u-notDisplayed		{ display: none; }
-.u-Inline			{ display: inline; }
+.u-Block		{ display: block; }
+.u-notDisplayed	{ display: none; }
+.u-Inline		{ display: inline; }
 
 .u-Table {
 	display: table;
@@ -90,6 +91,14 @@
 	}
 }
 
+.u-Flex {
+	display: flex;
+
+	&--center { align-items: center }
+}
+
+.u-inlineFlex	{ display: inline-flex; }
+
 .u-notSelectable { user-select: none; }
 
 
@@ -98,13 +107,13 @@
  */
 
 .u-Width {
-	&--full			{ width: 100% !important; }
-	&--half			{ width: 50% !important; }
+	&--full		{ width: 100% !important; }
+	&--half		{ width: 50% !important; }
 }
 
 .u-Height {
-	&--full			{ height: 100% !important; }
-	&--half			{ height: 50% !important; }
+	&--full		{ height: 100% !important; }
+	&--half		{ height: 50% !important; }
 }
 
 
@@ -113,9 +122,9 @@
  */
 
 .u-Rotate {
-	&--90			{ transform: rotate(90deg); }
-	&--180			{ transform: rotate(180deg); }
-	&--270			{ transform: rotate(270deg); }
+	&--90		{ transform: rotate(90deg); }
+	&--180		{ transform: rotate(180deg); }
+	&--270		{ transform: rotate(270deg); }
 }
 
 
@@ -124,16 +133,16 @@
  *	OTHER
  */
 
-.u-Clickable		{ cursor: pointer; }
+.u-Clickable	{ cursor: pointer; }
 
-.u-Disabled			{ pointer-events: none; }
+.u-Disabled		{ pointer-events: none; }
 
 .u-Overflow {
-	&--hidden		{ overflow: hidden; }
-	&--scroll		{ overflow: scroll; }
+	&--hidden	{ overflow: hidden; }
+	&--scroll	{ overflow: scroll; }
 }
 
-.u-noTransition		{ transition: none !important; }
+.u-noTransition	{ transition: none !important; }
 
 .u-Reset {
 	&--styles {
