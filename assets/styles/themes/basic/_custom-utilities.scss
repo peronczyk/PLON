@@ -27,10 +27,10 @@
 
 .l-Pad {
 	&			{ padding: $gutter; }
-	&_top		{ padding-top: $gutter; }
-	&_right		{ padding-right: $gutter; }
-	&_bottom	{ padding-bottom: $gutter; }
-	&_left		{ padding-left: $gutter; }
+	&--top		{ padding-top: $gutter; }
+	&--right	{ padding-right: $gutter; }
+	&--bottom	{ padding-bottom: $gutter; }
+	&--left		{ padding-left: $gutter; }
 }
 
 
@@ -57,14 +57,14 @@
  */
 
 .u-Line {
-	&_left		{ border-left: 1px solid $color-line; }
-	&_right		{ border-right: 1px solid $color-line; }
-	&_top		{ border-top: 1px solid $color-line; }
-	&_bottom	{ border-bottom: 1px solid $color-line; }
+	&--left		{ border-left: 1px solid $color-line; }
+	&--right	{ border-right: 1px solid $color-line; }
+	&--top		{ border-top: 1px solid $color-line; }
+	&--bottom	{ border-bottom: 1px solid $color-line; }
 }
 
 .u-boxShadow {
-	&_1 { box-shadow: 0 1px 1px rgba(0,0,0,.15), 0 2px 30px rgba(0,0,0,.1); }
+	&--1 { box-shadow: 0 1px 1px rgba(0,0,0,.15), 0 2px 30px rgba(0,0,0,.1); }
 }
 
 
@@ -73,7 +73,7 @@
  */
 
 .u-Lines {
-	&_all {
+	&--all {
 		td, th {
 			padding-left: 10px;
 			padding-right: 10px;
@@ -81,7 +81,7 @@
 		}
 	}
 
-	&_horizontal {
+	&--horizontal {
 		th { border-bottom: 2px solid $color-line; }
 		td { border-bottom: 1px solid $color-line; }
 	}

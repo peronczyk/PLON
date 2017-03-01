@@ -1,0 +1,24 @@
+/*	----------------------------------------------------------------------------
+ *	COOKIES BAR
+ */
+
+.c-Cookies-bar {
+	visibility: hidden;
+	position: fixed;
+	z-index: 999;
+	bottom: 30px;
+	right: 30px;
+	padding: 20px;
+	width: 240px;
+	transform: scale(.7);
+	opacity: 0;
+	transition: all .3s;
+
+	&.is-Open {
+		visibility: visible;
+		transform: scale(1);
+		opacity: 1;
+	}
+
+	button { margin: 0; }
+}
