@@ -3,6 +3,7 @@
 .log
 .project
 bower_modules
+debug.log
 desktop.ini
 dist
 node_modules
