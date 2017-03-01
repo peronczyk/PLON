@@ -4,7 +4,8 @@
  *
  *	Responsible for adding a Theme to a view. It lets us know that UI Components’
  *	current cosmetic appearance may be due to the presence of a theme.
- *	================================================================================ */
+ *	================================================================================
+ */
 
 
 /*	--------------------------------------------------------------------------------
@@ -13,32 +14,32 @@
 
 .t-Dark {
 	background-color: $color-dark;
-	color: #c6c6c6;
+	color: $color-gray;
 
-	h1 { color: #fff; }
-	h2, h3, h4, h5, h6 { color: #a7a7a7; }
+	h1 { color: $color-white; }
+	h2, h3, h4, h5, h6 { color: $color-gray-medium; }
 
 	a {
-		color: #2bc1ff;
+		color: $color-light-blue;
 
-		&:hover { color: #82daff; }
+		&:hover { color: lighten($color-light-blue, 8%); }
 	}
 
-	label { color: #fff; }
+	label { color: $color-white; }
 
-	th, td { border-color: #6b6b6b; }
+	th, td { border-color: $color-dark-gray; }
 
 	input[type=text],
 	input[type=file],
 	input[type=password],
 	textarea,
 	select {
-		border-color: #6b6b6b;
-		color: #fff;
+		border-color: $color-dark-gray;
+		color: $color-white;
 
 		&:focus {
-			border-color: #fff;
-			background-color: #202020;
+			border-color: $color-white;
+			background-color: $color-dark;
 		}
 
 		&.is-error { border-color: $color-red; }
@@ -54,25 +55,26 @@
 
 .t-Orange-dark {
 	background-color: $color-orange-dark;
-	color: #fff;
+	color: $color-white;
 
 	a { color: $color-orange-light; }
 
 	button, .btn {
 		color: inherit;
-		border-color: #fff;
+		border-color: $color-white;
 
 		&:hover {
-			color: #000;
-			background-color: #fff;
+			color: $color-black;
+			background-color: $color-white;
 		}
 	}
 }
 
 
-.t-White		{ background-color: #fff; }
+.t-White		{ background-color: $color-white; }
 .t-Orange		{ background-color: $color-orange; }
 .t-Gray			{ background-color: $color-gray; }
+.t-Gray-medium	{ background-color: $color-gray-medium; }
 .t-Gray-dark	{ background-color: $color-gray-dark; }
 .t-Blue			{ background-color: $color-blue; }
 .t-Emerald		{ background-color: $color-emerald; }

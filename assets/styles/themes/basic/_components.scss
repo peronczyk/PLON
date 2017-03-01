@@ -5,7 +5,8 @@
  *	This is a concrete, implementation-specific piece of UI. All of the changes
  *	you make to its styles should be detectable in the context you’re currently
  *	looking at. Modifying these styles should be safe and have no side effects.
- *	================================================================================ */
+ *	================================================================================
+ */
 
 
 /*	----------------------------------------------------------------------------
@@ -37,7 +38,7 @@
 			margin: 16px 0 0 0;
 			font-size: 18px;
 			font-weight: normal;
-			color: #7b7b7b;
+			color: $color-gray-dark;
 		}
 	}
 
@@ -58,7 +59,7 @@
 				height: 100%;
 				font-size: 14px;
 				line-height: 30px;
-				color: #7b7b7b;
+				color: $color-gray-dark;
 				transition: all .2s ease-out;
 
 				&:hover { color: #000; }

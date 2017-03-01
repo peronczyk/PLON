@@ -5,7 +5,8 @@
  *	May be used in any number of unrelated contexts.
  *	Making modifications to these types of class could potentially have knock-on
  *	effects in a lot of other unrelated places. Tread carefully.
- *	================================================================================ */
+ *	================================================================================
+ */
 
 
 .o-Sample-text {
@@ -125,7 +126,7 @@
 			height: 44px;
 			background-color: transparent;
 			border: none;
-			color: $color-gray-dark;
+			color: $color-gray-medium;
 
 			&:hover { background-color: $color-gray; }
 
@@ -140,7 +141,7 @@
 					height: 0;
 					border-style: solid;
 					border-width: 5px 3.5px 0 3.5px;
-					border-color: $color-gray-dark transparent transparent transparent;
+					border-color: $color-gray-medium transparent transparent transparent;
 				}
 			}
 		}
