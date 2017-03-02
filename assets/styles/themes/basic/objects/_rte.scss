@@ -6,7 +6,7 @@
 	position: relative;
 	border: 1px solid $color-line;
 
-	&.is-Active { border-color: #00a8ff; }
+	&.is-Active { border-color: $color-blue; }
 
 	&__toolbar {
 		list-style-type: none;
@@ -52,10 +52,10 @@
 			top: 40px;
 			left: -1px;
 			min-width: 110px;
-			background-color: #fff;
+			background-color: $color-white;
 			border: 1px solid $color-line;
 			border-top: none;
-			box-shadow: 0 1px 5px rgba(0,0,0,.1);
+			box-shadow: 0 1px 5px rgba($color-black, .1);
 
 			button {
 				width: 100%;
