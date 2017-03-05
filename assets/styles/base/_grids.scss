@@ -7,10 +7,6 @@
  */
 
 
-/*	--------------------------------------------------------------------------------
- *	FLEX GRID
- */
-
 .flexGrid {
 
 	.Row {
@@ -24,18 +20,18 @@
 
 			// Vertical column alignments applicable to each column separately
 			&.Col {
-				&-top		{ align-self: flex-start; }
-				&-center	{ align-self: center; }
-				&-bottom	{ align-self: flex-end; }
+				&--top		{ align-self: flex-start; }
+				&--center	{ align-self: center; }
+				&--bottom	{ align-self: flex-end; }
 			}
 		}
 	}
 
 	// Vertical columns alignments applied to each column in grid
 	&.Grid {
-		&-top		{ .Row { align-items: flex-start; } }
-		&-center	{ .Row { align-items: center; } }
-		&-bottom	{ .Row { align-items: flex-end; } }
+		&--top		{ .Row { align-items: flex-start; } }
+		&--center	{ .Row { align-items: center; } }
+		&--bottom	{ .Row { align-items: flex-end; } }
 	}
 }
 
