@@ -7,42 +7,46 @@
 
 	<link rel="stylesheet" type="text/css" href="dist/styles/layout.css">
 	<link rel="stylesheet" type="text/css" href="dist/styles/theme-basic.css">
+
+	<style>
+		.l-Wrapper { max-width: 500px; }
+	</style>
 </head>
 
 <body>
 	<div class="l-Wrapper">
-		<div class="l-Inner">
-			<h1><strong>Streamline</strong> script examples</strong></h1>
-			<p><strong>Github</strong>: <a href="https://github.com/peronczyk/Streamline" target="_blank">github.com/peronczyk/Streamline</a></p>
+		<h1><strong>Streamline</strong> script examples</strong></h1>
+		<p><a href="https://github.com/peronczyk/Streamline">github.com/peronczyk/Streamline</a></p>
+		<hr>
+		<p>List of available jQuery plugins:</p>
 
-			<table class="u-Lines_horizontal">
-				<thead>
-					<tr>
-						<th>Script name</th>
-						<th class="u-Text_center">Readme</th>
-					</tr>
-				</thead>
-				<tbody>
-					<?php
-						$examples = scandir('examples/');
-						foreach($examples as $dir) {
-							if ($dir == '.' || $dir == '..') continue;
+		<table>
+			<thead>
+				<tr>
+					<th>Script name</th>
+					<th class="u-Text--center">Readme</th>
+				</tr>
+			</thead>
+			<tbody>
+				<?php
+					$examples = scandir('examples/');
+					foreach($examples as $dir) {
+						if ($dir == '.' || $dir == '..') continue;
 
-							echo('<tr><td>');
+						echo('<tr><td>');
 
-							if (file_exists('examples/' . $dir . '/index.html')) echo('<a href="examples/' . $dir . '">' . $dir . '</a>');
-							else echo($dir);
+						if (file_exists('examples/' . $dir . '/index.html')) echo('<a href="examples/' . $dir . '">' . $dir . '</a>');
+						else echo($dir);
 
-							echo('</td><td class="u-Text_center">');
+						echo('</td><td class="u-Text_center">');
 
-							if (file_exists('examples/' . $dir . '/README.md')) echo('yes');
+						if (file_exists('examples/' . $dir . '/README.md')) echo('yes');
 
-							echo('</td></tr>');
-						}
-					?>
-				</tbody>
-			</table>
-		</div>
+						echo('</td></tr>');
+					}
+				?>
+			</tbody>
+		</table>
 	</div>
 </body>
 
