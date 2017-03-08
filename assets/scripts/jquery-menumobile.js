@@ -5,23 +5,21 @@
  *
  *	Author			: Bartosz Perończyk
  *	Created			: 2016-05-11
- *	Modified		: 2016-07-19
+ *	Modified		: 2017-03-08
  *
  *	--------------------------------------------------------------------------------
  *	DESCRIPTION:
  *
- *	Adds mobile functionality to normal navigation menu
+ *	Adds mobile functionality to normal navigation menu by adding or removing
+ *	specified class names to <body> element and/or toggle and menu element.
+ *	Styling is in your hand.
  *
  *	--------------------------------------------------------------------------------
  *	INSTALATION:
  *
- *	$('#menu-container').mobileMenu(
- *		'toggleElem': '#menu-toggle'
+ *	$('#mobile-menu-toggle').mobileMenu({
+ *		'menuElem': '#mobile-menu'
  *	});
- *
- *	#menu-toggle	- link that open or close menu
- *	#menu-container	- element, that will be shown or hide after clicking
- *					  on #menu-toggle
  *
  *	================================================================================ */
 
@@ -78,13 +76,11 @@
 
 
 	/*	----------------------------------------------------------------------------
-	 *	MENU TOGGLE
+	 *	TOGGLE MENU STATE
 	 */
 
 	var toggleMenu = function(config) {
 		var $toggle = this;
-
-		console.log('BLA');
 
 		// CLOSE MENU
 
