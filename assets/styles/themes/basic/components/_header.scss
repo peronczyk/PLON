@@ -31,6 +31,71 @@
 		}
 	}
 
+	&__toggle {
+		display: inline-block;
+		position: relative;
+		margin: 10px;
+		width: 42px;
+		height: 42px;
+		transition: all .2s cubic-bezier(0.40, 0.14, 0.50, 0.78);
+
+		&:hover { border-color: #8f8f8f; }
+
+		hr {
+			position: absolute;
+			left: 11px;
+			width: 18px;
+			height: 2px;
+			border: 0;
+			background-color: #56b9fe;
+			transition: all .3s cubic-bezier(0.40, 0.14, 0.50, 0.78);
+
+			&:nth-child(1) { top: 12px; }
+			&:nth-child(2) { top: 19px; }
+			&:nth-child(3) { top: 26px; }
+		}
+
+		.is-menuMobile--open & {
+			hr {
+				&:nth-child(1) { top: 20px; transform: rotate(45deg); }
+				&:nth-child(2) { left: 30px; opacity: 0; }
+				&:nth-child(3) { top: 20px; transform: rotate(-45deg); }
+			}
+		}
+	}
+
+	&__nav {
+		transition: .3s;
+
+		ul {
+			list-style: none;
+		}
+
+		a {
+			display: block;
+			padding: 10px 30px;
+		}
+
+		.c-Header--mobile & {
+			visibility: hidden;
+			position: fixed;
+			top: 0;
+			right: 0;
+			padding-top: 30px;
+			height: 100%;
+			width: 300px;
+			opacity: 0;
+			transform: scale(.9) translateX(100px);
+			will-change: visibility, opacity, transform;
+		}
+
+		.is-menuMobile--open & {
+			visibility: visible;
+			opacity: 1;
+			transform: scale(1) translateX(0);
+		}
+	}
+
 	&__menu {
 		float: right;
 		height: 100%;
