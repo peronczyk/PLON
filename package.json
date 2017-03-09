@@ -1,7 +1,11 @@
 {
   "name": "streamline",
   "version": "1.0.0",
-  "description": "Simple CSS+JS framework based on jQuery and Gulp",
+  "description": "Simple SCSS+JS framework based on jQuery and Gulp",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/peronczyk/Streamline"
+  },
   "scripts": {
     "watch": "gulp watch",
     "serve": "gulp serve",
