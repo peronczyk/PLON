@@ -1,7 +1,7 @@
 
 /*	================================================================================
  *
- *	GRIDS
+ *	GRID SYSTEM BASED ON FLEX
  *
  *	================================================================================
  */
@@ -34,7 +34,8 @@
 
 
 /*	--------------------------------------------------------------------------------
- *	COLUMN SiZES FOR BOTH GRID SYSTEMS
+ *	COLUMN DEFINITIONS FOR GRID SYSTEMS
+ *	Example classname produced by mixin below: .Col-6@XL
  */
 
 @mixin columns($screen-size:'') {
