@@ -1,0 +1,17 @@
+.o-Sample-text {
+	font-size: 14px;
+	line-height: 20px;
+	position: relative;
+
+	&:after {
+		content: '';
+		position: absolute;
+		top: 0;
+		bottom: 40px;
+		left: 0;
+		right: 0;
+		z-index: +1;
+		background: linear-gradient(to bottom, rgba($color-white,1) 0%,rgba($color-white, 0) 100%);
+		filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#00ffffff',GradientType=0);
+	}
+}

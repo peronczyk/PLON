@@ -1,0 +1,80 @@
+
+/*	================================================================================
+ *	THEMES
+ *
+ *	Responsible for adding a Theme to a view. It lets us know that UI Components’
+ *	current cosmetic appearance may be due to the presence of a theme.
+ *	================================================================================
+ */
+
+
+/*	--------------------------------------------------------------------------------
+ *	Theme : DARK
+ */
+
+.t-Dark {
+	background-color: $color-dark;
+	color: $color-gray;
+
+	h1 { color: $color-white; }
+	h2, h3, h4, h5, h6 { color: $color-gray-medium; }
+
+	a {
+		color: $color-blue-light;
+
+		&:hover { color: lighten($color-blue-light, 8%); }
+	}
+
+	label { color: $color-white; }
+
+	th, td { border-color: $color-gray-dark; }
+
+	input[type=text],
+	input[type=file],
+	input[type=password],
+	textarea,
+	select {
+		border-color: $color-gray-dark;
+		color: $color-white;
+
+		&:focus {
+			border-color: $color-white;
+			background-color: $color-dark;
+		}
+
+		&.is-error { border-color: $color-red; }
+	}
+
+	hr { border-color: $color-line; }
+}
+
+
+/*	--------------------------------------------------------------------------------
+ *	Theme : Dark orange
+ */
+
+.t-Orange-dark {
+	background-color: $color-orange-dark;
+	color: $color-white;
+
+	a { color: $color-orange-light; }
+
+	button, .btn {
+		color: inherit;
+		border-color: $color-white;
+
+		&:hover {
+			color: $color-black;
+			background-color: $color-white;
+		}
+	}
+}
+
+
+.t-White		{ background-color: $color-white; }
+.t-Orange		{ background-color: $color-orange; }
+.t-Gray			{ background-color: $color-gray; }
+.t-Gray-medium	{ background-color: $color-gray-medium; }
+.t-Gray-dark	{ background-color: $color-gray-dark; }
+.t-Blue			{ background-color: $color-blue; }
+.t-Emerald		{ background-color: $color-emerald; }

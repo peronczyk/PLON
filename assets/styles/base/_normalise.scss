@@ -5,7 +5,9 @@
  *
  *	No classnames allowed in this file
  *
- *	================================================================================ */
+ *	================================================================================
+ */
+
 
 * {
 	-webkit-box-sizing: border-box;
@@ -13,6 +15,7 @@
 			box-sizing: border-box;
 	margin: 0;
 	padding: 0;
+	border: none;
 	font-size: 100%;
 	outline: none;
 }
@@ -29,6 +32,12 @@ body {
 	line-height: 1;
 }
 
+// Scale window content to viewport size if window is extra small
+@viewport { width: device-width }
+@media screen and (max-width: $breakpoint-h-xs) {
+	@viewport { width: $breakpoint-h-xs; }
+}
+
 *:before, *:after { box-sizing: inherit; }
 
 article, aside, details, figure, figcaption, header, footer, hgroup, menu, nav, section, summary, hr { display: block; }
@@ -40,7 +49,7 @@ audio, canvas, progress, video {
 
 img { border: none; }
 
-svg:not(:root) { overflow: hidden; } /* Correct overflow not hidden in IE 9/10/11. */
+svg:not(:root) { overflow: hidden; } // Correct overflow not hidden in IE 9/10/11.
 
 
 /*	--------------------------------------------------------------------------------
@@ -107,10 +116,11 @@ input[type=submit],
 input[type=file] {
 	-webkit-appearance: none;
 	-moz-appearance: none;
-	cursor: pointer;
 
 	&:hover { z-index: +1; }
 }
+
+label { user-select: none; }
 
 [disabled] { cursor: default; }
 

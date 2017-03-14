@@ -3,24 +3,13 @@
  *
  *	JQ: COOKIES INFO
  *
- *	Script author	: Bartosz Perończyk (peronczyk.com)
- *	Contributors	: Future Processing Design Team
+ *	Created			: 2016-02-23
+ *	Modified		: 2017-03-09
+ *	Author			: Bartosz Perończyk (peronczyk.com)
+ *	Repository		: https://github.com/peronczyk/Streamline
  *
- *	--------------------------------------------------------------------------------
- *	DESCRIPTION:
- *
- *	Shows information about cookies law used on website
- *	and button to close this information.
- *
- *	--------------------------------------------------------------------------------
- *	INSTALATION:
- *
- *	$('.some-element').cookiesInfo({'visibleClassName': 'is-Open'});
- *		some-element - DOM element, that contains cookies law info
- *			and <button> inside it
- *		visibleClassName - CSS class name, that makes 'some-element' visible
- *
- *	================================================================================ */
+ *	================================================================================
+ */
 
 
 (function($) {
@@ -32,11 +21,20 @@
 	 */
 
 	var defaults = {
-			debug				: 0,
-			visibleClassName	: 'is-Open', // Name of CSS class name, that makes cookies bar visible
-			acceptButton		: 'button', // DOM element inside cookie bar, that accepts cookie law
-			cookieName			: 'cookies_accept', // Cookie name stored in visitor's computer
-			cookieExpiresAfter	: 90, // Number of days after which cookies will be expired
+			// Debug mode
+			debug: 0,
+
+			// Name of CSS class name, that makes cookies bar visible
+			visibleClassName: 'is-Open',
+
+			// DOM element inside cookies info box, that accepts cookie law
+			acceptButton: 'button',
+
+			// Cookie name stored in visitor's computer
+			cookieName: 'cookies_accept',
+
+			// Number of days after which cookies will be expired
+			cookieExpiresAfter: 90,
 		},
 		cookies = document.cookie.split('; '),
 		cookieStr, date, expires;
@@ -47,7 +45,7 @@
 	 *	To remove cookie just set days to negative value
 	 */
 
-	function cookieSet(config) {
+	var cookieSet = function(config) {
 		date = new Date();
 		date.setTime(date.getTime() + (config.cookieExpiresAfter * 24 * 60 * 60 * 1000));
 		expires = date.toGMTString();
@@ -60,7 +58,7 @@
 	 *	GET COOKIE
 	 */
 
-	function cookieGet(config) {
+	var cookieGet = function(config) {
 		if (document.cookie != '') {
 			for(var i = 0; i < cookies.length; i++) {
 				cookieStr = cookies[i].split('=');
@@ -76,25 +74,18 @@
 	 */
 
 	$.fn.cookiesInfo = function(options) {
-
-		var
-			// Setup configuration
-			config = $.extend({}, defaults, options),
-
-			// Definitions
-			_self = $(this);
+		var config = $.extend({}, defaults, options); // Setup configuration
+		var _self = $(this); // Definitions
 
 		if (config.debug) console.info('Plugin loaded: cookiesInfo');
 
 		// Check if cookies bar exists in DOM
-
 		if (_self.length < 1) {
 			if (config.debug) console.error('cookiesInfo: Cookies bar not found.');
 			return _self;
 		}
 
 		// Check if cookies law was accepted
-
 		if (cookieGet(config) != 1) {
 			if (config.debug) console.info('cookiesInfo: Not accepted, open bar.');
 			_self.addClass(config.visibleClassName);
@@ -102,7 +93,6 @@
 		else if (config.debug) console.log('cookiesInfo: Cookies accepted. Bar not shown.');
 
 		// Accept cookies law
-
 		_self.on('click', config.acceptButton, function() {
 			if (cookieSet(config)) {
 				_self.removeClass(config.visibleClassName);
