@@ -3,35 +3,12 @@
  *
  *	JQ: REVEAL
  *
- *	Script author	: Bartosz Perończyk (peronczyk.com)
- *	Created			: 2016-03-23
- *	Modified		: 2016-10-11
+ *	Modified		: 2017-03-09
+ *	Author			: Bartosz Perończyk (peronczyk.com)
+ *	Repository		: https://github.com/peronczyk/Streamline
  *
- *	--------------------------------------------------------------------------------
- *	DESCRIPTION:
- *
- *	Script allows you to animate elements on website when you scroll to them.
- *	It adds class names specified with data-xxx tag to element when page
- *	loads and then removes it when page scrolls to it.
- *
- *	--------------------------------------------------------------------------------
- *	INSTALATION:
- *
- *	To animate element you need to do 3 things:
- *		1.	Add data-reveal="your-class-name" to HTML element you want to work with.
- *		2.	Setup script this way:
- *			$.reveal();
- *		3.	Add supporting CSS classes.
- *			.u-noTransition - disables animation when blocks are hidden after
- *				page was loaded. Class name can be changed in configuration.
- *			.your-class-name - class that hides your element.
- *
- *	--------------------------------------------------------------------------------
- *	TODO
- *
- *		- Add multiple classes to one element
- *
- *	================================================================================ */
+ *	================================================================================
+ */
 
 
 (function($) {
@@ -47,13 +24,13 @@
 			'debug': 0,
 
 			// data-xxx selector that defines class name to be added to the element,
-			// eg.: data-reveal="js-Reveal-left"
+			// eg.: data-reveal="js-Reveal--left"
 			'selector': 'data-reveal',
 
 			// Class name added to all elements that will be revealed
 			'defaultClassName': 'js-Reveal',
 
-			// Class name turning CSS animations off
+			// Class name thar turns CSS animations off
 			'noTransitionClassName': 'u-noTransition',
 
 			// How many pixels need to be scrolled after element will show
@@ -70,7 +47,7 @@
 	 *	MONITOR REVEAL ELEMENTS DISTANCE FROM TOP
 	 */
 
-	function checkElementsToReveal(config) {
+	var checkElementsToReveal = function(config) {
 
 		// If array of elements to be animated is not empty check their distance from top
 		if (elementsToReveal.length > 0) {
