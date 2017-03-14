@@ -41,6 +41,8 @@
 			// CSS class name added to <body> tag that indicates if modal is open.
 			// Use it to hide browser scroll bar and to add styling to modal.
 			openBodyClassName: 'c-Modal__is-Open',
+
+			eventsNamespace: '.plon.modal',
 		},
 		$document = $('document'),
 		$body = $('body');
@@ -79,31 +81,26 @@
 
 		if (config.debug) console.info('Plugin loaded: Modal');
 
-		if (!config.wrapper || !config.window || !config.content) {
-			console.error('Modal: Configuration error - one of the required options is missing: wrapper, window or content');
-			return false;
-		}
-
-		var $wrapper	= $(config.wrapper),
-			$inner		= $(config.window),
-			$content	= $(config.content);
+		var $wrapper	= $(config.wrapperElem),
+			$inner		= $(config.windowElem),
+			$content	= $(config.contentElem);
 
 		if ($wrapper.length < 1) {
 			console.error('Modal: Could not find modal wrapper element "' + config.wrapper + '"');
-			return;
+			return false;
 		}
 
 		if ($inner.length < 1) {
 			console.error('Modal: Could not find modal window element "' + config.window + '"');
-			return;
+			return false;
 		}
 
 		if ($content.length < 1) {
 			console.error('Modal: Could not find modal content element "' + config.content + '"');
-			return;
+			return false;
 		}
 
-		$.on('click.modal', '[' + config.dataSelector +']', function(event) {
+		$('[' + config.dataSelector + ']').on('click' + config.eventsNamespace, function(event) {
 			event.preventDefault();
 
 			var selectorMode = $(this).attr(config.dataSelector);
@@ -117,7 +114,7 @@
 				case 'title':
 					var title = $(this).attr('title');
 					if (title) {
-						$content.html($(this).attr('title'));
+						$content.html(title);
 						openModal(config, $wrapper);
 						if (config.debug) console.info('Modal: Content taken from clicked element title');
 					}
@@ -161,7 +158,7 @@
 		 *	REACT ON CLICKING OUTSIDE OPENED MODAL WINDOW
 		 */
 
-		$wrapper.on('click.modal', function(event) {
+		$wrapper.on('click' + config.eventsNamespace, function(event) {
 			if(!$(event.target).closest(config.window).length) {
 				if (config.debug) console.info('Modal: Clicked outside window');
 				closeModal(config, $wrapper);

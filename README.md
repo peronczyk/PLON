@@ -1,16 +1,15 @@
 PLON
-======
+====
 Simple SCSS+JS framework based on jQuery and Gulp
-
-## About
 
 ## Demo
 
 [peronczyk.com/plon](http://peronczyk.com/plon/)
 
+---
 ## Gulp installation
 
-Instal required npm packages
+Instal required npm packages:
 ```bash
 $ npm install
 ```
@@ -21,9 +20,12 @@ $ gulp
 ```
 or any other gulp command from "Gulp commands" section.
 
+---
 ## Scripts installation
 
+More informations will be added soon... hope so.
 
+---
 ## Gulp commands
 
 * `gulp clean-dist` - Removes all content from 'dist' directory.
@@ -35,7 +37,7 @@ or any other gulp command from "Gulp commands" section.
 * `gulp serve` - Enters watch mode and starts simple server that serves same browser experience on different browsers through generated URL.
 * `gulp default` - Runs tasks: clean-dist, js, css, images, fonts.
 
-
+---
 ## CSS CodeGuide
 
 ### Few assumptions:

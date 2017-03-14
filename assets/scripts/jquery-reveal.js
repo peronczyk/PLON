@@ -3,7 +3,7 @@
  *
  *	JQ: REVEAL
  *
- *	Modified		: 2017-03-09
+ *	Modified		: 2017-03-14
  *	Author			: Bartosz Perończyk (peronczyk.com)
  *	Repository		: https://github.com/peronczyk/plon
  *
@@ -35,6 +35,8 @@
 
 			// How many pixels need to be scrolled after element will show
 			'diff': 300,
+
+			'eventsNamespace': '.plon.reveal',
 		},
 		$document		= $(document),
 		$window			= $(window),
@@ -68,7 +70,7 @@
 		}
 
 		// Turn of scroll monitoring if all elements was animated
-		else $document.off('.sl.reveal');
+		else $document.off(config.eventsNamespace);
 	}
 
 
@@ -125,7 +127,7 @@
 		});
 
 		// Monitor document scrolling
-		$document.on('scroll.sl.reveal', function() {
+		$document.on('scroll' + config.eventsNamespace, function() {
 			if (frameRequested) return;
 			frameRequested = true;
 			requestAnimationFrame(function() {

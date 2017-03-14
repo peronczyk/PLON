@@ -42,6 +42,7 @@
 			'debug': 0,
 			'dataSelector': 'data-parallax',
 			'defaultSpeed': 0.7,
+			'eventsNamespace': '.plon.scrollparallax',
 		},
 		$document 		= $(document),
 		frameRequested	= false,
@@ -95,7 +96,7 @@
 		paralaxAdjust(config, layers);
 
 		// Monitor document scrolling
-		$(window).on('scroll.sl.scrollparallax', function() {
+		$(window).on('scroll' + config.eventsNamespace, function() {
 			if (frameRequested) return;
 			frameRequested = true;
 			requestAnimationFrame(function() {

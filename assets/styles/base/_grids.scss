@@ -8,6 +8,10 @@
 
 
 .Grid {
+	display: flex;
+	flex: 0 1 auto;
+	flex-direction: row;
+	flex-wrap: wrap;
 
 	// Vertical columns alignments applied to each column in grid
 	&.Grid {

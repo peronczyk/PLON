@@ -151,11 +151,10 @@
 	$.fn.menuMobile = function(options) {
 
 		// Setup configuration
-		var config = $.extend({}, defaults, options),
+		var config = $.extend({}, defaults, options);
 
 		// Definitions
-		var $toggle = this,
-			$menu; // Link to menu element
+		var $toggle = this;
 
 		if (config.debug) console.info('Plugin loaded: menuMobile');
 
