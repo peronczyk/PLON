@@ -1,4 +1,4 @@
-Streamline
+PLON
 ======
 Simple SCSS+JS framework based on jQuery and Gulp
 
@@ -6,7 +6,7 @@ Simple SCSS+JS framework based on jQuery and Gulp
 
 ## Demo
 
-[peronczyk.com/streamline](http://peronczyk.com/streamline/)
+[peronczyk.com/plon](http://peronczyk.com/plon/)
 
 ## Gulp installation
 

@@ -5,7 +5,7 @@
  *
  *	Modified		: 2017-03-09
  *	Author			: Bartosz Perończyk (peronczyk.com)
- *	Repository		: https://github.com/peronczyk/Streamline
+ *	Repository		: https://github.com/peronczyk/plon
  *
  *	================================================================================
  */

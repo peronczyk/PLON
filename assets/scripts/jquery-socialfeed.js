@@ -2,7 +2,7 @@
  *	================================================================================
  *
  *	JQ: SOCIAL FEED
- *	Sorce: https://github.com/peronczyk/Streamline
+ *	Sorce: https://github.com/peronczyk/plon
  *
  *	--------------------------------------------------------------------------------
  *	DESCRIPTION:

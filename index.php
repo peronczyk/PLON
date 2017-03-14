@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>Streamline script examples</title>
+	<title>PLON script examples</title>
 
 	<link rel="stylesheet" type="text/css" href="dist/styles/layout.css">
 	<link rel="stylesheet" type="text/css" href="dist/styles/theme-basic.css">
@@ -15,8 +15,8 @@
 
 <body>
 	<div class="l-Wrapper">
-		<h1><strong>Streamline</strong> script examples</strong></h1>
-		<p><a href="https://github.com/peronczyk/Streamline">github.com/peronczyk/Streamline</a></p>
+		<h1><strong>PLON</strong> script examples</strong></h1>
+		<p><a href="https://github.com/peronczyk/plon">github.com/peronczyk/PLON</a></p>
 		<hr>
 		<p>List of available jQuery plugins:</p>
 
@@ -38,7 +38,7 @@
 						if (file_exists('examples/' . $dir . '/index.html')) echo('<a href="examples/' . $dir . '">' . $dir . '</a>');
 						else echo($dir);
 
-						echo('</td><td class="u-Text_center">');
+						echo('</td><td class="u-Text--center">');
 
 						if (file_exists('examples/' . $dir . '/README.md')) echo('yes');
 
