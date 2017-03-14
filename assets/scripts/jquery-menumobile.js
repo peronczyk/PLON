@@ -3,25 +3,13 @@
  *
  *	JQ: MENU MOBILE
  *
- *	Author			: Bartosz Perończyk
  *	Created			: 2016-05-11
- *	Modified		: 2017-03-08
+ *	Modified		: 2017-03-09
+ *	Author			: Bartosz Perończyk (peronczyk.com)
+ *	Repository		: https://github.com/peronczyk/Streamline
  *
- *	--------------------------------------------------------------------------------
- *	DESCRIPTION:
- *
- *	Adds mobile functionality to normal navigation menu by adding or removing
- *	specified class names to <body> element and/or toggle and menu element.
- *	Styling is in your hand.
- *
- *	--------------------------------------------------------------------------------
- *	INSTALATION:
- *
- *	$('#mobile-menu-toggle').mobileMenu({
- *		'menuElem': '#mobile-menu'
- *	});
- *
- *	================================================================================ */
+ *	================================================================================
+ */
 
 
 (function($) {
