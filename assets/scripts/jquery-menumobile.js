@@ -3,7 +3,6 @@
  *
  *	JQ: MENU MOBILE
  *
- *	Created			: 2016-05-11
  *	Modified		: 2017-03-09
  *	Author			: Bartosz Perończyk (peronczyk.com)
  *	Repository		: https://github.com/peronczyk/Streamline
@@ -60,7 +59,6 @@
 		$document	= $(document),
 		$window		= $(window),
 		$body		= $('body');
-
 
 
 	/*	----------------------------------------------------------------------------
@@ -152,13 +150,12 @@
 
 	$.fn.menuMobile = function(options) {
 
-		var
-			// Setup configuration
-			config = $.extend({}, defaults, options),
+		// Setup configuration
+		var config = $.extend({}, defaults, options),
 
-			// Definitions
-			$toggle = this,
-			$menu; // Link to menu element;
+		// Definitions
+		var $toggle = this,
+			$menu; // Link to menu element
 
 		if (config.debug) console.info('Plugin loaded: menuMobile');
 
@@ -173,7 +170,7 @@
 			config.$menu = $(config.menuElem);
 			if (config.$menu.length) {
 				delete config.$menu;
-				if (config.debug) console.error('menuMobile: Selected menu object does not exits');
+				if (config.debug) console.warn('menuMobile: Selected menu object does not exits');
 			}
 		}
 
