@@ -23,6 +23,10 @@
  *	================================================================================
  */
 
+/*
+	global jQuery
+*/
+
 
 (function($) {
 
@@ -32,48 +36,62 @@
 	 *	PLUGIN DEFAULT CONFIGURATION
 	 */
 
-	var defaults = {
-			'debug': 0,
+	var defaults =
+		{
+			debug: 0,
 
 			// Service type (facebook or youtube)
-			'service': null,
+			service: null,
 
 			// Node ID of social page
 			// eg.: http://facebook.com/sourceid
-			'sourceId': null,
+			sourceId: null,
 
 			// Access token
 			// Generated per persona or per app. Check API documentation.
-			'accessToken': null,
+			accessToken: null,
 
 			// List of variables that describes each post
-			'fields': null,
+			fields: null,
 
 			// How many posts will be received
-			'postsPerPage': 4,
+			postsPerPage: 4,
 
 			// Class name or ID of entry
-			'entryElem': null,
+			entryElem: null,
 
 			// Data attribute name that connects element with text that should be
 			// inserted to it
-			'entryElementsSelector': 'data-entry-element',
+			entryElementsSelector: 'data-entry-element',
 
 			// Class name or ID of previous button
-			'btnPrevious': null,
+			btnPrevious: null,
 
 			// Class name or ID of next button
-			'btnNext': null,
+			btnNext: null,
 
 			// Predefined class names for script states
 			// They are added to selected wrapper element when script loads data
-			'loadingClassName'		: 'is-Loading',
-			'loadedClassName'		: 'is-Loaded',
-			'errorClassName'		: 'is-Error',
-			'hasNextClassName'		: 'has-Next',
-			'hasPrevClassName'		: 'has-Prev',
-			'disabledClassName'		: 'u-Disabled',
+			classNames: {
+				loading		: 'is-Loading',
+				loaded		: 'is-Loaded',
+				error		: 'is-Error',
+				hasNext		: 'has-Next',
+				hasPrev		: 'has-Prev',
+				disabled	: 'u-Disabled',
+			}
 		};
+
+
+	/*	----------------------------------------------------------------------------
+	 *	DATE FORMATTING HELPER
+	 *	Format: YYYY-MM-DD HH:MM
+	 */
+
+	var formatDate = function(sourceDate) {
+		var date = new Date(sourceDate);
+		return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + ' ' + date.getHours() + ':' + date.getMinutes();
+	}
 
 
 	/*	----------------------------------------------------------------------------
@@ -87,7 +105,8 @@
 	 *		with parsed values bind to them
 	 */
 
-	var services = {
+	var services =
+		{
 
 			// Facebook API
 
@@ -100,11 +119,11 @@
 				},
 
 				'urlPrev': function(config, receivedData) {
-					return (receivedData.paging.next) ? receivedData.paging.next : false;
+					return receivedData.paging.next ? receivedData.paging.next : false;
 				},
 
 				'urlNext': function(config, receivedData) {
-					return (receivedData.paging.previous) ? receivedData.paging.previous : false;
+					return receivedData.paging.previous ? receivedData.paging.previous : false;
 				},
 
 				'getDataValues': function(config, receivedData) {
@@ -117,8 +136,8 @@
 								'date'		: formatDate(feedList[i].created_time),
 								'image'		: feedList[i].full_picture,
 								'text'		: feedList[i].message,
-								'likes'		: (feedList[i].likes) ? feedList[i].likes.summary.total_count : 0,
-								'comments'	: (feedList[i].comments) ? feedList[i].comments.summary.total_count : 0
+								'likes'		: feedList[i].likes ? feedList[i].likes.summary.total_count : 0,
+								'comments'	: feedList[i].comments ? feedList[i].comments.summary.total_count : 0
 							};
 						}
 					}
@@ -175,21 +194,10 @@
 
 	var prepareEntryElements = function($entry, selector) {
 		var entryElements = [];
-		$entry.find('[' + selector + ']').each(function(i, elem) {
+		$entry.find('[' + selector + ']').each(function() {
 			entryElements[$(this).attr(selector)] = $(this);
 		});
 		return entryElements;
-	}
-
-
-	/*	----------------------------------------------------------------------------
-	 *	DATE FORMATTING HELPER
-	 *	Format: YYYY-MM-DD HH:MM
-	 */
-
-	var formatDate = function(date) {
-		var date = new Date(date);
-		return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + ' ' + date.getHours() + ':' + date.getMinutes();
 	}
 
 
@@ -200,11 +208,11 @@
 	var setEntryElementValue = function($elem, value) {
 		switch($elem.prop('nodeName')) {
 			case 'A':
-				(value) ? $elem.attr('href', value).show() : $elem.attr('href', '').hide();
+				value ? $elem.attr('href', value).show() : $elem.attr('href', '').hide();
 				break;
 
 			case 'IMG':
-				(value) ? $elem.attr('src', value).show() : $elem.attr('src', '').hide();
+				value ? $elem.attr('src', value).show() : $elem.attr('src', '').hide();
 				break;
 
 			default:
@@ -219,9 +227,9 @@
 
 	var getFeedEntries = function(config, $self, $entriesWrapper, $entry, entryElements, $navigation, url, pageNum) {
 
-		$self.addClass(config.loadingClassName);
+		$self.addClass(config.classNames.loading);
 
-		var preparedUrl = (url) ? url : services[config.service].url(config),
+		var preparedUrl = url ? url : services[config.service].url(config),
 			result = $.ajax({'url': preparedUrl});
 
 		result.then(
@@ -240,8 +248,8 @@
 				$entriesWrapper.empty();
 
 				$self
-					.removeClass(config.loadingClassName)
-					.addClass(config.loadedClassName);
+					.removeClass(config.classNames.loading)
+					.addClass(config.classNames.loaded);
 
 				// Prepare entries and insert them into entries wrapper
 				for (var index in dataValues) {
@@ -249,28 +257,28 @@
 						setEntryElementValue(entryElements[type], dataValues[index][type]);
 					}
 					$entriesWrapper.append($entry.clone());
-				};
+				}
 
 				var urlPrev = services[config.service].urlPrev(config, jqXHR.responseJSON),
 					urlNext = services[config.service].urlNext(config, jqXHR.responseJSON);
 
 				// Check if there are previous page of feed
 				if (urlPrev) {
-					$self.addClass(config.hasPrevClassName);
+					$self.addClass(config.classNames.hasPrev);
 					if ($navigation.prev) $navigation.prev.attr('href', urlPrev);
 				}
 				else {
-					$self.removeClass(config.hasPrevClassName);
+					$self.removeClass(config.classNames.hasPrev);
 					if ($navigation.prev) $navigation.prev.attr('href', '#0');
 				}
 
 				// Check if there are next page of feed
 				if (urlNext && pageNum > 0) {
-					$self.addClass(config.hasNextClassName);
+					$self.addClass(config.classNames.hasNext);
 					if ($navigation.next) $navigation.next.attr('href', urlNext);
 				}
 				else {
-					$self.removeClass(config.hasNextClassName);
+					$self.removeClass(config.classNames.hasNext);
 					if ($navigation.next) $navigation.next.attr('href', '#0');
 				}
 
@@ -279,8 +287,8 @@
 			// Error
 			function(jqXHR, textStatus, errorThrown) {
 				$self
-					.removeClass(config.loadingClassName)
-					.addClass(config.errorClassName);
+					.removeClass(config.classNames.loading)
+					.addClass(config.classNames.error);
 
 				if (config.debug) {
 					console.warn('socialFeed: Request to ' + preparedUrl + ' ended with error: ' + errorThrown);
@@ -297,12 +305,11 @@
 
 	$.fn.socialFeed = function(options) {
 
-		var
-			// Setup configuration
-			config = $.extend({}, defaults, options),
+		// Setup configuration
+		var config = $.extend({}, defaults, options);
 
-			// Definitions
-			$self = $(this),
+		// Definitions
+		var $self = $(this),
 			$navigation = {},
 			pageNum = 0; // Points to number of loaded feed entries.
 
@@ -326,9 +333,7 @@
 
 		getFeedEntries(config, $self, $entriesWrapper, $entry, entryElements, $navigation, null, pageNum);
 
-
 		// Button: PREVIOUS
-
 		if (config.btnPrevious) {
 			$navigation.prev = $self.find(config.btnPrevious);
 			if ($navigation.prev.length > 0) {
@@ -345,9 +350,7 @@
 			else if (config.debug) console.warn('socialFeed: Button previous was set but not found in document');
 		}
 
-
 		// Button: NEXT
-
 		if (config.btnNext) {
 			$navigation.next = $self.find(config.btnNext);
 			if ($navigation.next.length > 0) {
