@@ -41,24 +41,24 @@
 		var changeTab = function(newTabNumber) {
 			console.log(newTabNumber);
 			if (newTabNumber > $panelList.length - 1 || newTabNumber < 0) {
-				console.warn('Tabs: Tab with index "' + index + '" doesn\'t exist');
+				console.warn('Tabs: Tab with index "' + newTabNumber + '" doesn\'t exist');
 				return false;
 			}
 
 			console.log($panelList);
-		}
+		};
 
 		var nextTab = function() {
 			console.log('Next');
 			var newTabNumber = activeTabNumber === $tabList.length - 1 ? 0 : activeTabNumber + 1;
 			changeTab(newTabNumber);
-		}
+		};
 
 		var previousTab = function() {
 			console.log('Previous');
 			var newTabNumber = activeTabNumber <= 0 ? $tabList.length - 1 : activeTabNumber - 1;
 			changeTab(newTabNumber);
-		}
+		};
 
 		var bindKeyboardNav = function() {
 			$document.on('keydown' + config.eventsNamespace, function(event) {
@@ -76,11 +76,11 @@
 						break;
 				}
 			});
-		}
+		};
 
 		var unbindKeyboardNav = function() {
 			$document.off(config.eventsNamespace);
-		}
+		};
 
 		$tabContainer = $(elem);
 		if (!$tabContainer.length) {
@@ -141,6 +141,6 @@
 		$(this).each(function(index, elem) {
 			new Tabs(options, elem);
 		});
-	}
+	};
 
 })(jQuery);
