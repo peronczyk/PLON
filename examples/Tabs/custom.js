@@ -2,7 +2,7 @@ var debug = 1;
 
 $(function() {
 
-	$('.o-Tabs').tabs({
+	$('[role="tablist"]').tabs({
 		'debug': debug
 	});
 

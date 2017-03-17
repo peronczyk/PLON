@@ -1,115 +1,146 @@
-
-/*	================================================================================
- *
- *	JQ: TABS
- *
- *	Author			: Bartosz Perończyk
- *	Created			: 2015-08-26
- *	Modified		: 2016-07-19
- *
- *	--------------------------------------------------------------------------------
- *	DESCRIPTION:
- *
- *
- *	--------------------------------------------------------------------------------
- *	INSTALATION:
- *
- *	Example: $('.tabs').tabs();
- *
- *	--------------------------------------------------------------------------------
- *	TODO:
- *
- *	Navigation with keyboard and reacting on history back/forward
- *
- *	================================================================================ */
-
+/*
+	global jQuery
+*/
 
 (function($) {
 
 	'use strict';
 
-
 	/*	----------------------------------------------------------------------------
-	 *	PLUGIN DEFAULT CONFIGURATION
+	 *
 	 */
 
-	var defaults = {
-			'debug'			: 0,
-			'openClassName'	: 'is-Active'
-		},
-		tabName, containerID, $clickedLink, $container, $tabContent;
+	var Tabs = function(options, elem) {
+
+		// Default configuration
+		var defaults = {
+			debug: 0,
+			tabSelector		: '[role="tab"]',
+			panelSelector	: '[role="tabpanel"]',
+			eventsNamespace	: '.plon.tabs',
+			dataBinder		: 'data-tabs-panels',
+		};
+
+		// Setting instance configuration
+		var config = $.extend({}, defaults, options);
+
+		// Common variables definition
+		var panelsId, $panelContainer, $panelList,
+			$tabContainer, $tabList,
+			activeTabNumber;
+
+		// jQ shortcuts
+		var $document = $(document);
+
+		// Events monitored by script
+		var monitoredEvents =
+			' click' + config.eventsNamespace +
+			' focusin' + config.eventsNamespace +
+			' focusout' + config.eventsNamespace;
+
+		var changeTab = function(newTabNumber) {
+			console.log(newTabNumber);
+			if (newTabNumber > $panelList.length - 1 || newTabNumber < 0) {
+				console.warn('Tabs: Tab with index "' + index + '" doesn\'t exist');
+				return false;
+			}
+
+			console.log($panelList);
+		}
+
+		var nextTab = function() {
+			console.log('Next');
+			var newTabNumber = activeTabNumber === $tabList.length - 1 ? 0 : activeTabNumber + 1;
+			changeTab(newTabNumber);
+		}
+
+		var previousTab = function() {
+			console.log('Previous');
+			var newTabNumber = activeTabNumber <= 0 ? $tabList.length - 1 : activeTabNumber - 1;
+			changeTab(newTabNumber);
+		}
+
+		var bindKeyboardNav = function() {
+			$document.on('keydown' + config.eventsNamespace, function(event) {
+				switch (event.which) {
+					case '37': // Arrow left
+					case '38': // Arrow up
+						event.preventDefault();
+						nextTab();
+						break;
+
+					case '39': // Arrow right
+					case '40': // Arrow down
+						event.preventDefault();
+						previousTab();
+						break;
+				}
+			});
+		}
+
+		var unbindKeyboardNav = function() {
+			$document.off(config.eventsNamespace);
+		}
+
+		$tabContainer = $(elem);
+		if (!$tabContainer.length) {
+			console.warn('TabList container not found');
+			return false;
+		}
+
+		$tabList = $tabContainer.find(config.tabSelector);
+		if (!$tabList.length) {
+			console.warn('No tabs found');
+			return false;
+		}
+
+		panelsId = $tabContainer.attr(config.dataBinder);
+		if (typeof panelsId === 'undefined' || panelsId === false) {
+			var $elemWithBindingId = $tabContainer.closest('[' + config.dataBinder + ']');
+			if ($elemWithBindingId.length) {
+				panelsId = $elemWithBindingId.attr(config.dataBinder);
+			}
+			else {
+				console.warn('Tabs: Selected tabs list container or any parent element doesn\'t have data selector (' + config.dataBinder + ') or it\'s empty: "' + panelsId + '"');
+				return false;
+			}
+		}
+
+		$panelContainer = $('#' + panelsId);
+		if (!$panelContainer) {
+			if (config.debug) console.warn('Tabs: Specified panels container doesn\'t exist: ' + panelsId);
+			return false;
+		}
+
+		$panelList = $panelContainer.children(config.panelSelector);
+
+		$tabList.on(monitoredEvents, function(event) {
+			switch (event.type) {
+				case 'click':
+					changeTab($(this).index());
+					break;
+
+				case 'focusin':
+					bindKeyboardNav();
+					break;
+
+				case 'focusout':
+					unbindKeyboardNav();
+					break;
+			}
+		});
+	};
 
 
 	/*	----------------------------------------------------------------------------
-	 *	SET UP JQUERY PLUGIN
+	 *	JQ PLUGIN
 	 */
 
 	$.fn.tabs = function(options) {
-
-		var
-			// Setup configuration
-			config	= $.extend({}, defaults, options),
-
-			// Definitions
-			_self	= this;
-
-		if (config.debug) console.info('Plugin loaded: Tabs');
-
-		// React on tab clicking
-
-		_self.on('click.tabs', 'a', function() {
-
-			$clickedLink	= $(this),
-			tabName			= $clickedLink.attr('href').split('#')[1],
-			containerID		= $clickedLink.closest('[data-for]').data('for');
-
-			// Check if DOM elements are OK
-
-			if (!containerID || containerID.length <= 0) {
-				if (config.debug) console.error('Tabs: Clicked tabs group doesn\'t have data-for or it\'s empty: ' + containerID);
-				return false;
-			}
-
-			if (!tabName || tabName.length <= 0) {
-				if (config.debug) console.error('Tabs: Tab clicked but href was empty: ' + tabName);
-				return false;
-			}
-
-			$container = $('#' + containerID);
-
-			if ($container.length <= 0) {
-				if (config.debug) console.error('Tabs: Specified tabs container doesn\'t exist: ' + containerID);
-				return false;
-			}
-
-			else {
-				$tabContent = $('.' + tabName);
-
-				if ($tabContent.length > 0) {
-
-					// Change current tab class
-					$clickedLink
-						.parent('li').addClass(config.openClassName)
-						.siblings().removeClass(config.openClassName);
-
-					// Change content tab class
-					$tabContent.addClass(config.openClassName)
-						.siblings().removeClass(config.openClassName);
-
-					// Change size of tab container to allow it's animation
-					$container.css({'height': $tabContent.outerHeight()});
-
-					if (config.debug) console.info('Tabs: Tab content changed to: ' + tabName);
-				}
-
-				else if (config.debug) console.error('Tabs: Specified tab content doesn\'t exist: ' + tabName);
-			}
-
-			return false;
+		console.log('Plugin initiated: Tabs');
+		$(this).each(function(index, elem) {
+			new Tabs(options, elem);
 		});
-
-		return _self;
-
 	}
 
 })(jQuery);
