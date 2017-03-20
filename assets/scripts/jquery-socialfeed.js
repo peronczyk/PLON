@@ -23,10 +23,6 @@
  *	================================================================================
  */
 
-/*
-	global jQuery
-*/
-
 
 (function($) {
 
@@ -91,7 +87,7 @@
 	var formatDate = function(sourceDate) {
 		var date = new Date(sourceDate);
 		return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + ' ' + date.getHours() + ':' + date.getMinutes();
-	}
+	};
 
 
 	/*	----------------------------------------------------------------------------
@@ -110,34 +106,34 @@
 
 			// Facebook API
 
-			'facebook': {
-				'defaultFields': 'message,created_time,story,full_picture,picture,likes.summary(true).limit(0),comments.summary(true).limit(0),permalink_url,link',
-				'dataVariable': 'data',
+			facebook: {
+				defaultFields: 'message,created_time,story,full_picture,picture,likes.summary(true).limit(0),comments.summary(true).limit(0),permalink_url,link',
+				dataVariable: 'data',
 
-				'url': function(config) {
+				url: function(config) {
 					return 'https://graph.facebook.com/v2.8/' + config.sourceId + '/posts?fields=' + this.defaultFields + '&limit=' + config.postsPerPage + '&access_token=' + config.accessToken;
 				},
 
-				'urlPrev': function(config, receivedData) {
+				urlPrev: function(config, receivedData) {
 					return receivedData.paging.next ? receivedData.paging.next : false;
 				},
 
-				'urlNext': function(config, receivedData) {
+				urlNext: function(config, receivedData) {
 					return receivedData.paging.previous ? receivedData.paging.previous : false;
 				},
 
-				'getDataValues': function(config, receivedData) {
+				getDataValues: function(config, receivedData) {
 					var values = [];
 					if (receivedData.data) {
 						var feedList = receivedData.data;
 						for (var i in feedList) {
 							values[i] = {
-								'link'		: feedList[i].permalink_url,
-								'date'		: formatDate(feedList[i].created_time),
-								'image'		: feedList[i].full_picture,
-								'text'		: feedList[i].message,
-								'likes'		: feedList[i].likes ? feedList[i].likes.summary.total_count : 0,
-								'comments'	: feedList[i].comments ? feedList[i].comments.summary.total_count : 0
+								link		: feedList[i].permalink_url,
+								date		: formatDate(feedList[i].created_time),
+								image		: feedList[i].full_picture,
+								text		: feedList[i].message,
+								likes		: feedList[i].likes ? feedList[i].likes.summary.total_count : 0,
+								comments	: feedList[i].comments ? feedList[i].comments.summary.total_count : 0
 							};
 						}
 					}
@@ -148,36 +144,36 @@
 
 			// YouTube API
 
-			'youtube': {
-				'defaultFields': 'snippet',
+			youtube: {
+				defaultFields: 'snippet',
 
-				'url': function(config) {
+				url: function(config) {
 					return 'https://www.googleapis.com/youtube/v3/search?channelId=' + config.sourceId + '&order=date&part=' + this.defaultFields + '&maxResults=' + config.postsPerPage + '&key=' + config.accessToken;
 				},
 
-				'urlPrev': function(config, receivedData) {
+				urlPrev: function(config, receivedData) {
 					if (receivedData.nextPageToken) {
 						return this.url(config) + '&pageToken=' + receivedData.nextPageToken;
 					}
 					else return false;
 				},
 
-				'urlNext': function(config, receivedData) {
+				urlNext: function(config, receivedData) {
 					if (receivedData.prevPageToken) {
 						return this.url(config) + '&pageToken=' + receivedData.prevPageToken;
 					}
 					else return false;
 				},
 
-				'getDataValues': function(config, receivedData) {
+				getDataValues: function(config, receivedData) {
 					var values = [];
 					if (receivedData.items) {
 						var feedList = receivedData.items;
 						for (var i in feedList) {
 							values[i] = {
-								'link'		: 'https://youtu.be/' + feedList[i].id.videoId,
-								'image'		: feedList[i].snippet.thumbnails.high.url,
-								'text'		: feedList[i].snippet.title,
+								link	: 'https://youtu.be/' + feedList[i].id.videoId,
+								image	: feedList[i].snippet.thumbnails.high.url,
+								text	: feedList[i].snippet.title,
 							};
 						}
 					}
@@ -198,7 +194,7 @@
 			entryElements[$(this).attr(selector)] = $(this);
 		});
 		return entryElements;
-	}
+	};
 
 
 	/*	----------------------------------------------------------------------------
@@ -206,7 +202,7 @@
 	 */
 
 	var setEntryElementValue = function($elem, value) {
-		switch($elem.prop('nodeName')) {
+		switch ($elem.prop('nodeName')) {
 			case 'A':
 				value ? $elem.attr('href', value).show() : $elem.attr('href', '').hide();
 				break;
@@ -218,7 +214,7 @@
 			default:
 				$elem.html(value);
 		}
-	}
+	};
 
 
 	/*	----------------------------------------------------------------------------
@@ -230,7 +226,7 @@
 		$self.addClass(config.classNames.loading);
 
 		var preparedUrl = url ? url : services[config.service].url(config),
-			result = $.ajax({'url': preparedUrl});
+			result = $.ajax({url: preparedUrl});
 
 		result.then(
 
@@ -296,7 +292,7 @@
 				}
 			}
 		);
-	}
+	};
 
 
 	/*	----------------------------------------------------------------------------
@@ -368,6 +364,6 @@
 		}
 
 		return $self;
-	}
+	};
 
 })(jQuery);
