@@ -168,7 +168,7 @@
 		// Check if menu element was defined and if it exists in DOM
 		if (config.menuElem) {
 			config.$menu = $(config.menuElem);
-			if (config.$menu.length) {
+			if (!config.$menu.length) {
 				delete config.$menu;
 				if (config.debug) console.warn('menuMobile: Selected menu object does not exits');
 			}
@@ -181,6 +181,7 @@
 		});
 
 		return that;
+
 	};
 
 })(jQuery);
