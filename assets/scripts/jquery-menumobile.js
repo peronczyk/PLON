@@ -23,37 +23,37 @@
 	var defaults = {
 
 			// Debug mode
-			'debug' : 0,
+			debug : 0,
 
 			// Class name or ID of DOM element that contains menu.
 			// Define this only if you want to change class name of this element
 			// when menu state changes.
-			'menuElem': null,
+			menuElem: null,
 
 			// CSS class added to toggle and menu element.
 			// If You don't want to add separate classes to menu and toggle
 			// leave it 'null'
-			'openClassName': null,
+			openClassName: null,
 
 			// Data atribute name added to menu toggle that indicates
 			// whether menu is open or closed
-			'openDataName': 'menumobile-open',
+			openDataName: 'menumobile-open',
 
 			// CSS class added to <body> element when menu is open.
 			// Set it to 'null' if you want to disable adding class to <body>.
 			// Used also for disabling scroll.
-			'openBodyClassName': 'is-menuMobile--open',
+			openBodyClassName: 'is-menuMobile--open',
 
 			// Namespace for events fired with script
-			'eventsNamespace': 'menumobile',
+			eventsNamespace: 'menumobile',
 
 			// Should script toggle mobile menu when user clicks outside selected
 			// menu element
-			'closeByClickingOutside': true,
+			closeByClickingOutside: true,
 
 			// Should script close mobile menu if user uses "backspace" key
 			// or triest to go back in browser history (user back arrow in browser)
-			'closeByClickingBack': true,
+			closeByClickingBack: true,
 		},
 
 		// Some shortcuts
@@ -168,7 +168,7 @@
 		// Check if menu element was defined and if it exists in DOM
 		if (config.menuElem) {
 			config.$menu = $(config.menuElem);
-			if (config.$menu.length) {
+			if (!config.$menu.length) {
 				delete config.$menu;
 				if (config.debug) console.warn('menuMobile: Selected menu object does not exits');
 			}
