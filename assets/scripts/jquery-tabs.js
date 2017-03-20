@@ -19,6 +19,7 @@
 			panelSelector	: '[role="tabpanel"]',
 			eventsNamespace	: '.plon.tabs',
 			dataBinder		: 'data-tabs-panels',
+			classNames		: {active: 'is-Active'}
 		};
 
 		// Setting instance configuration
@@ -41,9 +42,13 @@
 		var changeTab = function(newTabNumber) {
 			console.log(newTabNumber);
 			if (newTabNumber > $panelList.length - 1 || newTabNumber < 0) {
-				console.warn('Tabs: Tab with index "' + newTabNumber + '" doesn\'t exist');
+				console.warn('Tabs: Tabs panel with index "' + newTabNumber + '" doesn\'t exist');
 				return false;
 			}
+
+			var $newActivePanel = $panelList.eq(newTabNumber);
+			$panelList.removeClass(config.classNames.active);
+			$newActivePanel.addClass(config.classNames.active);
 
 			console.log($panelList);
 		};
