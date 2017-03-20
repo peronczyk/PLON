@@ -21,6 +21,7 @@
 	 */
 
 	var defaults = {
+
 			// Debug mode
 			'debug' : 0,
 
@@ -66,19 +67,19 @@
 	 */
 
 	var toggleMenu = function(config) {
-		var $toggle = this;
+		var that = this;
 
 		// CLOSE MENU
 
-		if ($toggle.data(config.openDataName) == true) {
+		if (that.data(config.openDataName) === true) {
 
 			// Set data information about changed menu state
-			$toggle.data(config.openDataName, false);
+			that.data(config.openDataName, false);
 
 			if (config.debug) console.log('menuMobile: Close');
 
 			// Remove active classes from toggle and menu elemens
-			if (config.openClassName) $toggle.add($menuToggle).removeClass(config.openClassName);
+			if (config.openClassName) that.add(that).removeClass(config.openClassName);
 
 			// Remove specific class from body element
 			if (config.openBodyClassName) $body.removeClass(config.openBodyClassName);
@@ -93,13 +94,13 @@
 		else {
 
 			// Set data information about changed menu state
-			$toggle.data(config.openDataName, true);
+			that.data(config.openDataName, true);
 
 			if (config.debug) console.log('menuMobile: Open');
 
 			// Add active classes to toggle and menu elemens
 			if (config.openClassName) {
-				$toggle.addClass(config.openClassName);
+				that.addClass(config.openClassName);
 				if (config.$menu) config.$menu.addClass(config.openClassName);
 			}
 
@@ -110,16 +111,16 @@
 			$document.on('click.' + config.eventsNamespace, function(event) {
 
 				// Close menu if clicked element is a menu link
-				if ($(event.target).is($toggle.find('a'))) {
+				if ($(event.target).is(that.find('a'))) {
 					if (config.debug) console.log('menuMobile: Menu link clicked');
-					toggleMenu.call($toggle, config);
+					toggleMenu.call(that, config);
 				}
 
 				// Close menu if clicked outside menu object
-				else if (config.closeByClickingOutside && !$(event.target).closest($toggle).length) {
+				else if (config.closeByClickingOutside && !$(event.target).closest(that).length) {
 					event.preventDefault();
 					if (config.debug) console.log('menuMobile: Clicked outside opened menu');
-					toggleMenu.call($toggle, config);
+					toggleMenu.call(that, config);
 				}
 			});
 
@@ -127,17 +128,17 @@
 			if (config.closeByClickingBack) {
 				window.history.pushState({type: 'menumobile'}, null, null); // Set history state
 
-				$window.on('popstate.' + config.eventsNamespace, function(event) {
+				$window.on('popstate.' + config.eventsNamespace, function() {
 					if (config.debug) console.log('menuMobile: History change event triggered while menu was open');
-					toggleMenu.call($toggle, config);
+					toggleMenu.call(that, config);
 				});
 			}
 
 			// Handle escape key to close opened navigation menu
 			$document.on('keyup.' + config.eventsNamespace, function(event) {
-				if (event.which == 27) {
+				if (event.which === 27) {
 					if (config.debug) console.log('menuMobile: Escape key pressed');
-					toggleMenu.call($toggle, config);
+					toggleMenu.call(that, config);
 				}
 			});
 		}
@@ -151,18 +152,17 @@
 	$.fn.menuMobile = function(options) {
 
 		// Setup configuration
-		var config = $.extend({}, defaults, options),
+		var config = $.extend({}, defaults, options);
 
 		// Definitions
-		var $toggle = this,
-			$menu; // Link to menu element
+		var that = this;
 
 		if (config.debug) console.info('Plugin loaded: menuMobile');
 
 		// Check if toggle element exits in document
-		if ($toggle.length < 1) {
+		if (that.length < 1) {
 			if (config.debug) console.error('menuMobile: Selected toggle element does not exists');
-			return $toggle;
+			return that;
 		}
 
 		// Check if menu element was defined and if it exists in DOM
@@ -175,12 +175,12 @@
 		}
 
 		// Handle toggle element click
-		$toggle.on('click.' + config.eventsNamespace, function(event) {
+		that.on('click.' + config.eventsNamespace, function(event) {
 			event.preventDefault();
-			toggleMenu.call($toggle, config);
+			toggleMenu.call(that, config);
 		});
 
-		return $toggle;
+		return that;
 	}
 
 })(jQuery);
