@@ -2,8 +2,10 @@ var debug = 1;
 
 $(function() {
 
+	'use strict';
+
 	$.modal({
-		'debug': debug
+		debug: debug
 	});
 
 
