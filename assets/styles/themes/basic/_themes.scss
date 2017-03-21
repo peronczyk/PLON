@@ -137,4 +137,18 @@
 	background-color: $color-emerald;
 
 	h1 { color: $color-white; }
+
+
+/*	--------------------------------------------------------------------------------
+ *	Theme : Tables
+ */
+
+table {
+	&.t-Hoverable {
+		tr:hover {
+			td {
+				background-color: $color-gray;
+			}
+		}
+	}
 }
