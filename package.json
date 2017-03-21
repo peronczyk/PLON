@@ -21,6 +21,7 @@
     "gulp-sourcemaps": "^1.6.0",
     "gulp-uglify": "^1.5.3",
     "gulp-util": "^3.0.7",
-    "run-sequence": "^1.2.1"
+    "run-sequence": "^1.2.1",
+    "jquery": "^3.2.1"
   }
 }
