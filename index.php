@@ -40,7 +40,9 @@
 
 						echo('</td><td class="u-Text--center">');
 
-						if (file_exists('examples/' . $dir . '/README.md')) echo('yes');
+						$script_local_address = 'docs/Scripts/' . $dir . '.md';
+
+						if (file_exists($script_local_address)) echo('<a href="https://github.com/peronczyk/PLON/tree/master/' . $script_local_address . '" target="_blank">view</a>');
 
 						echo('</td></tr>');
 					}
