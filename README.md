@@ -1,115 +1,39 @@
-PLON
-====
-Simple SCSS+JS framework based on jQuery and Gulp
+# PLON
+Simple SCSS & JS framework based on jQuery and Gulp.
 
+---
+## Why PLON?
+1. This framework was created for front-end developers who **don't want any base visual styling**, for people who likes to **start from a blank page** and have full controll over the effect of their work.
+2. SCSS structure and class naming encourages developers to use objective CSS (OOCSS).
+3. jQuery plugins are very easy to install and to debug. Scr
+3. Provides each plugin as a separate file - this encourages not to use unnecessary code.
+
+---
 ## Demo
-
-[peronczyk.com/plon](http://peronczyk.com/plon/)
-
----
-## Gulp installation
-
-Instal required npm packages:
-```bash
-$ npm install
-```
-
-Than you can generate dist files by entering:
-```bash
-$ gulp
-```
-or any other gulp command from "Gulp commands" section.
+[**peronczyk.com/plon**](http://peronczyk.com/plon/)
 
 ---
-## Scripts installation
+## Table of Contents
 
-More informations will be added soon... hope so.
-
----
-## Gulp commands
-
-* `gulp clean-dist` - Removes all content from 'dist' directory.
-* `gulp css` - Compiles all SASS files from 'assets' and moves results to 'dist'.
-* `gulp js` - Uglifies and concatenates all JS files from 'assets' and moves results to 'dist'.
-* `gulp images` - Copies all images from 'assets' to 'dist'.
-* `gulp fonts` - Copies all fonts from 'assets' to 'dist'.
-* `gulp watch` - Enters watch mode. Monitors changes in JS, CSS, Images and Fonts assets.
-* `gulp serve` - Enters watch mode and starts simple server that serves same browser experience on different browsers through generated URL.
-* `gulp default` - Runs tasks: clean-dist, js, css, images, fonts.
-
----
-## CSS CodeGuide
-
-### Few assumptions:
-* Część nazwy klasy pisana z dużej litery oznacza nazwę pliku w którym się ona znajduje (w przypadku, gdy jest to komponent lub obiekt). Ułatwia to wyszukiwanie tej klasy w strukturze SCSS. Inspiracja do używania dużych liter w nazwach klas wzięła sie z Office Fabric. Tam używają tego trochę inaczej, ale koncept spodobał mi się. Mimo że na początku kod wyglądał dość dziwnie to potem jednak ułatwiało mi to pracę, ponieważ nazwa modułu przez użycie dużej litery wydawała się ważniejsza niż nazwa taga html: `<div class="c-Component">Lorem ipsum</div>`
-* Nazwa komponentu lub obiektu oddzielana jest od jego elementów podwójnym podkreśleniem - podobnie jak w BEM.
-* Modyfikatory lub wartości klas funkcyjnych oddzielane są od ich typów podwójnym myślnikiem ("`--`") - podobnie jak w BEM.
-* Nazwa klasy nie powinna odzwierciedlać struktury DOM. Nie ważne jak głęboko znajduje się element obiektu zawsze jego nazwa oddzielona jest "`__`" od nazwy obiektu.
-* Jeśli zauważamy że nazwa elementu wewnątrz obiektu/komponentu musi w jakiś sposób być "zagłębiona" oznacza to że prawdopodobnie obiekt/komponent jest zbyt duży i należy podzielić go na mniejsze obiekty/komponenty lub wydzielić w jego wnętrzu nowy obiekt. Można też spróbować utworzyć dla takiego elementu klasę funkcyjną ale tylko pod warunkiem że przewidujemy ponowne jej użycie gdziekolwiek indziej.
-
-### Modular classes:
-Dotyczą stylowania bloków strony. Np.: tego jak ma wyglądać artykuł, wykres, menu.
-
-1. **Components** - elementy strony, występujące tylko raz - górne menu (header), stopka (footer), banner hero, modal, etc. Widząc taką klasę jesteśmy zawsze pewni że zmieniając jakieś jej parametry nie zepsujemy czegoś w innym miejscu.
-
-```SCSS
-.c-Modal {
-  // Modifiers
-  &--big {...}
-
-  // Elements
-  &__window {...}
-  &__content {...}
-  &__close {...}
-}
-```
-2. **Objects** - elementy strony powtarzające się - taby, artykuły, nawigacje. Należy zachować większą ostrożność edytując te style ponieważ możemy być prawie pewni że zmiana czegoś może mieć wpływ na wiele miejsc na stronie.
-```SCSS
-.o-Something {
-  &__child {...}
-}
-```
-
-### Functional classes:
-Dotyczą drobnych czynności lub stylowania bardziej generycznego. W tych klasach powinniśmy bardzo uważać na jakiekolwiek zmiany, ponieważ potencjalnie mogą one popsuć bardzo wiele miejsc. Należy też zwracać uwagę aby jedna klasa funkcyjna wykonywała możliwie jak najmniej czynności.
-
-1. **Layout** - klasy dotyczące aspektu układu elementów a nie nadające wyglądu (kolor, tło, obramowanie). Np.: gridy, ustawianie elementu jako blok (display: block), wyrównywanie do prawej lub lewej.
-```SCSS
-.l-Wrap {...}
-```
-
-2. **Utilities** - inne klasy nadające elementowi DOM jakiś parametr, np.: wyrównujące tekst (`u-Text--right`).
-```SCSS
-.u-Text {
-  &--left { text-align: left; }
-  &--right { text-align: right; }
-}
-
-.u-Msg {
-  &--success { color: green; }
-  &--error { color: red; }
-}
-```
-
-
-3. **Themes** - klasy nadające elementowi uniwersalny styl. Np.: wszystkie bloki (komponenty o obiekty) mają białe tło. Theme w tym momencie mógłby zmienić tło danej sekcji na ciemne przy okazji zmieniając style elementów potomnych tak, aby pasowały do tego stylu, np.: zmiana koloru tekstu z ciemnego na jasny. Zmiany wewnątrz theme'ów dotyczą tylko elementów generycznych a nie klas. Theme nie powinien zatem zmieniać styli nadanych przez inne klasy, np.: .t-Dark .l-Wrap {...}.
-```SCSS
-.t-Dark {
-  background-color: $color-black;
-
-  h1 { color: $color-white; }
-  p { color: $color-gray; }
-  a { color: $color-blue; }
-}
-```
-
-4. **States** - klasy nadające stan danego bloku - np.: to że dana zakładka jest aktywna lub dany link prowadzi do miejsca, w którm się znajdujemy. Rozpoczynają się od "is-". klasy te nadawane moga być zarówno w JS jak i bezpośrednio w HTML. Nazwa stanu może dotyczyć konkretnego elementu jak być nadawana wysoko zlokalizowanemu rodzicowi aby móc wpływać na większą część dokumentu.
-```SCSS
-.o-Something {
-  display: none;
-
-  .is-Modal--open & {
-    display: block;
-  }
-}
-```
+1. [**How to start project with PLON?**](/docs/README.md)
+2. [Scripts](/docs/scripts/README.md) (installation and debuging)
+    * [cookiesInfo](/docs/Scripts/cookiesInfo.md)
+    * [gallerySlider](/docs/Scripts/gallerySlider.md)
+    * [isScrolled](/docs/Scripts/isScrolled.md)
+    * [menuMobile](/docs/Scripts/menuMobile.md)
+    * [modal](/docs/Scripts/modal.md)
+    * [mutationObserver](/docs/Scripts/mutationObserver.md)
+    * [reveal](/docs/Scripts/reveal.md)
+    * [richTextEditor](/docs/Scripts/richTextEditor.md)
+    * [scrollParallax](/docs/Scripts/scrollParallax.md)
+    * [scrollSections](/docs/Scripts/scrollSections.md)
+    * [scrollTo](/docs/Scripts/scrollTo.md)
+    * [socialFeed](/docs/Scripts/socialFeed.md)
+    * [stickyBlocks](/docs/Scripts/stickyBlocks.md)
+    * [tabs](/docs/Scripts/tabs.md)
+    * [tiltIt](/docs/Scripts/tiltIt.md)
+    * [toolTips](/docs/Scripts/toolTips.md)
+    * [videoAutoPause](/docs/Scripts/videoAutoPause.md)
+3. [Gulp](/docs/gulp.md)
+4. Code Guides
+    * [SCSS/CSS](/docs/CodeGuides/scss.md)
