@@ -10,28 +10,33 @@
  *	================================================================================
  */
 
-/*
-	global jQuery
-*/
-
 
 (function($) {
 
 	'use strict';
 
+
 	/*	----------------------------------------------------------------------------
-	 *	PLUGIN DEFAULT CONFIGURATION
+	 *	GLOBAL CONSTRUCTOR FOR COMPONENT
 	 */
 
-	var defaults = {
-			debug: 0,
+	window.RichTextEditor = function(elem, options) {
+
+		var that = this;
+
+		// Default configuration
+		var defaults = {
+			debug: false,
 			classNames: {
 				wrapper	: 'o-Rte',
 				toolbar	: 'o-Rte__toolbar',
 				editor	: 'o-Rte__editor',
+				source	: 'o-Rte__source',
+				sublist	: 'o-Rte__sublist',
 				hidden	: 'u-Hidden',
-				active	: 'is-Active',
+				active	: 'is-Active'
 			},
+			toolbarElements: [['h1', 'h2', 'code'], 'bold', 'italic', 'underline', 'ul', 'ol', 'link', 'undo', 'redo', 'clearFormatting', 'source'],
 			lang: {
 				styles: 'Styles',
 				h1: 'Header level 1',
@@ -40,61 +45,245 @@
 				bold: 'Bold text',
 				italic: 'Italic text',
 				underline: 'Underlined text',
-				unorderedList: 'Unordered list',
-				orderedList: 'Ordered list',
+				ul: 'Unordered list',
+				ol: 'Ordered list',
 				link: 'Link to online resource',
 				undo: 'Undo last operation',
 				redo: 'Redo last operation',
 				clearFormatting: 'Clear formatting',
-				htmlSource: 'Show HTML source code',
+				source: 'Show HTML source code',
 			}
-		},
-		key, subKey;
+		};
+
+		// Setting up configuration
+		var config = $.extend({}, defaults, options);
+
+		// Variables available for constructor
+		this.textarea;
+
+		// Common variables definition
+		var $elem, $component, $input, $toolbar, $editor, $source, $link;
+
+		// Available toolbar elements and operations binded to them
+		var operations = {
+
+			bold: {
+				icon: 'Bold',
+				exec: function() {
+					document.execCommand('bold');
+				}
+			},
+
+			clearFormatting: {
+				icon: 'Clear-formatting',
+				exec: function() { /* @TODO */ }
+			},
+
+			code: {
+				icon: 'pre',
+				exec: function() {
+					document.execCommand('formatBlock', false, 'pre');
+				}
+			},
+
+			h1: {
+				icon: 'Header-1',
+				exec: function() {
+					document.execCommand('formatBlock', false, 'h1');
+				}
+			},
+
+			italic: {
+				icon: 'Italic',
+				exec: function() {
+					document.execCommand('italic');
+				}
+			},
+
+			link: {
+				icon: 'Link',
+				exec: function() {
+					$link.toggleClass(config.classNames.active);
+				}
+			},
+
+			ol: {
+				icon: 'Ordered-list',
+				exec: function() {
+					document.execCommand('insertOrderedList');
+				}
+			},
+
+			redo: {
+				icon: 'Redo',
+				exec: function() {
+					document.execCommand('redo');
+				}
+			},
+
+			source: {
+				icon: 'Html',
+				exec: function($button) {
+
+					// Save changes
+					if ($button.hasClass(config.classNames.active)) {
+						$input.val($source.val());
+						$editor.html($source.val());
+					}
+
+					$source.toggleClass(config.classNames.active);
+					$button.toggleClass(config.classNames.active);
+				}
+			},
+
+			ul: {
+				icon: 'Unordered-list',
+				exec: function() {
+					document.execCommand('insertUnorderedList');
+				}
+			},
+
+			undo: {
+				icon: 'Undo',
+				exec: function() {
+					document.execCommand('undo');
+				}
+			},
+
+			underline: {
+				icon: 'Underline',
+				exec: function() {
+					document.execCommand('underline');
+				}
+			},
+		};
 
 
-	/*	----------------------------------------------------------------------------
-	 *	METHOD: Create Button
-	 *	Create DOM of single button basing on params received by function
-	 */
+		/**
+		 * HELPER: Create Toolbar
+		 */
 
-	var createButton = function(params) {
-		var str = '';
+		this.createToolbar = function() {
+			var toolbarCode = $('<div/>', {class: config.classNames.toolbar});
 
-		str += '<li><button';
+			for (var key in config.toolbarElements) {
 
-		if (params.exec)		str += ' data-exec="' + params.exec + '"';
-		if (params.argument)	str += ' data-argument="' + params.argument + '"';
-		if (params.title)		str += ' title="' + params.title + '"';
-		if (params.icon)		str += ' class="icon-' + params.icon + '"';
+				// If it is a list of buttons
+				if (config.toolbarElements[key].constructor === Array) {
 
-		str += '>' + params.label + '</button></li>';
-		return str;
+					/* @TODO : Finish below code
+					var $subList = $('<ul/>');
+					('<div class="' + config.classNames.sublist + '">' + config.lang.styles + '<ul></ul></div>');
+
+					for (var subKey in config.toolbarElements[key]) {
+						$subList.append('<li><button></button></li>');
+					}
+					toolbarCode.append($subList);*/
+				}
+
+				// If its regular button
+				else if (operations[config.toolbarElements[key]]) {
+					toolbarCode.append($('<button/>', {
+						class: 'icon-' + operations[config.toolbarElements[key]].icon,
+						title: config.lang[config.toolbarElements[key]],
+						'data-rte-exec': config.toolbarElements[key]
+					}));
+				}
+			}
+			return toolbarCode;
+		};
+
+
+		/**
+		 * METHOD: Create Editor
+		 * @param {object} params
+		 */
+
+		this.createEditor = function(params) {
+
+			// Component wrapper
+			$component	= $('<div/>', {class: config.classNames.wrapper});
+
+			// Component elements
+			$input		= $('<input/>', {type: 'hidden', name: params.name, value: params.value});
+			$toolbar	= that.createToolbar();
+			$editor		= $('<p/>', {class: config.classNames.editor, contenteditable: true}).html(params.value);
+			$source		= $('<textarea/>', {class: config.classNames.source}).html(params.value);
+
+			// Mix wrapper and elements together and replace source textarea
+			$component.append($input, $toolbar, $editor, $source);
+			$elem.replaceWith($component);
+
+			// Set two way binding on hidden input and rich text editor
+			$editor.on('DOMSubtreeModified', function(event) {
+				$input.val(event.currentTarget.innerHTML);
+				$source.val(event.currentTarget.innerHTML);
+			});
+
+			// Handle focus on editor
+			$editor.on('focus blur', function(event) {
+				if (event.type === 'focus') $component.addClass(config.classNames.active);
+				else $component.removeClass(config.classNames.active);
+			});
+
+			// Handle clicking on toolbar button
+			$toolbar.on('click', 'button', function(event) {
+				event.preventDefault();
+
+				var $this = $(this),
+					exec = $this.data('rte-exec');
+
+				// Execute operation
+				if (exec && operations[exec]) operations[exec].exec($this);
+			});
+		};
+
+
+		/**
+		 * METHOD: Get Selection
+		 */
+
+		this.getSelection = function() {
+			return window.getSelection ? window.getSelection() : '';
+		};
+
+
+		/**
+		 * METHOD: Get Selection Text
+		 */
+
+		this.getSelectionText = function() {
+			return that.getSelection().toString();
+		};
+
+
+		/**
+		 * METHOD: Init
+		 */
+
+		this.init = function() {
+
+			$elem = $(elem);
+			if (!$elem.length) {
+				if (config.debug) console.log('RichTextEditor: Textarea element not found');
+				return false;
+			}
+
+			if ($elem.prop('nodeName') !== 'TEXTAREA') {
+				if (config.debug) console.log('RichTextEditor: Element skipped: ' + $elem.prop('nodeName'));
+				return false;
+			}
+
+			that.createEditor({
+				name	: $elem.attr('name'),
+				value	: $elem.val(),
+			});
+
+		};
+
+		this.init();
+
 	};
-
-
-	/*	--------------------------------------------------------------------
-	 *	METHOD: Get selection
-	 */
-
-	var getSelection = function() {
-		return window.getSelection ? window.getSelection() : {};
-	};
-
-
-	/*	----------------------------------------------------------------------------
-	 *	METHOD: Get selection text
-	 */
-
-	var getSelectionText = function() {
-		return getSelection().toString();
-	};
-
-
-	/*	----------------------------------------------------------------------------
-	 *	METHOD: Clear formatting
-	 */
-
-	var clearFormatting = function() {};
 
 
 	/*	----------------------------------------------------------------------------
@@ -102,147 +291,14 @@
 	 */
 
 	$.fn.richTextEditor = function(options) {
+		if (options.debug) console.log('jQ Plugin initiated: RichTextEditor. Objects found: ' + this.length);
 
-		// Setup configuration
-		var config = $.extend({}, defaults, options);
-
-		// Definitions
-		var $that = $(this);
-
-		if (config.debug) console.info('Plugin loaded: richTextEditor (RTE)');
-
-		if (!$that.length) {
-			if (config.debug) console.warn('RTE: No richtext elements found');
-			return true;
-		}
-
-		// List of available buttons in toolbar
-		// All functions: https://developer.mozilla.org/en-US/docs/Web/API/Document/execCommand
-		var toolbarButtons = [
-			{
-				label: config.lang.styles,
-				list: [
-					{label: 'Header H1', exec: 'formatBlock', argument: 'h1', title: config.lang.h1},
-					{label: 'Header H2', exec: 'formatBlock', argument: 'h2', title: config.lang.h2},
-					{label: 'Kod', exec: 'formatBlock', argument: 'pre', title: config.lang.code}
-				]
-			},
-			{label: 'B', exec: 'insertHTML', argument: '<strong>{selection}</strong>', icon: 'Bold', title: config.lang.bold},
-			{label: 'I', exec: 'italic', icon: 'Italic', title: config.lang.italic},
-			{label: 'U', exec: 'underline', icon: 'Underline', title: config.lang.underline},
-			{label: 'Ul', exec: 'insertUnorderedList', icon: 'Unordered-list', title: config.lang.unorderedList},
-			{label: 'Ol', exec: 'insertOrderedList', icon: 'Ordered-list', title: config.lang.orderedList},
-			{label: 'A', exec: 'link', icon: 'Link', title: config.lang.link},
-			{label: 'Undo', exec: 'undo', icon: 'Undo', title: config.lang.undo},
-			{label: 'Redo', exec: 'redo', icon: 'Redo', title: config.lang.redo},
-			{label: 'Clear', exec: 'clearFormatting', icon: 'Clear-formatting', title: config.lang.clearFormatting},
-			{label: 'HTML', exec: 'showHTML', icon: 'Html', title: config.lang.htmlSource}
-		];
-
-		// Loop over all found textareas
-		$that.each(function() {
-			var $this = $(this);
-
-			// Skip this element if it's not a textarea
-			if ($this.prop('nodeName') !== 'TEXTAREA') {
-				if (config.debug) console.log('RTE: Element skiped: ' + $this.prop('nodeName'));
-				return true;
-			}
-
-			// Set starting params for textarea replacement
-			var	textarea =
-				{
-					name	: $this.attr('name'),
-					value	: $this.val(),
-					width	: $this[0].style.width ? $this[0].style.width : $this.width(), // Try to get uncomputed width
-					height	: $this[0].style.height ? $this[0].style.height : $this.height(), // Try to get uncomputed height
-				};
-
-			// Start replacing textarea with ew editor code
-			var editorCode = $('<div/>', {class: config.classNames.wrapper});
-
-			editorCode
-				.append($('<input/>', {type: 'hidden', name: textarea.name, value: textarea.value}))
-				.append($('<ul/>', {class: config.classNames.toolbar}))
-				.append($('<div/>', {class: config.classNames.editor, contenteditable: true}));
-
-			$this.replaceWith(editorCode);
-
-			var $input		= editorCode.children('input'),
-				$toolbar	= editorCode.children('.' + config.classNames.toolbar),
-				$editor		= editorCode.children('.' + config.classNames.editor);
-
-			$editor.html(textarea.value);
-
-			// Set two way binding on hidden input and rich text editor
-			// To achive this Mutation Observers are used instead of Mutation Events
-
-			$editor.on('DOMSubtreeModified', function(event) {
-				$input.val(event.currentTarget.innerHTML);
-			});
-
-			// Prepare toolbar
-			for (key in toolbarButtons) {
-				var appendStr = '';
-
-				// If it is a list of buttons
-				if (toolbarButtons[key].list && typeof toolbarButtons[key].list === 'object') {
-					appendStr += '<li><button data-exec="toggle" class="sublist">' + toolbarButtons[key].label + '</button><ul class="' + config.classNames.hidden + '">';
-
-					for (subKey in toolbarButtons[key].list) {
-						appendStr += createButton(toolbarButtons[key].list[subKey]);
-					}
-
-					appendStr += '</ul></li>';
-				}
-
-				// If its regular button
-				else appendStr += createButton(toolbarButtons[key]);
-
-				$toolbar.append(appendStr);
-			}
-
-
-			// Handle clicking on toolbar button
-
-			$toolbar.on('click', 'button', function() {
-				var $this = $(this),
-					exec = $this.data('exec');
-
-				switch (exec) {
-					case 'toggle':
-						$this.next().toggleClass(config.classNames.hidden);
-						if (config.debug) console.log('RTE: Button clicked to toggle submenu');
-						break;
-
-					case 'showHTML':
-						if (config.debug) console.log('RTE: Button clicked with function "showHTML"');
-						break;
-
-					case 'clearFormatting':
-						clearFormatting();
-						break;
-
-					default:
-						var argument = $this.data('argument') ? $this.data('argument').replace('{selection}', getSelectionText()) : null;
-						document.execCommand(exec, false, argument);
-						$toolbar.find('ul').addClass('hidden');
-						if (config.debug) console.log('RTE: Button clicked with function: ' + exec + ' and argument: ' + argument);
-				}
-
-				return false;
-			});
-
-
-			// Handle focus on editor
-
-			$editor.on('focus blur', function(event) {
-				if (event.type === 'focus') editorCode.addClass(config.classNames.active);
-				else editorCode.removeClass(config.classNames.active);
-			});
+		/* global RichTextEditor */
+		this.each(function(index, elem) {
+			new RichTextEditor(elem, options);
 		});
 
-		return $that;
+		return this;
 	};
 
 })(jQuery);

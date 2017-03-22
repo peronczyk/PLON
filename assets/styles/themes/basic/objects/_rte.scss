@@ -5,57 +5,56 @@
 .o-Rte {
 	position: relative;
 	border: 1px solid $color-line;
+	transition: .2s;
 
 	&.is-Active { border-color: $color-blue; }
 
 	&__toolbar {
-		list-style-type: none;
 		height: 45px;
 		border-bottom: 1px solid $color-line;
 
-		& > li {
+		> * {
 			position: relative;
-			display: inline-block;
-			vertical-align: top;
+			display: inline-flex;
+			align-items: center;
+			vertical-align: middle;
+			height: 100%;
+			color: $color-gray-dark;
+			cursor: pointer;
+
+			&:hover { background-color: $color-gray; }
 		}
 
 		button {
-			display: inline-block;
 			padding: 0 12px;
 			min-width: 44px;
-			height: 44px;
 			background-color: transparent;
 			border: none;
-			color: $color-gray-dark;
 
-			&:hover { background-color: $color-gray; }
-
-			&.sublist {
-				border-right: 1px solid $color-line;
-
-				&:after {
-					content: '';
-					display: inline-block;
-					margin-left: 4px;
-					width: 0;
-					height: 0;
-					border-style: solid;
-					border-width: 5px 3.5px 0 3.5px;
-					border-color: $color-gray-dark transparent transparent transparent;
-				}
-			}
+			&.is-Active { background-color: $color-gray; }
 		}
+	}
 
-		li > ul {
+	&__sublist {
+		padding: 0 20px;
+		min-width: 44px;
+		border-right: 1px solid $color-gray;
+
+		ul {
 			list-style-type: none;
 			position: absolute;
-			top: 40px;
+			visibility: hidden;
+			top: calc(100% + 1px);
 			left: -1px;
-			min-width: 110px;
+			min-width: 120px;
+			min-height: 100%;
 			background-color: $color-white;
 			border: 1px solid $color-line;
 			border-top: none;
 			box-shadow: 0 1px 5px rgba($color-black, .1);
+			opacity: 0;
+			transform: translateY(10px);
+			transition: .3s;
 
 			button {
 				width: 100%;
@@ -66,6 +65,14 @@
 
 			li:last-child button {
 				border-bottom: none;
+			}
+		}
+
+		&:hover {
+			ul {
+				visibility: visible;
+				opacity: 1;
+				transform: translateY(0);
 			}
 		}
 	}
@@ -84,6 +91,27 @@
 			padding-bottom: 5px;
 			margin-left: 25px;
 			padding-left: 5px;
+		}
+	}
+
+	&__source {
+		visibility: hidden;
+		opacity: 0;
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		width: 100%;
+		height: calc(100% - 45px);
+		border: 0;
+		font-family: 'Courier New', Courier, monospace;
+		font-size: 13px;
+		line-height: 22px;
+		background-color: $color-white;
+		transition: .2s;
+
+		&.is-Active {
+			visibility: visible;
+			opacity: 1;
 		}
 	}
 }
