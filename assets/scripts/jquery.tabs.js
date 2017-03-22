@@ -1,37 +1,55 @@
-/*
-	global jQuery
-*/
+
+/*	================================================================================
+ *
+ *	JQ: TABS
+ *
+ *	Modified		: 2017-03-22
+ *	Author			: Bartosz Perończyk (peronczyk.com)
+ *	Repository		: https://github.com/peronczyk/plon
+ *
+ *	================================================================================
+ */
+
 
 (function($) {
 
 	'use strict';
 
+	// jQ shortcuts
+	var $document = $(document);
+
+
 	/*	----------------------------------------------------------------------------
-	 *
+	 *	GLOBAL CONSTRUCTOR FOR COMPONENT
 	 */
 
-	var Tabs = function(options, elem) {
+	window.Tabs = function(elem, options) {
+
+		var that = this;
 
 		// Default configuration
 		var defaults = {
-			debug: 0,
-			tabSelector		: '[role="tab"]',
-			panelSelector	: '[role="tabpanel"]',
-			eventsNamespace	: '.plon.tabs',
-			dataBinder		: 'data-tabs-panels',
-			classNames		: {active: 'is-Active'}
+			debug					: false,
+			tabSelector				: '[role="tab"]',
+			panelSelector			: '[role="tabpanel"]',
+			eventsNamespace			: '.plon.tabs',
+			dataBinder				: 'data-tabs-panels',
+			classNames				: {active: 'is-Active'},
+			autoActivateTab			: 0,
 		};
 
 		// Setting instance configuration
 		var config = $.extend({}, defaults, options);
 
-		// Common variables definition
-		var panelsId, $panelContainer, $panelList,
-			$tabContainer, $tabList,
-			activeTabNumber;
+		// Variables available for constructor
+		this.activeTabIndex = null;
+		this.panelsId;
 
-		// jQ shortcuts
-		var $document = $(document);
+		// Common variables definition
+		var $tabsContainer = $(elem),
+			$tabsList,
+			$panelsContainer,
+			$panelsList;
 
 		// Events monitored by script
 		var monitoredEvents =
@@ -39,101 +57,165 @@
 			' focusin' + config.eventsNamespace +
 			' focusout' + config.eventsNamespace;
 
-		var changeTab = function(newTabNumber) {
-			console.log(newTabNumber);
-			if (newTabNumber > $panelList.length - 1 || newTabNumber < 0) {
-				console.warn('Tabs: Tabs panel with index "' + newTabNumber + '" doesn\'t exist');
+
+		/**
+		 * METHOD:
+		 * Change Tab
+		 * @param {number} newTabIndex
+		 */
+
+		this.changeTab = function(newTabIndex) {
+			if (newTabIndex > $panelsList.length - 1 || newTabIndex < 0) {
+				if (config.debug) console.warn('Tabs: Tabs panel with index "' + newTabIndex + '" doesn\'t exist');
 				return false;
 			}
 
-			var $newActivePanel = $panelList.eq(newTabNumber);
-			$panelList.removeClass(config.classNames.active);
-			$newActivePanel.addClass(config.classNames.active);
+			$tabsList
+				.removeClass(config.classNames.active)
+				.attr('tabindex', -1)
+				.eq(newTabIndex)
+				.addClass(config.classNames.active)
+				.attr('tabindex', 0)
+				.trigger('focus', {selfInitiated: true});
 
-			console.log($panelList);
+			$panelsList
+				.removeClass(config.classNames.active)
+				.attr('aria-hidden', true)
+				.eq(newTabIndex)
+				.addClass(config.classNames.active)
+				.attr('aria-hidden', false);
+
+			that.activeTabIndex = newTabIndex;
+
+			if (config.debug) console.log('Tabs: Switched to tab with index: ' + newTabIndex);
 		};
 
-		var nextTab = function() {
-			console.log('Next');
-			var newTabNumber = activeTabNumber === $tabList.length - 1 ? 0 : activeTabNumber + 1;
-			changeTab(newTabNumber);
+
+		/**
+		 * METHOD:
+		 * Naxt Tab
+		 */
+
+		this.nextTab = function() {
+			var newTabIndex = 0;
+			if (that.activeTabIndex !== null) {
+				newTabIndex = that.activeTabIndex === $tabsList.length - 1 ? 0 : that.activeTabIndex + 1;
+			}
+			if (config.debug) console.log('Tabs: Switching to next tab (index: ' + newTabIndex + ')');
+			that.changeTab(newTabIndex);
 		};
 
-		var previousTab = function() {
-			console.log('Previous');
-			var newTabNumber = activeTabNumber <= 0 ? $tabList.length - 1 : activeTabNumber - 1;
-			changeTab(newTabNumber);
+
+		/**
+		 * METHOD:
+		 * Previous Tab
+		 */
+
+		this.previousTab = function() {
+			var newTabIndex = that.activeTabIndex <= 0 ? $tabsList.length - 1 : that.activeTabIndex - 1;
+			if (config.debug) console.log('Tabs: Switching to previous tab (index: ' + newTabIndex + ')');
+			that.changeTab(newTabIndex);
 		};
 
-		var bindKeyboardNav = function() {
+
+		/**
+		 * METHOD:
+		 * Bind Keyboard Nav
+		 */
+
+		this.bindKeyboardNav = function() {
 			$document.on('keydown' + config.eventsNamespace, function(event) {
 				switch (event.which) {
-					case '37': // Arrow left
-					case '38': // Arrow up
+					case 32: // Space
 						event.preventDefault();
-						nextTab();
+						that.changeTab($(event.target).index());
 						break;
 
-					case '39': // Arrow right
-					case '40': // Arrow down
+					case 37: // Arrow left
+					case 38: // Arrow up
 						event.preventDefault();
-						previousTab();
+						that.previousTab();
+						break;
+
+					case 39: // Arrow right
+					case 40: // Arrow down
+						event.preventDefault();
+						that.nextTab();
 						break;
 				}
 			});
 		};
 
-		var unbindKeyboardNav = function() {
+
+		/**
+		 * METHOD:
+		 * Unbind Keyboard Nav
+		 */
+
+		this.unbindKeyboardNav = function() {
 			$document.off(config.eventsNamespace);
 		};
 
-		$tabContainer = $(elem);
-		if (!$tabContainer.length) {
-			console.warn('TabList container not found');
+
+		/**
+		 * Component installation verification
+		 */
+
+		if (!$tabsContainer.length) {
+			if (config.debug) console.warn('Tabs: TabList container not found: ' + elem);
 			return false;
 		}
 
-		$tabList = $tabContainer.find(config.tabSelector);
-		if (!$tabList.length) {
-			console.warn('No tabs found');
+		$tabsList = $tabsContainer.find(config.tabSelector);
+		if (!$tabsList.length) {
+			if (config.debug) console.warn('Tabs: No tabs found');
 			return false;
 		}
 
-		panelsId = $tabContainer.attr(config.dataBinder);
-		if (typeof panelsId === 'undefined' || panelsId === false) {
-			var $elemWithBindingId = $tabContainer.closest('[' + config.dataBinder + ']');
+		that.panelsId = $tabsContainer.attr(config.dataBinder);
+		if (typeof that.panelsId === 'undefined' || that.panelsId === false) {
+			var $elemWithBindingId = $tabsContainer.closest('[' + config.dataBinder + ']');
 			if ($elemWithBindingId.length) {
-				panelsId = $elemWithBindingId.attr(config.dataBinder);
+				that.panelsId = $elemWithBindingId.attr(config.dataBinder);
 			}
 			else {
-				console.warn('Tabs: Selected tabs list container or any parent element doesn\'t have data selector (' + config.dataBinder + ') or it\'s empty: "' + panelsId + '"');
+				if (config.debug) console.warn('Tabs: Selected tabs list container or any parent element doesn\'t have data selector (' + config.dataBinder + ') or it\'s empty: "' + that.panelsId + '"');
 				return false;
 			}
 		}
 
-		$panelContainer = $('#' + panelsId);
-		if (!$panelContainer) {
-			if (config.debug) console.warn('Tabs: Specified panels container doesn\'t exist: ' + panelsId);
+		$panelsContainer = $('#' + that.panelsId);
+		if (!$panelsContainer) {
+			if (config.debug) console.warn('Tabs: Specified panels container doesn\'t exist: ' + that.panelsId);
 			return false;
 		}
 
-		$panelList = $panelContainer.children(config.panelSelector);
+		$panelsList = $panelsContainer.children(config.panelSelector);
+		that.activeTabIndex = $tabsContainer.find('.' + config.classNames.active).index();
 
-		$tabList.on(monitoredEvents, function(event) {
-			switch (event.type) {
-				case 'click':
-					changeTab($(this).index());
-					break;
 
-				case 'focusin':
-					bindKeyboardNav();
-					break;
+		/**
+		 * Events monitoring
+		 */
 
-				case 'focusout':
-					unbindKeyboardNav();
-					break;
+		$tabsList.on(monitoredEvents, function(event, params) {
+			if (event.type === 'click') that.changeTab($(this).index());
+
+			// Turn ON or OFF keyboard monitoring
+			// if event wasn't triggered by this component
+			if (!params || !params.selfInitiated) {
+				if (event.type === 'focusin') that.bindKeyboardNav();
+				else if (event.type === 'focusout') that.unbindKeyboardNav();
 			}
 		});
+
+		/**
+		 * Auto activating first tab if none of tabs are active
+		 */
+
+		if (config.autoActivateTab !== false && $.isNumeric(config.autoActivateTab) && that.activeTabIndex === -1) {
+			that.changeTab(config.autoActivateTab);
+		}
 	};
 
 
@@ -142,10 +224,14 @@
 	 */
 
 	$.fn.tabs = function(options) {
-		console.log('Plugin initiated: Tabs');
-		$(this).each(function(index, elem) {
-			new Tabs(options, elem);
+		if (options.debug) console.log('jQ Plugin initiated: Tabs. Objects found: ' + this.length);
+
+		/* global Tabs */
+		this.each(function(index, elem) {
+			new Tabs(elem, options);
 		});
+
+		return this;
 	};
 
 })(jQuery);
