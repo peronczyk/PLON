@@ -59,7 +59,8 @@
 
 		if (config.debug) console.info('Plugin loaded: scrollTo');
 
-		this.filter('a').on('click', function() {
+		this.filter('a').on('click', function(event) {
+			event.preventDefault();
 
 			// Stop if there is no target specified (no #element in href)
 			if (!this.hash) {
@@ -95,8 +96,6 @@
 			}
 
 			else if (config.debug) console.log('scrollTo: Element ' + this.hash + ' not found');
-
-			return false;
 		});
 
 		return _self;
