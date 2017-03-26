@@ -107,6 +107,7 @@
 		font-size: 13px;
 		line-height: 22px;
 		background-color: $color-white;
+		resize: none;
 		transition: .2s;
 
 		&.is-Active {
