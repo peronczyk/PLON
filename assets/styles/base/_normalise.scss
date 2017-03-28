@@ -3,11 +3,8 @@
  *
  *	NORMALISE
  *
- *	No classnames allowed in this file
- *
  *	================================================================================
  */
-
 
 * {
 	-webkit-box-sizing: border-box;
@@ -65,9 +62,6 @@ abbr[title], dfn[title] {
 	cursor: help;
 }
 
-strong, .is-bold	{ font-weight: bold; }
-u, .is-underlined	{ text-decoration: underline; }
-
 sub, sup {
 	font-size: .8em;
 	line-height: 0;
@@ -80,8 +74,10 @@ sub { bottom: -0.25em; }
 a {
 	text-decoration: none;
 	cursor: pointer;
-	background-color: transparent; /* Remove the gray background color from active links in IE 10. */
+	background-color: transparent; // Remove the gray background color from active links in IE 10.
 }
+
+address { font-style: normal; }
 
 
 /*	--------------------------------------------------------------------------------
