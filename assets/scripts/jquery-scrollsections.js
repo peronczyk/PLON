@@ -32,6 +32,7 @@
 	var defaults = {
 			'debug'				: 0,
 			'activeClassName'	: 'is-Active',
+			'eventsNamespace'	: '.plon.scrollsections',
 		},
 		$document			= $(document),
 		$window				= $(window),
@@ -151,7 +152,7 @@
 
 		// On mouse scroll
 
-		$document.on('DOMMouseScroll.sl.scrollsections mousewheel.sl.scrollsections', function(event) {
+		$document.on('DOMMouseScroll' + config.eventsNamespace + ' mousewheel' + config.eventsNamespace, function(event) {
 			var dir = 1;
 			if (event.originalEvent.detail < 0 || event.originalEvent.wheelDelta > 0) { dir = -1; }
 			return sectionScroll(config, $sections, dir);
@@ -160,7 +161,7 @@
 
 		// On keyboard arrows press
 
-		$document.on('keydown.sl.scrollsections', function(event) {
+		$document.on('keydown' + config.eventsNamespace, function(event) {
 			var dir = 0;
 			switch(event.which) {
 				case 38: dir--; break; // UP
@@ -172,7 +173,7 @@
 
 		// On window resize
 
-		$window.on('resize.sl.scrollsections', function() {
+		$window.on('resize' + config.eventsNamespace, function() {
 			if ($window.height() != viewportHeight) {
 				viewportHeight = $(window).height();
 				if (config.debug) console.log('Window height changed to: ' + viewportHeight);

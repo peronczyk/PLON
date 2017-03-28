@@ -1,0 +1,176 @@
+/*	----------------------------------------------------------------------------
+ *	HEADER
+ *	Horizontal bar used at the top of the page to provide major navigation
+ *	and information about actually used application
+ */
+
+.c-Header {
+	position: fixed;
+	width: 100%;
+	height: 70px;
+	background-color: #fff;
+	z-index: +1;
+
+	&__logo {
+		float: left;
+
+		svg {
+			margin-top: 25px;
+			margin-right: 20px;
+			float: left;
+			width: 27px;
+			height: 18px;
+		}
+
+		h1 {
+			float: left;
+			margin: 16px 0 0 0;
+			font-size: 18px;
+			font-weight: normal;
+			color: #7b7b7b;
+		}
+	}
+
+	&__toggle {
+		display: inline-block;
+		position: relative;
+		margin: 10px;
+		width: 42px;
+		height: 42px;
+		transition: all .2s cubic-bezier(0.40, 0.14, 0.50, 0.78);
+
+		&:hover { border-color: #8f8f8f; }
+
+		hr {
+			position: absolute;
+			left: 11px;
+			width: 18px;
+			height: 2px;
+			border: 0;
+			background-color: #56b9fe;
+			transition: all .3s cubic-bezier(0.40, 0.14, 0.50, 0.78);
+
+			&:nth-child(1) { top: 12px; }
+			&:nth-child(2) { top: 19px; }
+			&:nth-child(3) { top: 26px; }
+		}
+
+		.is-menuMobile--open & {
+			hr {
+				&:nth-child(1) { top: 20px; transform: rotate(45deg); }
+				&:nth-child(2) { left: 30px; opacity: 0; }
+				&:nth-child(3) { top: 20px; transform: rotate(-45deg); }
+			}
+		}
+	}
+
+	&__nav {
+		transition: .3s;
+
+		ul {
+			list-style: none;
+		}
+
+		a {
+			display: block;
+			padding: 10px 30px;
+		}
+
+		.c-Header--mobile & {
+			visibility: hidden;
+			position: fixed;
+			top: 0;
+			right: 0;
+			padding-top: 30px;
+			height: 100%;
+			width: 300px;
+			opacity: 0;
+			transform: scale(.9) translateX(100px);
+			will-change: visibility, opacity, transform;
+		}
+
+		.is-menuMobile--open & {
+			visibility: visible;
+			opacity: 1;
+			transform: scale(1) translateX(0);
+		}
+	}
+
+	&__menu {
+		float: right;
+		height: 100%;
+		list-style: none;
+
+		& > li {
+			height: 100%;
+			display: inline-block;
+			vertical-align: middle;
+
+			& > a {
+				display: block;
+				position: relative;
+				padding: 18px 16px 0 16px;
+				height: 100%;
+				font-size: 14px;
+				line-height: 30px;
+				color: #7b7b7b;
+				transition: all .2s ease-out;
+
+				&:hover { color: #000; }
+
+				&:after {
+					content: '';
+					display: block;
+					position: absolute;
+					top: 0;
+					left: 50%;
+					height: 3px;
+					width: 100%;
+					opacity: 0;
+					background-color: $color-blue;
+					transform: translateX(-50%) scaleX(0);
+					transition: all .2s ease-out;
+				}
+
+				&:hover:after {
+					opacity: 1;
+					transform: translateX(-50%) scaleX(1);
+				}
+			}
+		}
+	}
+
+	&__badge {
+		ul {
+			list-style: none;
+			visibility: hidden;
+			opacity: 0;
+			background-color: #fff;
+			transition: all .2s;
+			border-color: $color-line;
+			border-style: solid;
+			border-width: 0 1px 1px 1px;
+
+			a {
+				display: block;
+				padding: 12px 12px;
+			}
+		}
+
+		&:hover {
+			ul {
+				visibility: visible;
+				opacity: 1;
+			}
+		}
+	}
+
+	&__badge-photo {
+		display: inline-block;
+		margin-right: 8px;
+		vertical-align: middle;
+		width: 30px;
+		height: 30px;
+		background-color: $color-gray;
+	}
+}

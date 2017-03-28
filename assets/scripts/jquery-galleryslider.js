@@ -3,21 +3,12 @@
  *
  *	JQ: GALLERY SLIDER
  *
- *	Author			: Bartosz Perończyk
- *	Created			: 2014-10-16
- *	Modified		: 2016-09-26
+ *	Modified		: 2017-03-09
+ *	Author			: Bartosz Perończyk (peronczyk.com)
+ *	Repository		: https://github.com/peronczyk/plon
  *
- *	--------------------------------------------------------------------------------
- *	DESCRIPTION:
- *
- *
- *
- *	--------------------------------------------------------------------------------
- *	INSTALATION:
- *
- *
- *
- *	================================================================================ */
+ *	================================================================================
+ */
 
 
 (function($) {
@@ -86,9 +77,9 @@
 			if (config.debug) console.log('gallerySlider: Navigation clicked\n - direction: ' + dir + '\n - active image is: ' + activeFigure);
 
 			// Calculations
-			var figureWidth			= $figures[0].clientWidth, // Needs to be diference between offsets of 2 figures
-				actualShift 		= $imageList.offset().left - $container.offset().left,
-				visible$figures		= Math.round($imageList.width() / figureWidth); // How many images are visible on screen
+			var figureWidth		= $figures[0].clientWidth, // Needs to be diference between offsets of 2 figures
+				actualShift 	= $imageList.offset().left - $container.offset().left,
+				visible$figures	= Math.round($imageList.width() / figureWidth); // How many images are visible on screen
 
 
 			// Move $figures to right
