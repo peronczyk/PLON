@@ -1,0 +1,33 @@
+/*	----------------------------------------------------------------------------
+ *	SIDEBAR
+ *	Provides secondary level navigation or
+ */
+
+.c-Sidebar {
+	width: 400px;
+	min-height: 100vh;
+	font-size: 14px;
+	line-height: 20px;
+
+	&--left {
+		float: left;
+		left: 0;
+	}
+	&--right {
+		float: right;
+		right: 0;
+	}
+
+	@media (max-width: $breakpoint-h-ul) {
+		width: 350px;
+	}
+
+	@media (max-width: $breakpoint-h-xl) {
+		padding: $gutter/2 $gutter/2 0 $gutter/2;
+		width: 300px;
+	}
+
+	@media (max-width: $breakpoint-h-md) {
+		float: none;
+	}
+}

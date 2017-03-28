@@ -1,0 +1,16 @@
+/*	================================================================================
+ *	COMPONENTS
+ *
+ *	This is a concrete, implementation-specific piece of UI. All of the changes
+ *	you make to its styles should be detectable in the context you’re currently
+ *	looking at. Modifying these styles should be safe and have no side effects.
+ *	================================================================================
+ */
+
+@import
+	'content',
+	'cookies-bar',
+	'header',
+	'modal',
+	'sidebar',
+	'tooltip';

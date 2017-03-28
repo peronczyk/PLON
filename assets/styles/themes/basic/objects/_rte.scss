@@ -1,0 +1,89 @@
+/*	--------------------------------------------------------------------------------
+ *	RICH TEXT EDITOR
+ */
+
+.o-Rte {
+	position: relative;
+	border: 1px solid $color-line;
+
+	&.is-Active { border-color: $color-blue; }
+
+	&__toolbar {
+		list-style-type: none;
+		height: 45px;
+		border-bottom: 1px solid $color-line;
+
+		& > li {
+			position: relative;
+			display: inline-block;
+			vertical-align: top;
+		}
+
+		button {
+			display: inline-block;
+			padding: 0 12px;
+			min-width: 44px;
+			height: 44px;
+			background-color: transparent;
+			border: none;
+			color: $color-gray-dark;
+
+			&:hover { background-color: $color-gray; }
+
+			&.sublist {
+				border-right: 1px solid $color-line;
+
+				&:after {
+					content: '';
+					display: inline-block;
+					margin-left: 4px;
+					width: 0;
+					height: 0;
+					border-style: solid;
+					border-width: 5px 3.5px 0 3.5px;
+					border-color: $color-gray-dark transparent transparent transparent;
+				}
+			}
+		}
+
+		li > ul {
+			list-style-type: none;
+			position: absolute;
+			top: 40px;
+			left: -1px;
+			min-width: 110px;
+			background-color: $color-white;
+			border: 1px solid $color-line;
+			border-top: none;
+			box-shadow: 0 1px 5px rgba($color-black, .1);
+
+			button {
+				width: 100%;
+				border: none;
+				border-bottom: 1px solid $color-gray;
+				text-align: left;
+			}
+
+			li:last-child button {
+				border-bottom: none;
+			}
+		}
+	}
+
+	&__editor {
+		padding: 16px 12px;
+		min-height: 160px;
+		font-size: 14px;
+
+		ul { list-style-type: disc; }
+
+		ol { list-style-type: decimal; }
+
+		ul li,
+		ol li {
+			padding-bottom: 5px;
+			margin-left: 25px;
+			padding-left: 5px;
+		}
+	}
+}

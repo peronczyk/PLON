@@ -1,9 +1,9 @@
-var debug = 1,
-	$document = $(document);
+var debug = 1;
 
+$(function() {
 
-$document.ready(function() {
-
-	$('[data-richtext]').richTextEditor();
+	$('[data-rte]').richTextEditor({
+		debug: debug,
+	});
 
 });

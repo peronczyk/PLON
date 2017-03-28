@@ -7,8 +7,8 @@
  *	and should not be bound onto or changed. It can be reused and is not tied
  *	to any specific piece of UI.
  *
- *	================================================================================ */
-
+ *	================================================================================
+ */
 
 
 .u-Hero {
@@ -29,28 +29,28 @@
  */
 
 .u-Text {
-	&-left		{ text-align: left !important; }
-	&-center	{ text-align: center !important; }
-	&-right		{ text-align: right !important; }
-	&-justify	{ text-align: justify !important; }
+	&--left		{ text-align: left !important; }
+	&--center	{ text-align: center !important; }
+	&--right	{ text-align: right !important; }
+	&--justify	{ text-align: justify !important; }
 }
 
 .u-Valign {
-	&-top		{ vertical-align: top; }
-	&-middle	{ vertical-align: middle; }
-	&-bottom	{ vertical-align: bottom; }
+	&--top		{ vertical-align: top; }
+	&--middle	{ vertical-align: middle; }
+	&--bottom	{ vertical-align: bottom; }
 }
 
 .u-Box {
-	&-center {
+	&--center {
 		margin-left: auto;
 		margin-right: auto;
 	}
 }
 
 .u-Float {
-	&-left		{ float: left; }
-	&-right		{ float: right; }
+	&--left		{ float: left; }
+	&--right	{ float: right; }
 }
 
 
@@ -72,13 +72,12 @@
  *	DISPLAY
  */
 
-.u-Hidden			{ visibility: hidden; }
+.u-Hidden		{ visibility: hidden; }
+.u-Visible		{ visibility: visible; }
 
-.u-Disabled			{ pointer-events: none; }
-
-.u-Block			{ display: block; }
-.u-notDisplayed		{ display: none; }
-.u-Inline			{ display: inline; }
+.u-Block		{ display: block; }
+.u-notDisplayed	{ display: none; }
+.u-Inline		{ display: inline; }
 
 .u-Table {
 	display: table;
@@ -92,6 +91,14 @@
 	}
 }
 
+.u-Flex {
+	display: flex;
+
+	&--center { align-items: center }
+}
+
+.u-inlineFlex	{ display: inline-flex; }
+
 .u-notSelectable { user-select: none; }
 
 
@@ -100,13 +107,13 @@
  */
 
 .u-Width {
-	&-full			{ width: 100% !important; }
-	&-half			{ width: 50% !important; }
+	&--full		{ width: 100% !important; }
+	&--half		{ width: 50% !important; }
 }
 
 .u-Height {
-	&-full			{ height: 100% !important; }
-	&-half			{ height: 50% !important; }
+	&--full		{ height: 100% !important; }
+	&--half		{ height: 50% !important; }
 }
 
 
@@ -115,9 +122,9 @@
  */
 
 .u-Rotate {
-	&-90			{ transform: rotate(90deg); }
-	&-180			{ transform: rotate(180deg); }
-	&-270			{ transform: rotate(270deg); }
+	&--90		{ transform: rotate(90deg); }
+	&--180		{ transform: rotate(180deg); }
+	&--270		{ transform: rotate(270deg); }
 }
 
 
@@ -126,11 +133,24 @@
  *	OTHER
  */
 
-.u-Clickable		{ cursor: pointer; }
+.u-Clickable	{ cursor: pointer; }
+
+.u-Disabled		{ pointer-events: none; }
 
 .u-Overflow {
-	&-hidden		{ overflow: hidden; }
-	&-scroll		{ overflow: scroll; }
+	&--hidden	{ overflow: hidden; }
+	&--scroll	{ overflow: scroll; }
 }
 
-.u-noTransition		{ transition: none !important; }
+.u-noTransition	{ transition: none !important; }
+
+.u-Reset {
+	&--styles {
+		font-family: initial;
+
+		* {
+			margin: 0;
+			padding: 0;
+		}
+	}
+}
