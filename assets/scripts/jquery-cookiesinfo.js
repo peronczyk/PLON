@@ -3,10 +3,9 @@
  *
  *	JQ: COOKIES INFO
  *
- *	Created			: 2016-02-23
  *	Modified		: 2017-03-09
  *	Author			: Bartosz Perończyk (peronczyk.com)
- *	Repository		: https://github.com/peronczyk/Streamline
+ *	Repository		: https://github.com/peronczyk/plon
  *
  *	================================================================================
  */
