@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>MODAL &mdash; Streamline</title>
+	<title>PLON / Modal</title>
 
 	<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
 
@@ -11,7 +11,7 @@
 	<link rel="stylesheet" type="text/css" href="../../dist/styles/theme-basic.css">
 
 	<script type="text/javascript" src="../../dist/scripts/jquery-3.1.0.js"></script>
-	<script type="text/javascript" async src="../../dist/scripts/jquery.modal.js"></script>
+	<script type="text/javascript" async src="../../dist/scripts/plon.modal.js"></script>
 	<script type="text/javascript" async src="custom.js"></script>
 </head>
 
@@ -21,32 +21,21 @@
 		<div class="l-Inner">
 			<h1>JQ Modal</h1>
 			<hr>
-			<table>
-				<tr>
-					<td style="width:180px;"><a href="test.html" class="Btn u-Width_full" data-modal="url">Open: URL</a></td>
-					<td class="l-Pad_left">Open modal and insert text received <strong>asynchronously</strong> from url passed to href</td>
-				</tr>
-				<tr>
-					<td><a href="" class="Btn u-Width_full" data-modal="title" title="Some example text taken from title of the link">Open: Title</a></td>
-					<td class="l-Pad_left">Open modal and insert text from <strong>link title</strong></td>
-				</tr>
-				<tr>
-					<td><a href="" class="Btn u-Width_full" data-modal="image">Open: Image</a></td>
-					<td class="l-Pad_left">Open modal and insert <strong>image</strong></td>
-				</tr>
-				<tr>
-					<td><a href="" class="Btn u-Width_full" data-modal="youtube">Open: YouTube</a></td>
-					<td class="l-Pad_left">Try to open modal youtube video</td>
-				</tr>
-				<tr>
-					<td><a href="" class="Btn u-Width_full is-error" data-modal="lorem">Open: Unknown</a></td>
-					<td class="l-Pad_left">Try to open modal with <strong>unknown mode</strong></td>
-				</tr>
-			</table>
-
+			<ul style="list-style: none;">
+				<li><a href="test.html" data-modal="url">Load content from URL: ./test.html</a></li>
+				<li><a href="#0" data-modal="title" title="Some example text taken from title of the link">Load content from title attribute</a></li>
+				<li><a href="#test-content" data-modal="dom">Load content from DOM element</a></li>
+				<li><a href="img-02.png" data-modal="image">Load image fromURL: ./img-02.png</a></li>
+				<li><a href="#0" data-modal="lorem"><em>Try to open unknown modal mode</em></a></li>
+			</ul>
 			<br><hr>
 			<div style="height: 1000px;"></div>
 		</div>
+	</div>
+
+	<div id="test-content" class="u-notDisplayed">
+		<h2>Lorem ipsum</h2>
+		<p>Adipiscing elit un equat</p>
 	</div>
 
 	<dialog class="c-Modal" role="modal" aria-hidden="true">
