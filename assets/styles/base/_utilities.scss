@@ -29,10 +29,10 @@
  */
 
 .u-Text {
-	&--left		{ text-align: left !important; }
-	&--center	{ text-align: center !important; }
-	&--right	{ text-align: right !important; }
-	&--justify	{ text-align: justify !important; }
+	&--left		{ text-align: left; }
+	&--center	{ text-align: center; }
+	&--right	{ text-align: right; }
+	&--justify	{ text-align: justify; }
 }
 
 .u-Valign {
@@ -126,7 +126,6 @@
 	&--180		{ transform: rotate(180deg); }
 	&--270		{ transform: rotate(270deg); }
 }
-
 
 
 /*	----------------------------------------------------------------------------
