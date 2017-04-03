@@ -107,13 +107,13 @@
  */
 
 .u-Width {
-	&--full		{ width: 100% !important; }
-	&--half		{ width: 50% !important; }
+	&--full		{ width: 100%; }
+	&--half		{ width: 50%; }
 }
 
 .u-Height {
-	&--full		{ height: 100% !important; }
-	&--half		{ height: 50% !important; }
+	&--full		{ height: 100%; }
+	&--half		{ height: 50%; }
 }
 
 
