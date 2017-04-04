@@ -23,6 +23,10 @@
  *	================================================================================
  */
 
+/*
+	global jQuery
+*/
+
 
 (function($) {
 
@@ -87,7 +91,11 @@
 	var formatDate = function(sourceDate) {
 		var date = new Date(sourceDate);
 		return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + ' ' + date.getHours() + ':' + date.getMinutes();
+<<<<<<< HEAD:assets/scripts/jquery.socialfeed.js
 	};
+=======
+	}
+>>>>>>> 826edeee13ae057d3b5cc4e029c1b63e573fee45:assets/scripts/jquery-socialfeed.js
 
 
 	/*	----------------------------------------------------------------------------
@@ -114,11 +122,19 @@
 					return 'https://graph.facebook.com/v2.8/' + config.sourceId + '/posts?fields=' + this.defaultFields + '&limit=' + config.postsPerPage + '&access_token=' + config.accessToken;
 				},
 
+<<<<<<< HEAD:assets/scripts/jquery.socialfeed.js
 				urlPrev: function(config, receivedData) {
 					return receivedData.paging.next ? receivedData.paging.next : false;
 				},
 
 				urlNext: function(config, receivedData) {
+=======
+				'urlPrev': function(config, receivedData) {
+					return receivedData.paging.next ? receivedData.paging.next : false;
+				},
+
+				'urlNext': function(config, receivedData) {
+>>>>>>> 826edeee13ae057d3b5cc4e029c1b63e573fee45:assets/scripts/jquery-socialfeed.js
 					return receivedData.paging.previous ? receivedData.paging.previous : false;
 				},
 
@@ -128,12 +144,21 @@
 						var feedList = receivedData.data;
 						for (var i in feedList) {
 							values[i] = {
+<<<<<<< HEAD:assets/scripts/jquery.socialfeed.js
 								link		: feedList[i].permalink_url,
 								date		: formatDate(feedList[i].created_time),
 								image		: feedList[i].full_picture,
 								text		: feedList[i].message,
 								likes		: feedList[i].likes ? feedList[i].likes.summary.total_count : 0,
 								comments	: feedList[i].comments ? feedList[i].comments.summary.total_count : 0
+=======
+								'link'		: feedList[i].permalink_url,
+								'date'		: formatDate(feedList[i].created_time),
+								'image'		: feedList[i].full_picture,
+								'text'		: feedList[i].message,
+								'likes'		: feedList[i].likes ? feedList[i].likes.summary.total_count : 0,
+								'comments'	: feedList[i].comments ? feedList[i].comments.summary.total_count : 0
+>>>>>>> 826edeee13ae057d3b5cc4e029c1b63e573fee45:assets/scripts/jquery-socialfeed.js
 							};
 						}
 					}
@@ -194,7 +219,11 @@
 			entryElements[$(this).attr(selector)] = $(this);
 		});
 		return entryElements;
+<<<<<<< HEAD:assets/scripts/jquery.socialfeed.js
 	};
+=======
+	}
+>>>>>>> 826edeee13ae057d3b5cc4e029c1b63e573fee45:assets/scripts/jquery-socialfeed.js
 
 
 	/*	----------------------------------------------------------------------------
@@ -226,7 +255,11 @@
 		$self.addClass(config.classNames.loading);
 
 		var preparedUrl = url ? url : services[config.service].url(config),
+<<<<<<< HEAD:assets/scripts/jquery.socialfeed.js
 			result = $.ajax({url: preparedUrl});
+=======
+			result = $.ajax({'url': preparedUrl});
+>>>>>>> 826edeee13ae057d3b5cc4e029c1b63e573fee45:assets/scripts/jquery-socialfeed.js
 
 		result.then(
 
