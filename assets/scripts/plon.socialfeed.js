@@ -1,40 +1,36 @@
-/*
- *	================================================================================
+
+/*	================================================================================
  *
- *	JQ: SOCIAL FEED
- *	Sorce: https://github.com/peronczyk/plon
+ *	SOCIAL FEED COMPONENT
  *
- *	--------------------------------------------------------------------------------
- *	DESCRIPTION:
- *
- *	This script displays entries from social feed taken from popular social networks
- *
- *	--------------------------------------------------------------------------------
- *	INSTALATION:
- *
- *	$('#feed-wrapper).socialFeed({ options });
- *	Options are described below (plugin default configuration)
- *
- *	--------------------------------------------------------------------------------
- *	TODO
- *
- *	Connecting to Twitter. This API requires OA login :/
+ *	Modified		: 2017-04-04
+ *	Author			: Bartosz Perończyk (peronczyk.com)
+ *	Repository		: https://github.com/peronczyk/plon
  *
  *	================================================================================
  */
 
 
-(function($) {
+window.SocialFeed = function(options) {
 
 	'use strict';
 
-	/*	----------------------------------------------------------------------------
-	 *	PLUGIN DEFAULT CONFIGURATION
+	/** ----------------------------------------------------------------------------
+	 * DEFINITIONS
 	 */
 
+	var that = this;
+
+	// Default configuration
 	var defaults =
 		{
 			debug: 0,
+
+			// CSS selector for entries list wrapper
+			wrapperElem: null,
+
+			// Class name or ID of entry
+			entryElem: null,
 
 			// Service type (facebook or youtube)
 			service: null,
@@ -52,9 +48,6 @@
 
 			// How many posts will be received
 			postsPerPage: 4,
-
-			// Class name or ID of entry
-			entryElem: null,
 
 			// Data attribute name that connects element with text that should be
 			// inserted to it
@@ -78,10 +71,20 @@
 			}
 		};
 
+	// Common variables definition
+	var config,
+		$wrapper, $entry, $entriesWrapper,
+		$navigation = {},
+		entryElements,
+		pageNum = 0, // Points to loaded entries page
+		baseUrl,
+		nextUrl,
+		prevUrl;
 
-	/*	----------------------------------------------------------------------------
-	 *	DATE FORMATTING HELPER
-	 *	Format: YYYY-MM-DD HH:MM
+
+	/** ----------------------------------------------------------------------------
+	 * DATE FORMATTING HELPER
+	 * Format: YYYY-MM-DD HH:MM
 	 */
 
 	var formatDate = function(sourceDate) {
@@ -90,14 +93,14 @@
 	};
 
 
-	/*	----------------------------------------------------------------------------
+	/** ----------------------------------------------------------------------------
 	 *	SERVICES CONFIGURATION AND METHODS
 	 *
-	 *	@url - API endpoint URL
-	 *	@defaultFields - String that contains list of variables to be received with
+	 * url - API endpoint URL
+	 * defaultFields - String that contains list of variables to be received with
 	 *		each of feed posts (eg.: title, photo, date, etc). More info are
 	 *		available in API documentation.
-	 *	@getDataValues - Method that return universal element names
+	 * getDataValues - Method that return universal element names
 	 *		with parsed values bind to them
 	 */
 
@@ -110,19 +113,19 @@
 				defaultFields: 'message,created_time,story,full_picture,picture,likes.summary(true).limit(0),comments.summary(true).limit(0),permalink_url,link',
 				dataVariable: 'data',
 
-				url: function(config) {
+				url: function() {
 					return 'https://graph.facebook.com/v2.8/' + config.sourceId + '/posts?fields=' + this.defaultFields + '&limit=' + config.postsPerPage + '&access_token=' + config.accessToken;
 				},
 
-				urlPrev: function(config, receivedData) {
+				urlPrev: function(receivedData) {
 					return receivedData.paging.next ? receivedData.paging.next : false;
 				},
 
-				urlNext: function(config, receivedData) {
+				urlNext: function(receivedData) {
 					return receivedData.paging.previous ? receivedData.paging.previous : false;
 				},
 
-				getDataValues: function(config, receivedData) {
+				getDataValues: function(receivedData) {
 					var values = [];
 					if (receivedData.data) {
 						var feedList = receivedData.data;
@@ -147,25 +150,25 @@
 			youtube: {
 				defaultFields: 'snippet',
 
-				url: function(config) {
+				url: function() {
 					return 'https://www.googleapis.com/youtube/v3/search?channelId=' + config.sourceId + '&order=date&part=' + this.defaultFields + '&maxResults=' + config.postsPerPage + '&key=' + config.accessToken;
 				},
 
-				urlPrev: function(config, receivedData) {
+				urlPrev: function(receivedData) {
 					if (receivedData.nextPageToken) {
 						return this.url(config) + '&pageToken=' + receivedData.nextPageToken;
 					}
 					else return false;
 				},
 
-				urlNext: function(config, receivedData) {
+				urlNext: function(receivedData) {
 					if (receivedData.prevPageToken) {
 						return this.url(config) + '&pageToken=' + receivedData.prevPageToken;
 					}
 					else return false;
 				},
 
-				getDataValues: function(config, receivedData) {
+				getDataValues: function(receivedData) {
 					var values = [];
 					if (receivedData.items) {
 						var feedList = receivedData.items;
@@ -183,22 +186,23 @@
 		};
 
 
-	/*	----------------------------------------------------------------------------
-	 *	PREPARE FEED ENTRY ELEMENTS
-	 *	Get DOM entry element and search child elements specified by data selector
+	/** ----------------------------------------------------------------------------
+	 * PREPARE FEED ENTRY ELEMENTS
+	 * Get DOM entry element and search child elements specified by data selector
+	 * @returns {array}
 	 */
 
-	var prepareEntryElements = function($entry, selector) {
+	var prepareEntryElements = function() {
 		var entryElements = [];
-		$entry.find('[' + selector + ']').each(function() {
-			entryElements[$(this).attr(selector)] = $(this);
+		$entry.find('[' + config.entryElementsSelector + ']').each(function() {
+			entryElements[$(this).attr(config.entryElementsSelector)] = $(this);
 		});
 		return entryElements;
 	};
 
 
-	/*	----------------------------------------------------------------------------
-	 *	SET VALUE TO ENTRY ELEMENT
+	/** ----------------------------------------------------------------------------
+	 * SET VALUE TO ENTRY ELEMENT
 	 */
 
 	var setEntryElementValue = function($elem, value) {
@@ -217,24 +221,20 @@
 	};
 
 
-	/*	----------------------------------------------------------------------------
-	 *	GET FEED ENTRIES
+	/** ----------------------------------------------------------------------------
+	 * METHOD : Get Feed Entries
 	 */
 
-	var getFeedEntries = function(config, $self, $entriesWrapper, $entry, entryElements, $navigation, url, pageNum) {
+	this.loadEntries = function(url) {
+		$wrapper.addClass(config.classNames.loading);
 
-		$self.addClass(config.classNames.loading);
-
-		var preparedUrl = url ? url : services[config.service].url(config),
-			result = $.ajax({url: preparedUrl});
-
-		result.then(
+		$.ajax({url: url}).then(
 
 			// Success
 			function(data, textStatus, jqXHR) {
-				if (config.debug) console.log('socialFeed: Data received succesully from: ' + preparedUrl);
+				if (config.debug) console.log('socialFeed: Data received succesully from: ' + url);
 
-				var dataValues = services[config.service].getDataValues(config, jqXHR.responseJSON);
+				var dataValues = services[config.service].getDataValues(jqXHR.responseJSON);
 
 				if (dataValues.length < 1) {
 					if (config.debug) console.warn('socialFeed [' + config.service + ']: Could not process received data. Data is empty or broken.');
@@ -243,7 +243,7 @@
 
 				$entriesWrapper.empty();
 
-				$self
+				$wrapper
 					.removeClass(config.classNames.loading)
 					.addClass(config.classNames.loaded);
 
@@ -255,34 +255,22 @@
 					$entriesWrapper.append($entry.clone());
 				}
 
-				var urlPrev = services[config.service].urlPrev(config, jqXHR.responseJSON),
-					urlNext = services[config.service].urlNext(config, jqXHR.responseJSON);
+				prevUrl = services[config.service].prevUrl(config, jqXHR.responseJSON);
+				nextUrl = services[config.service].nextUrl(config, jqXHR.responseJSON);
 
 				// Check if there are previous page of feed
-				if (urlPrev) {
-					$self.addClass(config.classNames.hasPrev);
-					if ($navigation.prev) $navigation.prev.attr('href', urlPrev);
-				}
-				else {
-					$self.removeClass(config.classNames.hasPrev);
-					if ($navigation.prev) $navigation.prev.attr('href', '#0');
-				}
+				if (prevUrl) $wrapper.addClass(config.classNames.hasPrev);
+				else $wrapper.removeClass(config.classNames.hasPrev);
 
 				// Check if there are next page of feed
-				if (urlNext && pageNum > 0) {
-					$self.addClass(config.classNames.hasNext);
-					if ($navigation.next) $navigation.next.attr('href', urlNext);
-				}
-				else {
-					$self.removeClass(config.classNames.hasNext);
-					if ($navigation.next) $navigation.next.attr('href', '#0');
-				}
+				if (nextUrl && pageNum > 0) $wrapper.addClass(config.classNames.hasNext);
+				else $wrapper.removeClass(config.classNames.hasNext);
 
 			},
 
 			// Error
 			function(jqXHR, textStatus, errorThrown) {
-				$self
+				$wrapper
 					.removeClass(config.classNames.loading)
 					.addClass(config.classNames.error);
 
@@ -295,75 +283,116 @@
 	};
 
 
-	/*	----------------------------------------------------------------------------
-	 *	SET UP JQUERY PLUGIN
+	/** ----------------------------------------------------------------------------
+	 * METHOD : Place Feed Entries
 	 */
 
-	$.fn.socialFeed = function(options) {
+	this.placeEntries = function() {
+	};
+
+
+	/** ----------------------------------------------------------------------------
+	 * METHOD : Previous Page
+	 * @return {string} previous page URL
+	 */
+
+	this.previousPage = function() {
+		if (config.debug) console.info('socialFeed: Previous next clicked');
+	};
+
+
+	/** ----------------------------------------------------------------------------
+	 * METHOD : Next Page
+	 * @return {string} next page URL
+	 */
+
+	this.nextPage = function() {
+		if (config.debug) console.info('socialFeed: Button next clicked');
+	};
+
+
+	/** ----------------------------------------------------------------------------
+	 * METHOD : Handle Nav Button
+	 * @return {string} type (prev / next)
+	 */
+
+	this.handleNavButton = function(btnType) {
+		$navigation[btnType] = $wrapper.find(config.btnPrevious);
+
+		if (!$navigation[btnType].length) {
+			console.warn('socialFeed: Button "' + btnType + '" was set but not found in document');
+			delete $navigation[btnType];
+			return false;
+		}
+
+		$navigation[btnType].on('click.plon.socialfeed', function(event) {
+			event.preventDefault();
+
+			if (href.length > 2) {
+				if (btnType === 'previous') pageNum++;
+				else if (btnType === 'next' && pageNum > 0) pageNum--;
+
+				that.loadEntries();
+				if (config.debug) console.info('socialFeed: Button "' + btnType + '" clicked');
+			}
+		});
+	};
+
+
+	/** ----------------------------------------------------------------------------
+	 * METHOD : Init
+	 */
+
+	this.init = function() {
 
 		// Setup configuration
-		var config = $.extend({}, defaults, options);
+		config = $.extend({}, defaults, options);
 
 		// Definitions
-		var $self = $(this),
-			$navigation = {},
-			pageNum = 0; // Points to number of loaded feed entries.
-
-		if (config.debug) console.info('Plugin loaded: socialFeed [' + config.service + ']');
+		$wrapper = $(this);
 
 		if (!config.service || !services[config.service]) {
 			if (config.debug) console.warn('socialFeed: Selected service "' + config.service + '" is not supported');
-			return;
+			return false;
 		}
 
-		if ($self.length < 1) {
+		if (!config.wrapperElem || !config.entryElem) {
+			if (config.debug) console.warn('socialFeed: Wrapper element selector or entry element selector not provided');
+			return false;
+		}
+
+		$wrapper = $(config.wrapperElem);
+
+		if ($wrapper.length < 1) {
 			if (config.debug) console.warn('socialFeed: Wrapper element not found');
-			return;
+			return false;
 		}
 
-		var $entry = $self.find(config.entryElem),
-			$entriesWrapper = $entry.parent(),
-			entryElements = prepareEntryElements($entry, config.entryElementsSelector);
+		$entry = $wrapper.find(config.entryElem);
+
+		if ($entry.length < 1) {
+			if (config.debug) console.warn('socialFeed: Entry element not found in wrapper');
+			return false;
+		}
+
+		$entriesWrapper = $entry.parent();
+		entryElements = prepareEntryElements();
 
 		$entry.detach();
 
-		getFeedEntries(config, $self, $entriesWrapper, $entry, entryElements, $navigation, null, pageNum);
+		baseUrl = services[config.service].url();
 
-		// Button: PREVIOUS
-		if (config.btnPrevious) {
-			$navigation.prev = $self.find(config.btnPrevious);
-			if ($navigation.prev.length > 0) {
-				$navigation.prev.on('click.socialfeed', function(event) {
-					event.preventDefault();
-					var href = $(this).attr('href');
-					if (href.length > 2) {
-						pageNum++;
-						getFeedEntries(config, $self, $entriesWrapper, $entry, entryElements, $navigation, href, pageNum);
-						if (config.debug) console.info('socialFeed: Button previous clicked');
-					}
-				});
-			}
-			else if (config.debug) console.warn('socialFeed: Button previous was set but not found in document');
-		}
+		that.loadEntries(baseUrl);
 
-		// Button: NEXT
-		if (config.btnNext) {
-			$navigation.next = $self.find(config.btnNext);
-			if ($navigation.next.length > 0) {
-				$navigation.next.on('click.socialfeed', function(event) {
-					event.preventDefault();
-					var href = $(this).attr('href');
-					if (href.length > 2) {
-						if (pageNum > 0) pageNum--;
-						getFeedEntries(config, $self, $entriesWrapper, $entry, entryElements, $navigation, href, pageNum);
-						if (config.debug) console.info('socialFeed: Button next clicked');
-					}
-				});
-			}
-			else if (config.debug) console.warn('socialFeed: Button next was set but not found in document');
-		}
-
-		return $self;
+		// Handle navigation buttons
+		if (config.btnPrevious) that.handleNavButton('previous');
+		if (config.btnNext) that.handleNavButton('next');
 	};
 
-})(jQuery);
+
+	/** ----------------------------------------------------------------------------
+	 * INITIATE COMPONENT
+	 */
+
+	if (this.init() && config.debug) console.info('[PLON] SocialFeed initiated');
+};
