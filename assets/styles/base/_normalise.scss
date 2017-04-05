@@ -33,7 +33,10 @@ body {
 	@viewport { width: $breakpoint-h-xs; }
 }
 
-*:before, *:after { box-sizing: inherit; }
+*:before,
+*:after {
+	box-sizing: inherit;
+}
 
 article, aside, details, figure, figcaption, header, footer, hgroup, menu, nav, section, summary, hr { display: block; }
 
@@ -63,7 +66,8 @@ abbr[title], dfn[title] {
 	cursor: help;
 }
 
-sub, sup {
+sub,
+sup {
 	font-size: .8em;
 	line-height: 0;
 	vertical-align: baseline;
