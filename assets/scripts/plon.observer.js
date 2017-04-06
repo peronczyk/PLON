@@ -1,7 +1,7 @@
 
 /*	================================================================================
  *
- *	OBSERVE COMPONENT
+ *	PLON Component	: Observer
  *
  *	Modified		: 2017-04-06
  *	Author			: Bartosz Perończyk (peronczyk.com)
@@ -31,7 +31,7 @@
 	 *	SET UP JQUERY PLUGIN
 	 */
 
-	$.fn.observe = function(options) {
+	$.fn.observer = function(options) {
 
 		// Setup configuration
 		var config		= $.extend({}, defaults, options),
@@ -43,13 +43,13 @@
 
 		// Skip if function was initiated bad way
 		if (config.init && typeof config.init !== 'function') {
-			if (config.debug) console.error('Observe: variable passed as first argument was not a function');
+			if (config.debug) console.error('Observer: variable passed as first argument was not a function');
 			return _self;
 		}
 
 		// Skip if no dom elements was passed to watch
 		else if (_self.length < 1) {
-			if (config.debug) console.error('Observe: there is no elements to observe');
+			if (config.debug) console.error('Observer: there is no elements to observe');
 			return _self;
 		}
 
@@ -78,14 +78,14 @@
 
 		// Add observer to all elements found in jQ
 		_self.each(function() {
-			if (config.debug) console.info('Observe: set to watch');
+			if (config.debug) console.info('Observer: set to watch');
 			myObserver.observe(this, paramsSetup);
 		});
 
 		// Mutation handler
 		function mutationHandler(mutationRecords) {
 			mutationRecords.forEach(function(mutation) {
-				if (config.debug) console.info('Observe: Change in observed area detected');
+				if (config.debug) console.info('Observer: Change in observed area detected');
 				if (config.init) var initObj = config.init.call(initObj, mutation); // Call function passed as value of init object
 			});
 		}
