@@ -7,7 +7,7 @@ Watches for changes in specified dom element
 ## INSTALATION:
 
 ```javascript
-$('div#content').observe(options);
+$('div#content').observer(options);
 ```
 
 ## AVAILABLE OPTIONS
