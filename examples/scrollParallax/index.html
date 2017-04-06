@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Sscroll Parallax &mdash; PLON</title>
+
+	<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+
+	<link rel="stylesheet" type="text/css" href="../../dist/styles/layout.css">
+	<link rel="stylesheet" type="text/css" href="../../dist/styles/theme-basic.css">
+
+	<script type="text/javascript" src="../../dist/scripts/jquery.js"></script>
+	<script type="text/javascript" async src="../../dist/scripts/jquery.scrollparallax.js"></script>
+	<script type="text/javascript" async src="custom.js"></script>
+
+	<style>
+		.Sections {
+			height: 180vh;
+			overflow: hidden;
+		}
+
+			section {
+				position: relative;
+				width: calc(100% / 7);
+				float: left;
+				height: 100vh;
+			}
+
+				.Layer__container {
+					position: absolute;
+					top: 50%;
+					transform: translateY(-50%);
+					left: 0;
+					width: 100%;
+				}
+
+					.Layer {
+						padding: 20px;
+						height: 50px;
+						width: 100%;
+						text-align: center;
+						font-weight: bold;
+						transform: translate3d(0, 0, 0);
+						will-change: transform;
+					}
+
+				.Stripe {
+					position: fixed;
+					z-index: -1;
+					height: 100%;
+					width: calc(100% / 7);
+				}
+	</style>
+</head>
+
+<body>
+
+	<div class="Sections">
+
+		<section>
+			<div class="Layer__container">
+				<div class="Layer t-Blue">No parallax</div>
+			</div>
+			<div class="Stripe"></div>
+		</section>
+
+		<section>
+			<div class="Layer__container">
+				<div class="Layer t-Dark" data-parallax="-0.2">-0.2</div>
+			</div>
+			<div class="Stripe t-Gray"></div>
+		</section>
+
+		<section>
+			<div class="Layer__container">
+				<div class="Layer t-Emerald" data-parallax="0.3">0.3</div>
+			</div>
+			<div class="Stripe"></div>
+		</section>
+
+		<section>
+			<div class="Layer__container">
+				<div class="Layer t-Dark" data-parallax>Default: 0.7</div>
+			</div>
+			<div class="Stripe t-Gray"></div>
+		</section>
+
+		<section>
+			<div class="Layer__container">
+				<div class="Layer t-Emerald" data-parallax="1">1</div>
+			</div>
+			<div class="Stripe"></div>
+		</section>
+
+		<section>
+			<div class="Layer__container">
+				<div class="Layer t-Dark" data-parallax="1.3">1.3</div>
+			</div>
+			<div class="Stripe t-Gray"></div>
+		</section>
+
+		<section>
+			<div class="Layer__container">
+				<div class="Layer t-Emerald" data-parallax="1.8">1.8</div>
+			</div>
+			<div class="Stripe"></div>
+		</section>
+
+	</div>
+
+</body>
+
+</html>

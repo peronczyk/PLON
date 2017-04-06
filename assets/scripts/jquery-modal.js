@@ -1,34 +1,14 @@
 
 /*	================================================================================
  *
- *	JQ: MODAL WINDOW
+ *	JQ: MODAL
  *
- *	Script author	: Bartosz Perończyk (peronczyk.com)
- *	Created			: 2016-08-12
- *	Modified		: 2016-10-03
+ *	Modified		: 2017-03-09
+ *	Author			: Bartosz Perończyk (peronczyk.com)
+ *	Repository		: https://github.com/peronczyk/plon
  *
- *	--------------------------------------------------------------------------------
- *	DESCRIPTION:
- *
- *	Simple modal (popup) layer for websites.
- *
- *	--------------------------------------------------------------------------------
- *	INSTALATION:
- *
- *	Setup script in your custom.js this way: $.modal({});
- *	List of options with description is available below (default configuration)
- *
- *	--------------------------------------------------------------------------------
- *	TODO
- *
- *		- Method that opens modal in other scripts
- *		  eg.: $('.some-class').openModal({'type': });
- *
- *		- Auto injecting modal DOM structure to body
- *
- *		- Handling ESC and history back to close modal
- *
- *	================================================================================ */
+ *	================================================================================
+ */
 
 
 (function($) {
@@ -40,24 +20,39 @@
 	 */
 
 	var defaults = {
-			'debug'	: 0,
+			debug : 0,
 
-			// Modal display elements selectors
-			'wrapper'			: '.c-Modal', // CSS selector for modal wrapper element
-			'window'			: '.c-Modal__window',
-			'content'			: '.c-Modal__content',
-			'dataSelector'		: 'data-modal', // Data attribute name for DOM elements that should open modals
-			'openBodyClassName' : 'c-Modal__is-Open',
+			// CSS selector for modal wrapper element
+			wrapperElem: '.c-Modal',
+
+			// CSS selector for child element of wrapper that will position content.
+			// this class is used to determine if user clicked inside modal
+			// or outside to close it.
+			windowElem: '.c-Modal__window',
+
+			// CSS selector for child element of wraper that will contain content
+			// of modal (eg.: text, images)
+			contentElem: '.c-Modal__content',
+
+			// Data attribute name for DOM elements that should open modals
+			// after clicking on them
+			dataSelector: 'data-modal',
+
+			// CSS class name added to <body> tag that indicates if modal is open.
+			// Use it to hide browser scroll bar and to add styling to modal.
+			openBodyClassName: 'c-Modal__is-Open',
+
+			eventsNamespace: '.plon.modal',
 		},
 		$document = $('document'),
 		$body = $('body');
 
 
 	/*	----------------------------------------------------------------------------
-	*	CLOSE MODAL WINDOW
-	*/
+	 *	CLOSE MODAL WINDOW
+	 */
 
-	function closeModal(config, $wrapper) {
+	var closeModal = function(config, $wrapper) {
 		if (config.debug) console.info('Modal: Close');
 		$body.removeClass(config.openBodyClassName);
 		$wrapper.removeAttr('open');
@@ -65,10 +60,10 @@
 
 
 	/*	----------------------------------------------------------------------------
-	*	OPEN MODAL WINDOW
-	*/
+	 *	OPEN MODAL WINDOW
+	 */
 
-	function openModal(config, $wrapper) {
+	var openModal = function(config, $wrapper) {
 		if (config.debug) console.info('Modal: Open');
 		$wrapper.attr('open', '');
 		$body.addClass(config.openBodyClassName);
@@ -81,29 +76,31 @@
 
 	$.modal = function(options) {
 
-		var
-			// Setup configuration
-			config = $.extend({}, defaults, options),
-
-			// Definitions
-			$wrapper	= $(config.wrapper),
-			$content	= $(config.content);
+		// Setup configuration
+		var config = $.extend({}, defaults, options);
 
 		if (config.debug) console.info('Plugin loaded: Modal');
 
-		$wrapper = $(config.wrapper);
+		var $wrapper	= $(config.wrapperElem),
+			$inner		= $(config.windowElem),
+			$content	= $(config.contentElem);
 
 		if ($wrapper.length < 1) {
 			console.error('Modal: Could not find modal wrapper element "' + config.wrapper + '"');
-			return;
+			return false;
 		}
 
+		if ($inner.length < 1) {
+			console.error('Modal: Could not find modal window element "' + config.window + '"');
+			return false;
+		}
 
-		/*	------------------------------------------------------------------------
-		 *	OPEN WINDOW
-		 */
+		if ($content.length < 1) {
+			console.error('Modal: Could not find modal content element "' + config.content + '"');
+			return false;
+		}
 
-		$('[' + config.dataSelector +']').on('click.modal', function(event) {
+		$('[' + config.dataSelector + ']').on('click' + config.eventsNamespace, function(event) {
 			event.preventDefault();
 
 			var selectorMode = $(this).attr(config.dataSelector);
@@ -117,7 +114,7 @@
 				case 'title':
 					var title = $(this).attr('title');
 					if (title) {
-						$content.html($(this).attr('title'));
+						$content.html(title);
 						openModal(config, $wrapper);
 						if (config.debug) console.info('Modal: Content taken from clicked element title');
 					}
@@ -126,13 +123,13 @@
 
 				// Open modal in gallery mode
 				case 'image':
-					if (config.debug) console.info('Modal: Gallery mode (unsupported at this moment)');
+					if (config.debug) console.info('Modal: Gallery mode (unsupported in this version)');
 					alert('This mode is unsupported at this version of script');
 					break;
 
 				// Open modal with content received from YouTube
 				case 'youtube':
-					if (config.debug) console.info('Modal: Get movie from YouTube (unsupported at this moment)');
+					if (config.debug) console.info('Modal: Get movie from YouTube (unsupported in this version)');
 					alert('This mode is unsupported at this version of script');
 					break;
 
@@ -146,13 +143,13 @@
 							openModal(config, $wrapper);
 						},
 						error: function(jqXHR) {
-							if (config.debug) console.error('Modal: Couldn\'t get content from URL provided in clicked element');
+							if (config.debug) console.warn('Modal: Couldn\'t get content from URL provided in clicked element');
 						}
 					});
 					break;
 
 				default:
-					if (config.debug) console.error('Modal: Unknown modal selector type - "' + selectorMode + '"');
+					if (config.debug) console.warn('Modal: Unknown modal selector type - "' + selectorMode + '"');
 			}
 		});
 
@@ -161,7 +158,7 @@
 		 *	REACT ON CLICKING OUTSIDE OPENED MODAL WINDOW
 		 */
 
-		$wrapper.on('click.modal', function(event) {
+		$wrapper.on('click' + config.eventsNamespace, function(event) {
 			if(!$(event.target).closest(config.window).length) {
 				if (config.debug) console.info('Modal: Clicked outside window');
 				closeModal(config, $wrapper);

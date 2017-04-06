@@ -35,9 +35,10 @@
 	 */
 
 	var defaults = {
-			'debug'			: 0,
-			'tooltipID'		: 'tooltip', // CSS ID of tooltip DOM element
-			'openClassName'	: 'is-Open', // CSS class that indicates open state
+			'debug'				: 0,
+			'tooltipID'			: 'tooltip', // CSS ID of tooltip DOM element
+			'openClassName'		: 'is-Open', // CSS class that indicates open state
+			'eventsNamespace'	: '.plon.tooltips',
 		},
 		offset, text, $hoveredElem;
 
@@ -81,8 +82,8 @@
 
 		// React on mouse events
 		_self
-			.unbind('.sl.tooltip') // Prevent double binding
-			.on('mouseenter.sl.tooltip mouseleave.sl.tooltip', function(event) {
+			.unbind(config.eventsNamespace) // Prevent double binding
+			.on('mouseenter' + config.eventsNamespace + ' mouseleave' + config.eventsNamespace, function(event) {
 
 				$hoveredElem = $(this);
 

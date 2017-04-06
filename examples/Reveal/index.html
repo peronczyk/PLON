@@ -3,7 +3,8 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>REVEAL &mdash; Streamline</title>
+
+	<title>PLON / Reveal</title>
 
 	<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
 
@@ -11,7 +12,7 @@
 	<link rel="stylesheet" type="text/css" href="../../dist/styles/theme-basic.css">
 
 	<script type="text/javascript" src="../../dist/scripts/jquery-3.1.0.js"></script>
-	<script type="text/javascript" async src="../../dist/scripts/jquery-reveal.js"></script>
+	<script type="text/javascript" async src="../../dist/scripts/plon.reveal.js"></script>
 	<script type="text/javascript" async src="custom.js"></script>
 
 	<style>
@@ -21,10 +22,10 @@
 			transition: all 2s cubic-bezier(0.52, 0, 0.2, 0.60);
 		}
 
-		.js-Reveal-top		{ opacity: 0; transform: translateY(-60px); }
-		.js-Reveal-bottom	{ opacity: 0; transform: translateY(60px); }
-		.js-Reveal-left		{ opacity: 0; transform: translateX(-60px); }
-		.js-Reveal-right	{ opacity: 0; transform: translateX(60px); }
+		.js-Reveal--top		{ opacity: 0; transform: translateY(-60px); }
+		.js-Reveal--bottom	{ opacity: 0; transform: translateY(60px); }
+		.js-Reveal--left	{ opacity: 0; transform: translateX(-60px); }
+		.js-Reveal--right	{ opacity: 0; transform: translateX(60px); }
 	</style>
 </head>
 <body>
@@ -32,66 +33,74 @@
 	<div class="l-Wrapper">
 
 		<div class="l-Inner">
-			<div style="height:400px;">
-				<h3>Scroll down</h3>
+			<div>
+				<h1>jQuery: <strong>Reveal</strong></h1>
+				<p>Scroll down to see the effect</p>
+				<hr>
 			</div>
 
-			<div class="flexGrid">
-				<div class="Row">
-					<div class="Col-6">
-						<div class="t-Dark" data-reveal="js-Reveal-top" style="height:160px;"></div>
-					</div>
-					<div class="Col-6">
-						<div class="t-Emerald" data-reveal="js-Reveal-bottom" style="height:200px; margin-top:80px;"></div>
-					</div>
+			<div class="Grid">
+				<div class="Col-6">
+					<div class="t-Dark" data-reveal="js-Reveal--top" style="height:160px;"></div>
 				</div>
-
-				<div class="Row" style="margin-top:100px">
-					<div class="Col-6">
-						<div class="t-Blue" data-reveal="js-Reveal-left" style="height:230px; margin-top:60px;"></div>
-					</div>
-					<div class="Col-6">
-						<div class="t-Orange" data-reveal="js-Reveal-right" style="height:210px;"></div>
-					</div>
-				</div>
-
-				<div class="Row" style="margin-top:100px">
-					<div class="Col-3">
-						<div class="t-Dark" data-reveal="js-Reveal-top" style="height:180px; margin-top:200px;"></div>
-					</div>
-					<div class="Col-3">
-						<div class="t-Orange-dark" data-reveal="js-Reveal-bottom" style="height:280px;"></div>
-					</div>
-					<div class="Col-6">
-						<div class="t-Blue" data-reveal="js-Reveal-right" style="height:280px;"></div>
-					</div>
-				</div>
-
-				<div class="Row" style="margin-top:100px">
-					<div class="Col-6">
-						<div class="t-Gray" data-reveal="js-Reveal-left" style="height:180px; margin-top:200px;"></div>
-					</div>
-					<div class="Col-6">
-						<div class="t-Dark" data-reveal="js-Reveal-top" style="height:280px;"></div>
-					</div>
-				</div>
-
-				<div class="Row" style="margin-top:100px">
-					<div class="Col-6">
-						<div class="t-Emerald" data-reveal="js-Reveal-left" style="height:280px;"></div>
-					</div>
-					<div class="Col-3">
-						<div class="t-Gray-dark" data-reveal="js-Reveal-top" style="height:180px; margin-top:200px;"></div>
-					</div>
-					<div class="Col-3">
-						<div class="t-Orange" data-reveal="js-Reveal-bottom" style="height:280px;"></div>
-					</div>
+				<div class="Col-6">
+					<div class="t-Emerald" data-reveal="js-Reveal--bottom" style="height:200px; margin-top:80px;"></div>
 				</div>
 			</div>
 
-			<div style="height:200px;"></div>
+			<div class="Grid" style="margin-top:100px">
+				<div class="Col-6">
+					<div class="t-Blue" data-reveal="js-Reveal--left" style="height:230px; margin-top:60px;"></div>
+				</div>
+				<div class="Col-6">
+					<div class="t-Orange" data-reveal="js-Reveal--right" style="height:210px;"></div>
+				</div>
+			</div>
 
+			<div class="Grid" style="margin-top:100px">
+				<div class="Col-3">
+					<div class="t-Dark" data-reveal="js-Reveal--top" style="height:180px; margin-top:200px;"></div>
+				</div>
+				<div class="Col-3">
+					<div class="t-Orange-dark" data-reveal="js-Reveal--bottom" style="height:280px;"></div>
+				</div>
+				<div class="Col-6">
+					<div class="t-Blue" data-reveal="js-Reveal--right" style="height:280px;"></div>
+				</div>
+			</div>
+
+			<div class="Grid" style="margin-top:100px">
+				<div class="Col-6">
+					<div class="t-Gray" data-reveal="js-Reveal--left" style="height:180px; margin-top:200px;"></div>
+				</div>
+				<div class="Col-6">
+					<div class="t-Dark" data-reveal="js-Reveal--top" style="height:280px;"></div>
+				</div>
+			</div>
+
+			<div class="Grid" style="margin-top:100px">
+				<div class="Col-6">
+					<div class="t-Emerald" data-reveal="js-Reveal--left" style="height:280px;"></div>
+				</div>
+				<div class="Col-3">
+					<div class="t-Gray-dark" data-reveal="js-Reveal--top" style="height:180px; margin-top:200px;"></div>
+				</div>
+				<div class="Col-3">
+					<div class="t-Orange" data-reveal="js-Reveal--bottom" style="height:280px;"></div>
+				</div>
+			</div>
+
+			<div class="Grid" style="margin-top:100px">
+				<div class="Col-6">
+					<div class="t-Dark" data-reveal="js-Reveal--top" style="margin-top:80px; height:160px;"></div>
+				</div>
+				<div class="Col-6">
+					<div class="t-Emerald" data-reveal="js-Reveal--bottom" style="height:200px;"></div>
+				</div>
+			</div>
 		</div>
+
+		<div style="height:200px;"></div>
 
 	</div>
 
