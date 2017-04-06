@@ -1,9 +1,9 @@
 
 /*	================================================================================
  *
- *	JQ: GALLERY SLIDER
+ *	PLON Component	: Gallery Slider
  *
- *	Modified		: 2017-03-09
+ *	Modified		: 2017-04-06
  *	Author			: Bartosz Perończyk (peronczyk.com)
  *	Repository		: https://github.com/peronczyk/Streamline
  *
@@ -37,16 +37,13 @@
 
 	$.fn.gallerySlider = function(options) {
 
-		var
-			// Setup configuration
-			config = $.extend({}, defaults, options),
-
-			// Definitions
-			_self = $(this);
+		var config = $.extend({}, defaults, options), // Setup configuration
+			$that = $(this);
 
 		if (config.debug) console.info('Plugin loaded: gallerySlider');
 
-		_self.on('click.galleryslider', '.' + config.classNames.prev + ', .' + config.classNames.next, function() {
+		$that.on('click.galleryslider', '.' + config.classNames.prev + ', .' + config.classNames.next, function(event) {
+			event.preventDefault();
 
 			var $clickedElem = $(this);
 
@@ -101,9 +98,9 @@
 				}
 				else $imageList.css({'transform': 'translateX(' + ((-activeFigure - 1) * figureWidth) + 'px)'});
 			}
-
-			return false;
 		});
+
+		return $that;
 	}
 
 })(jQuery);
