@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>PLON / Social Feed</title>
+
+	<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+
+	<link rel="stylesheet" type="text/css" href="../../dist/styles/layout.css">
+	<link rel="stylesheet" type="text/css" href="../../dist/styles/theme-basic.css">
+
+	<script type="text/javascript" src="../../dist/scripts/jquery.min.js"></script>
+	<script type="text/javascript" async src="../../dist/scripts/plon.socialfeed.js"></script>
+	<script type="text/javascript" async src="custom.js"></script>
+
+	<style>
+		.c-Feed { transition: .2s; }
+
+		.c-Feed__nav .Btn {
+			opacity: .2;
+		}
+
+		.has-Next .c-Feed__next,
+		.has-Previous .c-Feed__previous {
+			opacity: 1;
+		}
+
+		.is-Loading {
+			opacity: .3;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="l-Wrapper">
+		<h1>PLON: <strong>Social Feed</strong></h1>
+		<hr>
+
+		<div class="Grid Grid--gutter">
+			<div class="Col-6">
+				<h3><strong>Facebook</strong> Feed</h3>
+
+				<!-- Start: Facebook feed -->
+
+				<div class="c-Feed" id="facebook-feed">
+
+					<div class="c-Feed__nav u-Clear l-Pad--bottom">
+						<a href="#0" class="c-Feed__previous Btn u-Display-block u-Float--left">&lsaquo; Previous</a>
+						<a href="#0" class="c-Feed__next Btn u-Display-block u-Float--right">Next &rsaquo;</a>
+					</div>
+
+					<!-- Start: Facebook feed / entries container -->
+
+					<div>
+						<!-- Start: Facebook feed / entry -->
+						<div id="facebook-feed__entry" class="l-Pad--bottom">
+							<hr>
+							<img data-entry-element="image" class="u-Width--full" alt="">
+							<p><strong data-entry-element="date"></strong></p>
+							<p data-entry-element="text"></p>
+							<a target="_blank" data-entry-element="link">View &raquo;</a>
+						</div>
+					</div>
+					<!-- End: Facebook feed / entries container -->
+
+				</div>
+
+				<a href="https://www.facebook.com/peronczyk" target="_blank"><strong>View this feed in social network &rsaquo;</strong></a>
+			</div>
+
+
+			<div class="Col-6">
+				<h3><strong>YouTube</strong> Feed</h3>
+
+				<!-- Start: YouTube feed -->
+
+				<div class="c-Feed" id="youtube-feed">
+
+					<div class="c-Feed__nav u-Clear l-Pad--bottom">
+						<a href="#0" class="c-Feed__previous Btn u-Display--block u-Float--left">&lsaquo; Previous</a>
+						<a href="#0" class="c-Feed__next Btn u-Display--block u-Float--right">Next &rsaquo;</a>
+					</div>
+
+					<!-- Start: YouTube feed / entries container -->
+
+					<div>
+						<!-- Start: YouTube feed / entry -->
+						<div id="youtube-feed__entry" class="l-Pad--bottom">
+							<hr>
+							<img data-entry-element="image" class="u-Width--full" alt="">
+							<p data-entry-element="text"></p>
+							<a target="_blank" data-entry-element="link">View &raquo;</a>
+						</div>
+						<!-- End: YouTube feed / entry -->
+					</div>
+
+					<!-- End: YouTube feed / entries container -->
+
+				</div>
+
+				<a href="https://www.youtube.com/user/googlechrome/videos?shelf_id=4&sort=dd" target="_blank"><strong>View this feed in social network &rsaquo;</strong></a>
+
+				<!-- End: YouTube feed -->
+			</div>
+		</div>
+
+	</div>
+</body>
+
+</html>

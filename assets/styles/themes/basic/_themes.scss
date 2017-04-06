@@ -71,10 +71,85 @@
 }
 
 
-.t-White		{ background-color: $color-white; }
-.t-Orange		{ background-color: $color-orange; }
-.t-Gray			{ background-color: $color-gray; }
-.t-Gray-medium	{ background-color: $color-gray-medium; }
-.t-Gray-dark	{ background-color: $color-gray-dark; }
-.t-Blue			{ background-color: $color-blue; }
-.t-Emerald		{ background-color: $color-emerald; }
+/*	--------------------------------------------------------------------------------
+ *	Theme : White
+ */
+
+.t-White {
+	background-color: $color-white;
+}
+
+
+/*	--------------------------------------------------------------------------------
+ *	Theme : Orange
+ */
+
+.t-Orange {
+	background-color: $color-orange;
+
+	h1 { color: $color-white; }
+}
+
+
+/*	--------------------------------------------------------------------------------
+ *	Theme : Gray
+ */
+
+.t-Gray {
+	background-color: $color-gray;
+}
+
+
+/*	--------------------------------------------------------------------------------
+ *	Theme : Medium Gary
+ */
+
+.t-Gray-medium {
+	background-color: $color-gray-medium;
+}
+
+
+/*	--------------------------------------------------------------------------------
+ *	Theme : Dark Gray
+ */
+
+.t-Gray-dark {
+	background-color: $color-gray-dark;
+}
+
+
+/*	--------------------------------------------------------------------------------
+ *	Theme : Blue
+ */
+
+.t-Blue {
+	background-color: $color-blue;
+
+	h1, h2 { color: $color-white; }
+}
+
+
+/*	--------------------------------------------------------------------------------
+ *	Theme : Emerald
+ */
+
+.t-Emerald {
+	background-color: $color-emerald;
+
+	h1 { color: $color-white; }
+}
+
+
+/*	--------------------------------------------------------------------------------
+ *	Theme : Tables
+ */
+
+table {
+	&.t-Hoverable {
+		tr:hover {
+			td {
+				background-color: $color-gray;
+			}
+		}
+	}
+}

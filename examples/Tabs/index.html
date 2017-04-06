@@ -3,15 +3,15 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>TABS &mdash; Streamline</title>
+	<title>PLON / Tabs</title>
 
 	<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
 
 	<link rel="stylesheet" type="text/css" href="../../dist/styles/layout.css">
 	<link rel="stylesheet" type="text/css" href="../../dist/styles/theme-basic.css">
 
-	<script type="text/javascript" src="../../dist/scripts/jquery-3.1.0.js"></script>
-	<script type="text/javascript" async src="../../dist/scripts/jquery-tabs.js"></script>
+	<script type="text/javascript" src="../../dist/scripts/jquery.min.js"></script>
+	<script type="text/javascript" async src="../../dist/scripts/plon.tabs.js"></script>
 	<script type="text/javascript" async src="custom.js"></script>
 </head>
 <body>
@@ -19,28 +19,75 @@
 	<div class="l-Wrapper">
 
 		<div class="l-Inner">
+			<h1>jQuery: <strong>Tabs</strong></h1>
+			<hr>
 
-			<div class="o-Tabs" data-for="tabs1">
-				<ul>
-					<li class="is-Active"><a href="#tab1" tabindex="1">Lorem ipsum</a></li>
-					<li><a href="#tab2" tabindex="1">Cum sociis</a></li>
-					<li><a href="#tab3" tabindex="1">Pellentesque</a></li>
-					<li><a href="#bla" tabindex="1">Not working</a></li>
-				</ul>
+			<h4>Tabs with 3rd tab active by default</h4>
+
+			<!-- First tabs -->
+			<div class="o-Tabs">
+				<div class="o-Tabs__list" id="tabs1" data-tabs-panels="tabs1-panels">
+					<ul role="tablist">
+						<li role="tab" tabindex="0" class="is-Active">Lorem ipsum</li>
+						<li role="tab" tabindex="-1">Cum sociis</li>
+						<li role="tab" tabindex="-1">Pellentesque</li>
+						<li role="tab" tabindex="-1"><em>Not working</em></li>
+					</ul>
+				</div>
+
+				<div class="o-Tabs__panels" id="tabs1-panels">
+					<div role="tabpanel">
+						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse id erat diam. Pellentesque feugiat ex vel turpis aliquet consequat. Quisque tortor risus, mollis quis commodo ac, condimentum in urna. Vivamus ante dui, vehicula nec nulla elementum, tempor ultrices lectus. Ut in mauris sed sem blandit fermentum. Fusce pretium augue consectetur maximus dictum. Donec nec nibh sapien. Aenean arcu massa, vulputate luctus feugiat vitae, varius vitae orci. Praesent et interdum nunc. Fusce lacus lorem, convallis non nisi non, pretium dignissim sapien. Nunc venenatis, nibh sodales gravida sagittis, ipsum enim mollis purus, vitae hendrerit massa arcu ac elit. Proin molestie pretium fringilla.</p>
+					</div>
+
+					<div role="tabpanel">
+						<p>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Etiam finibus venenatis arcu, sodales malesuada magna aliquam at. Vivamus in augue interdum, <a href="http://google.com/" target="_blank" title="Google">lobortis elit id</a>, dapibus dolor. Etiam suscipit justo quis eros feugiat, et ultricies metus fermentum. Pellentesque quis eros non quam scelerisque varius. Aliquam molestie sed augue sed efficitur. Suspendisse potenti. Nulla sollicitudin suscipit condimentum. Ut cursus ornare fringilla. Sed posuere cursus aliquam. Pellentesque porta nibh eget ornare pulvinar. Vivamus vel mattis felis.</p>
+						<p>In vehicula ligula et orci porta, eu sodales urna placerat. Nunc feugiat iaculis ultricies. Duis enim mauris, rutrum et fermentum sit amet, interdum at diam. Donec malesuada purus eget metus ultricies congue. Suspendisse ornare ipsum vel imperdiet condimentum. Integer id odio a mauris pellentesque iaculis at id eros. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nam sit amet pharetra elit, eu tincidunt lorem. In sed lacus sit amet dui vulputate eleifend nec euismod massa. Quisque consequat orci ligula, vitae rutrum sapien luctus non. Nam imperdiet, ligula vel ultrices condimentum, lectus tortor vestibulum nisl, malesuada viverra magna ligula a elit. Aenean porta risus ipsum, sed fringilla metus accumsan at. Morbi iaculis varius est, at mollis augue mattis quis. Mauris at accumsan sapien, et eleifend turpis.</p>
+						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse id erat diam. Pellentesque feugiat ex vel turpis aliquet consequat. Quisque tortor risus, mollis quis commodo ac, condimentum in urna. Vivamus ante dui, vehicula nec nulla elementum, tempor ultrices lectus. Ut in mauris sed sem blandit fermentum. Fusce pretium augue consectetur maximus dictum. Donec nec nibh sapien. Aenean arcu massa, vulputate luctus feugiat vitae, varius vitae orci. Praesent et interdum nunc. Fusce lacus lorem, convallis non nisi non, pretium dignissim sapien. Nunc venenatis, nibh sodales gravida sagittis, ipsum enim mollis purus, vitae hendrerit massa arcu ac elit. Proin molestie pretium fringilla.</p>
+					</div>
+
+					<div role="tabpanel" class="is-Active">
+						<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Praesent ultricies efficitur mauris, sed tempus lectus. Ut et semper mauris, at faucibus nisi. Nam et pretium urna. Nunc non dapibus elit. Nulla lacinia erat cursus posuere viverra. Curabitur sed fringilla erat, ut finibus nunc.</p>
+						<p>Vivamus eleifend risus ut rhoncus accumsan. Nunc faucibus vel est a semper. Morbi sapien nulla, gravida nec fermentum sagittis, elementum quis quam. Phasellus erat leo, tincidunt quis ultrices non, volutpat vitae tellus. Proin sagittis mi nec posuere aliquet. Curabitur vitae dui sit amet ligula dapibus tempor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vestibulum malesuada elit commodo nibh vestibulum congue hendrerit vel nisi.</p>
+					</div>
+				</div>
+			</div>
+			<!-- End: First tabs -->
+
+			<p><br></p>
+			<h4>Tabs with 2nd tab autoselected by plugin</h4>
+
+			<div class="u-Text--center">
+				<a href="#0" class="Btn" id="tabs2-prev">&laquo; previous</a>
+				<a href="#0" class="Btn" id="tabs2-first">first</a>
+				<a href="#0" class="Btn" id="tabs2-next">next &raquo;</a>
 			</div>
 
-			<div class="o-Tabs__container" id="tabs1">
-				<div class="tab1 is-Active"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse id erat diam. Pellentesque feugiat ex vel turpis aliquet consequat. Quisque tortor risus, mollis quis commodo ac, condimentum in urna. Vivamus ante dui, vehicula nec nulla elementum, tempor ultrices lectus. Ut in mauris sed sem blandit fermentum. Fusce pretium augue consectetur maximus dictum. Donec nec nibh sapien. Aenean arcu massa, vulputate luctus feugiat vitae, varius vitae orci. Praesent et interdum nunc. Fusce lacus lorem, convallis non nisi non, pretium dignissim sapien. Nunc venenatis, nibh sodales gravida sagittis, ipsum enim mollis purus, vitae hendrerit massa arcu ac elit. Proin molestie pretium fringilla.</p></div>
+			<!-- Second tabs -->
+			<div class="o-Tabs">
+				<div class="o-Tabs__list" id="tabs2" data-tabs-panels="tabs2-panels">
+					<ul role="tablist">
+						<li role="tab" tabindex="-1">Lorem ipsum</li>
+						<li role="tab" tabindex="-1">Cum sociis</li>
+						<li role="tab" tabindex="-1">Pellentesque</li>
+					</ul>
+				</div>
 
-				<div class="tab2"><p>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Etiam finibus venenatis arcu, sodales malesuada magna aliquam at. Vivamus in augue interdum, lobortis elit id, dapibus dolor. Etiam suscipit justo quis eros feugiat, et ultricies metus fermentum. Pellentesque quis eros non quam scelerisque varius. Aliquam molestie sed augue sed efficitur. Suspendisse potenti. Nulla sollicitudin suscipit condimentum. Ut cursus ornare fringilla. Sed posuere cursus aliquam. Pellentesque porta nibh eget ornare pulvinar. Vivamus vel mattis felis.</p>
-				<p>In vehicula ligula et orci porta, eu sodales urna placerat. Nunc feugiat iaculis ultricies. Duis enim mauris, rutrum et fermentum sit amet, interdum at diam. Donec malesuada purus eget metus ultricies congue. Suspendisse ornare ipsum vel imperdiet condimentum. Integer id odio a mauris pellentesque iaculis at id eros. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nam sit amet pharetra elit, eu tincidunt lorem. In sed lacus sit amet dui vulputate eleifend nec euismod massa. Quisque consequat orci ligula, vitae rutrum sapien luctus non. Nam imperdiet, ligula vel ultrices condimentum, lectus tortor vestibulum nisl, malesuada viverra magna ligula a elit. Aenean porta risus ipsum, sed fringilla metus accumsan at. Morbi iaculis varius est, at mollis augue mattis quis. Mauris at accumsan sapien, et eleifend turpis.</p>
-				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse id erat diam. Pellentesque feugiat ex vel turpis aliquet consequat. Quisque tortor risus, mollis quis commodo ac, condimentum in urna. Vivamus ante dui, vehicula nec nulla elementum, tempor ultrices lectus. Ut in mauris sed sem blandit fermentum. Fusce pretium augue consectetur maximus dictum. Donec nec nibh sapien. Aenean arcu massa, vulputate luctus feugiat vitae, varius vitae orci. Praesent et interdum nunc. Fusce lacus lorem, convallis non nisi non, pretium dignissim sapien. Nunc venenatis, nibh sodales gravida sagittis, ipsum enim mollis purus, vitae hendrerit massa arcu ac elit. Proin molestie pretium fringilla.</p></div>
+				<div class="o-Tabs__panels" id="tabs2-panels">
+					<div role="tabpanel">
+						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse id erat diam. Pellentesque feugiat ex vel turpis aliquet consequat. Quisque tortor risus, mollis quis commodo ac, condimentum in urna. Vivamus ante dui, vehicula nec nulla elementum, tempor ultrices lectus. Ut in mauris sed sem blandit fermentum. Fusce pretium augue consectetur maximus dictum. Donec nec nibh sapien.</p>
+					</div>
 
-				<div class="tab3"><p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Praesent ultricies efficitur mauris, sed tempus lectus. Ut et semper mauris, at faucibus nisi. Nam et pretium urna. Nunc non dapibus elit. Nulla lacinia erat cursus posuere viverra. Curabitur sed fringilla erat, ut finibus nunc.</p>
-				<p>Vivamus eleifend risus ut rhoncus accumsan. Nunc faucibus vel est a semper. Morbi sapien nulla, gravida nec fermentum sagittis, elementum quis quam. Phasellus erat leo, tincidunt quis ultrices non, volutpat vitae tellus. Proin sagittis mi nec posuere aliquet. Curabitur vitae dui sit amet ligula dapibus tempor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vestibulum malesuada elit commodo nibh vestibulum congue hendrerit vel nisi.</p></div>
+					<div role="tabpanel">
+						<p>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Etiam finibus venenatis arcu, sodales malesuada magna aliquam at. Vivamus in augue interdum, lobortis elit id, dapibus dolor. Etiam suscipit justo quis eros feugiat, et ultricies metus fermentum. Pellentesque quis eros non quam scelerisque varius. Aliquam molestie sed augue sed efficitur. Suspendisse potenti. Nulla sollicitudin suscipit condimentum. Ut cursus ornare fringilla. Sed posuere cursus aliquam. Pellentesque porta nibh eget ornare pulvinar. Vivamus vel mattis felis.</p>
+					</div>
+
+					<div role="tabpanel">
+						<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Praesent ultricies efficitur mauris, sed tempus lectus. Ut et semper mauris, at faucibus nisi. Nam et pretium urna. Nunc non dapibus elit. Nulla lacinia erat cursus posuere viverra. Curabitur sed fringilla erat, ut finibus nunc.</p>
+					</div>
+				</div>
 			</div>
-
-			<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Praesent ultricies efficitur mauris, sed tempus lectus. Ut et semper mauris, at faucibus nisi. Nam et pretium urna. Nunc non dapibus elit. Nulla lacinia erat cursus posuere viverra. Curabitur sed fringilla erat, ut finibus nunc.</p>
+			<!-- End: Second tabs -->
 		</div>
 
 	</div>

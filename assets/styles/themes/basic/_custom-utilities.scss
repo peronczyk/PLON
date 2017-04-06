@@ -38,16 +38,13 @@
  *	GRIDS
  */
 
-.flexGrid.u-Gutter {
+.Grid--gutter {
+	margin-left: -$gutter/2;
+	margin-right: -$gutter/2;
 
-	.Row {
-		margin-left: -$gutter/2;
-		margin-right: -$gutter/2;
-
-		[class*='Col-'] {
-			padding-left: $gutter/2;
-			padding-right: $gutter/2;
-		}
+	[class*='Col-'] {
+		padding-left: $gutter/2;
+		padding-right: $gutter/2;
 	}
 }
 

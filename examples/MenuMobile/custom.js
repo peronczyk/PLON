@@ -1,9 +1,14 @@
-var debug = 1; // Debug mode
+/* global MenuMobile */
 
 $(function() {
 
-	$('#mobile-menu-toggle').menuMobile({
-		'debug': debug,
+	'use strict';
+
+	new MenuMobile({
+		debug					: true,
+		toggleElem				: '#mobile-menu-toggle',
+		menuElem				: '#main-menu',
+		closeByClickingMenuLink	: true,
 	});
 
 });
