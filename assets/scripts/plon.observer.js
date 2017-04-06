@@ -1,23 +1,14 @@
 
 /*	================================================================================
  *
- *	JQ: OBSERVER
+ *	PLON Component	: Observer
  *
- *	Script author	: Bartosz Perończyk (peronczyk.com)
- *	Created			: 2015-12-09
- *	Modified		: 2016-10-11
+ *	Modified		: 2017-04-06
+ *	Author			: Bartosz Perończyk (peronczyk.com)
+ *	Repository		: https://github.com/peronczyk/plon
  *
- *	--------------------------------------------------------------------------------
- *	DESCRIPTION:
- *
- *	Watches for changes in specified dom element
- *
- *	--------------------------------------------------------------------------------
- *	INSTALATION:
- *
- *	Example: $('div#content').observe(function(mutation) { <code> });
- *
- *	================================================================================ */
+ *	================================================================================
+ */
 
 
 (function($) {
@@ -29,9 +20,9 @@
 	 */
 
 	var defaults = {
-			'debug': 0,
-			'init': null,
-			'params': null,
+			debug: 0,
+			init: null,
+			params: null,
 		},
 		allowedParams = ['childList', 'characterData', 'attributes', 'subtree'];
 
@@ -40,7 +31,7 @@
 	 *	SET UP JQUERY PLUGIN
 	 */
 
-	$.fn.observe = function(options) {
+	$.fn.observer = function(options) {
 
 		// Setup configuration
 		var config		= $.extend({}, defaults, options),
@@ -68,14 +59,14 @@
 
 		// Set up configuration
 		if (!config.params) {
-			while(i--) paramsSetup[allowedParams[i]] = true;
+			while (i--) paramsSetup[allowedParams[i]] = true;
 		}
 		else if (typeof config.params === 'object') {
 			paramsSetup = config.params;
 		}
 		else if (typeof config.params === 'string') {
 			config.params = config.params.split(' ');
-			while(i--) {
+			while (i--) {
 				if (config.params.indexOf(allowedParams[i]) > -1) {
 					paramsSetup[allowedParams[i]] = true;
 				}
@@ -100,6 +91,6 @@
 		}
 
 		return _self;
-	}
+	};
 
 })(jQuery);
