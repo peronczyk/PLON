@@ -2,9 +2,11 @@ var debug = 1;
 
 $(function() {
 
+	'use strict';
+
 	// Plugin setup
 	$('#cookies-bar').cookiesInfo({
-		'debug': debug
+		debug: debug
 	});
 
 	// Reset button only for showcase purposes

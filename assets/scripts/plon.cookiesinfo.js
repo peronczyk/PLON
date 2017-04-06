@@ -1,7 +1,7 @@
 
 /*	================================================================================
  *
- *	JQ: COOKIES INFO
+ *	PLON Component	: CookiesInfo
  *
  *	Modified		: 2017-03-09
  *	Author			: Bartosz Perończyk (peronczyk.com)
@@ -20,6 +20,7 @@
 	 */
 
 	var defaults = {
+
 			// Debug mode
 			debug: 0,
 
@@ -30,7 +31,7 @@
 			acceptButton: 'button',
 
 			// Cookie name stored in visitor's computer
-			cookieName: 'cookies_accept',
+			cookieName: 'cookies_accepted',
 
 			// Number of days after which cookies will be expired
 			cookieExpiresAfter: 90,
@@ -50,7 +51,7 @@
 		expires = date.toGMTString();
 		document.cookie = config.cookieName + '=1; expires=' + expires + '; path=/';
 		return true;
-	}
+	};
 
 
 	/*	----------------------------------------------------------------------------
@@ -58,14 +59,15 @@
 	 */
 
 	var cookieGet = function(config) {
-		if (document.cookie != '') {
-			for(var i = 0; i < cookies.length; i++) {
-				cookieStr = cookies[i].split('=');
-				if (cookieStr[0] === config.cookieName) return unescape(cookieStr[1]);
+		for (var i = 0; i < cookies.length; i++) {
+			cookieStr = cookies[i].split('=');
+			if (cookieStr[0] === config.cookieName) {
+				console.log(cookieStr[0] + ' ' + cookieStr[1]);
+				return unescape(cookieStr[1]);
 			}
 		}
-		return null;
-	}
+		return false;
+	};
 
 
 	/*	----------------------------------------------------------------------------
@@ -73,34 +75,35 @@
 	 */
 
 	$.fn.cookiesInfo = function(options) {
-		var config = $.extend({}, defaults, options); // Setup configuration
-		var _self = $(this); // Definitions
+		var config = $.extend({}, defaults, options),
+			$that = $(this);
 
 		if (config.debug) console.info('Plugin loaded: cookiesInfo');
 
 		// Check if cookies bar exists in DOM
-		if (_self.length < 1) {
+		if ($that.length < 1) {
 			if (config.debug) console.error('cookiesInfo: Cookies bar not found.');
-			return _self;
+			return $that;
 		}
 
 		// Check if cookies law was accepted
-		if (cookieGet(config) != 1) {
+		if (cookieGet(config) !== '1') {
 			if (config.debug) console.info('cookiesInfo: Not accepted, open bar.');
-			_self.addClass(config.visibleClassName);
+			$that.addClass(config.visibleClassName);
 		}
 		else if (config.debug) console.log('cookiesInfo: Cookies accepted. Bar not shown.');
 
 		// Accept cookies law
-		_self.on('click', config.acceptButton, function() {
+		$that.on('click', config.acceptButton, function(event) {
+			event.preventDefault();
+
 			if (cookieSet(config)) {
-				_self.removeClass(config.visibleClassName);
+				$that.removeClass(config.visibleClassName);
 				if (config.debug) console.info('cookiesInfo: Accepted, close bar.');
 			}
-			return false;
 		});
 
-		return _self;
-	}
+		return $that;
+	};
 
 })(jQuery);
