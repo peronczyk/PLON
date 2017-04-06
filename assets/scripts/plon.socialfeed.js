@@ -43,9 +43,6 @@ window.SocialFeed = function(options) {
 			// Generated per persona or per app. Check API documentation.
 			accessToken: null,
 
-			// List of variables that describes each post
-			fields: null,
-
 			// How many posts will be received
 			postsPerPage: 4,
 
@@ -112,8 +109,7 @@ window.SocialFeed = function(options) {
 			// Facebook API
 
 			facebook: {
-				defaultFields: 'message,created_time,story,full_picture,picture,likes.summary(true).limit(0),comments.summary(true).limit(0),permalink_url,link',
-				dataVariable: 'data',
+				defaultFields: 'message,type,created_time,story,full_picture,picture,likes.summary(true).limit(0),comments.summary(true).limit(0),permalink_url,link',
 
 				getUrl: function() {
 					return 'https://graph.facebook.com/v2.8/' + config.sourceId + '/posts?fields=' + this.defaultFields + '&limit=' + config.postsPerPage + '&access_token=' + config.accessToken;
@@ -244,6 +240,8 @@ window.SocialFeed = function(options) {
 			// Success
 			success: function(data, textStatus, jqXHR) {
 				if (config.debug) console.log('socialFeed: Data received succesully from: ' + apiUrl);
+
+				console.log(jqXHR.responseJSON);
 
 				var dataValues = services[config.service].getDataValues(jqXHR.responseJSON);
 

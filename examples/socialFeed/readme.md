@@ -17,7 +17,6 @@ new SocialFeed(options);
 - `service` (_required_) - Service type. Available services: "facebook" and "youtube".
 - `sourceId` (_required_) - Service source ID of social page, e.g. http://facebook.com/sourceid
 - `accessToken` (_required_) - Access token for selected service. Generated per persona or per app. Check API documentation.
-- `fields` - List of variables that describes each post. Check API documentation to view list of available fields.
 - `postsPerPage` - How many posts will be received. Default: `4`.
 - `entryElementsSelector` - Data attribute name that connects element with text that should be inserted to it. Default: `data-entry-element`.
 - `btnPrevious` - CSS selector for previous button. Default: `null`.
