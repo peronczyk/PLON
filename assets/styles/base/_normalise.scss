@@ -7,9 +7,7 @@
  */
 
 * {
-	-webkit-box-sizing: border-box;
-	   -moz-box-sizing: border-box;
-			box-sizing: border-box;
+	box-sizing: border-box;
 	margin: 0;
 	padding: 0;
 	border: none;
@@ -35,11 +33,17 @@ body {
 	@viewport { width: $breakpoint-h-xs; }
 }
 
-*:before, *:after { box-sizing: inherit; }
+*:before,
+*:after {
+	box-sizing: inherit;
+}
 
 article, aside, details, figure, figcaption, header, footer, hgroup, menu, nav, section, summary, hr { display: block; }
 
-audio, canvas, progress, video {
+audio,
+canvas,
+progress,
+video {
 	display: inline-block;
 	vertical-align: baseline;
 }
@@ -62,14 +66,15 @@ abbr[title], dfn[title] {
 	cursor: help;
 }
 
-sub, sup {
+sub,
+sup {
 	font-size: .8em;
 	line-height: 0;
 	vertical-align: baseline;
 	position: relative;
 }
-sup { top: -0.5em; }
-sub { bottom: -0.25em; }
+sup { top: -.5em; }
+sub { bottom: -.25em; }
 
 a {
 	text-decoration: none;
@@ -92,8 +97,8 @@ table {
 
 th, td { text-align: left; }
 
-input[type="radio"],
-input[type="checkbox"] {
+input[type='radio'],
+input[type='checkbox'] {
 	position: relative;
 	top: -1px;
 	vertical-align: middle;
@@ -107,9 +112,9 @@ input[type="checkbox"] {
 button,
 .Btn,
 label,
-input[type=button],
-input[type=submit],
-input[type=file] {
+input[type='button'],
+input[type='submit'],
+input[type='file'] {
 	-webkit-appearance: none;
 	-moz-appearance: none;
 
