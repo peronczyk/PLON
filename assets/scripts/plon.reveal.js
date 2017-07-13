@@ -20,21 +20,22 @@
 	 */
 
 	var defaults = {
+
 			// Debug mode
-			'debug': 0,
+			debug: 0,
 
 			// data-xxx selector that defines class name to be added to the element,
 			// eg.: data-reveal="js-Reveal--left"
-			'selector': 'data-reveal',
+			selector: 'data-reveal',
 
 			// Class name added to all elements that will be revealed
-			'defaultClassName': 'js-Reveal',
+			defaultClassName: 'js-Reveal',
 
 			// Class name thar turns CSS animations off
-			'noTransitionClassName': 'u-noTransition',
+			noTransitionClassName: 'u-noTransition',
 
 			// How many pixels need to be scrolled after element will show
-			'diff': 300,
+			diff: 300,
 		},
 		$document		= $(document),
 		$window			= $(window),
