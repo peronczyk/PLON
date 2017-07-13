@@ -4,7 +4,9 @@ This plugin adds functionality of changing class name of html element depending 
 
 ## Installation
 
-`$('#cookies-box').cookiesInfo(options);`
+```javascript
+$('#cookies-box').cookiesInfo(options);
+```
 
 You can pass an object of options to configure how this plugin works. The following options are accepted, each one is optional:
 

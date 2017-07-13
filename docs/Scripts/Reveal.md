@@ -12,6 +12,8 @@ To animate element you need to do 3 things:
     * `.u-noTransition` - disables animation when blocks are hidden after page was loaded. This class name can be changed by passing one of the options.
     * `.your-class-name` - class that hides your element.
 
+Example CSS code can be found in _examples/Reveal/index.html_ file.
+
 ## Available options
 
 * `debug` - Debug mode. Default: `0`.
