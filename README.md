@@ -1,4 +1,4 @@
-# PLON 1.0.0
+# PLON ![version](https://img.shields.io/npm/v/plon.svg)
 Simple SCSS & JS framework based on jQuery and Gulp.
 
 ---
