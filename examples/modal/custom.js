@@ -1,9 +1,13 @@
+/* global Modal */
+
 var debug = 1;
 
 $(function() {
 
-	$.modal({
-		'debug': debug
+	'use strict';
+
+	new Modal({
+		debug: debug
 	});
 
 

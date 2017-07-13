@@ -1,4 +1,4 @@
-# PLON
+# PLON 1.0.0
 Simple SCSS & JS framework based on jQuery and Gulp.
 
 ---

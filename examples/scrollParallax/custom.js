@@ -1,10 +1,10 @@
-var debug = 1;
+var debug = 1; // Debug mode
 
 $(function() {
 
 	'use strict';
 
-	$.reveal({
+	$.scrollParallax({
 		debug: debug,
 	});
 

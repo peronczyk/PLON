@@ -1,26 +1,14 @@
-
-/*	================================================================================
+/*
+ *	================================================================================
  *
- *	JQ: SCROLL TO
+ *	SCROLL TO COMPONENT
  *
+ *	Modified		: 2017-04-06
  *	Author			: Bartosz Perończyk (peronczyk.com)
- *	Created			: 2015-02-06
+ *	Repository		: https://github.com/peronczyk/plon
  *
- *	--------------------------------------------------------------------------------
- *	DESCRIPTION:
- *
- *	Adds ability to smooth scroll page to specific element. Scrolling stops
- *	when you use mouse scroll.
- *
- *	--------------------------------------------------------------------------------
- *	INSTALATION:
- *
- *	$('[data-scrollto]').scrollTo();
- *
- *	@speed	- controlls speed of scrolling.
- *			  Larger the number is, longer the scrolling lasts
- *
- *	================================================================================ */
+ *	================================================================================
+ */
 
 
 (function($) {
@@ -59,7 +47,8 @@
 
 		if (config.debug) console.info('Plugin loaded: scrollTo');
 
-		this.filter('a').on('click', function() {
+		this.filter('a').on('click', function(event) {
+			event.preventDefault();
 
 			// Stop if there is no target specified (no #element in href)
 			if (!this.hash) {
@@ -95,8 +84,6 @@
 			}
 
 			else if (config.debug) console.log('scrollTo: Element ' + this.hash + ' not found');
-
-			return false;
 		});
 
 		return _self;

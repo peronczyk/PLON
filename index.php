@@ -20,7 +20,7 @@
 		<hr>
 		<p>List of available jQuery plugins:</p>
 
-		<table>
+		<table class="t-Hoverable">
 			<thead>
 				<tr>
 					<th>Script name</th>

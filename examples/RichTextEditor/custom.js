@@ -1,9 +1,13 @@
-var debug = 1;
+/* global RichTextEditor */
 
 $(function() {
 
-	$('[data-rte]').richTextEditor({
-		debug: debug,
+	'use strict';
+
+	var options = {debug: true};
+
+	$('[data-rte]').each(function(index, elem) {
+		new RichTextEditor(elem, options);
 	});
 
 });
