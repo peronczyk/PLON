@@ -5,8 +5,8 @@ Simple SCSS & JS framework based on jQuery and Gulp.
 ## Why PLON?
 1. This framework was created for front-end developers who **don't want any base visual styling**, for people who likes to **start from a blank page** and have full controll over the effect of their work.
 2. SCSS structure and class naming encourages developers to use objective CSS (OOCSS).
-3. jQuery plugins are very easy to install and to debug. Scr
-3. Provides each plugin as a separate file - this encourages not to use unnecessary code.
+3. jQuery plugins are very easy to install and to debug.
+3. Provides each plugin as a separate file - so you don't have to use unnecessary code.
 
 ---
 ## Demo
@@ -36,4 +36,4 @@ Simple SCSS & JS framework based on jQuery and Gulp.
     * [VideoAutoPause](/docs/Scripts/VideoAutoPause.md)
 3. [Gulp](/docs/gulp.md)
 4. Code Guides
-    * [SCSS/CSS](/docs/CodeGuides/scss.md)
+    * [SCSS/CSS](/docs/CodeGuides/scss.md) (_Polish_)

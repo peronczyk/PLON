@@ -4,7 +4,10 @@ Simple modal (popup) layer for websites.
 
 ## Installation
 
-Setup script in your custom.js this way: `$.modal(options)`;
+Setup script in your custom.js this way:
+```javascript
+$.modal(options);
+```
 List of options with description is available below (default configuration)
 
 ## Available options

@@ -2,7 +2,7 @@
 
 1. Create directory in your project where you put front-end files.
 
-2. Copy the following files to the directory you created earlier:
+2. Copy the following files to created directory:
     * package.json
     * gulpfile.js
     * gulpconfig.js
@@ -13,9 +13,9 @@
     * assets/styles/layout.scss
     * assets/scripts/ _select only those jQ plugins you want_
 
-3. Open your system command line (e.g. Windows CMD) and install required node packages by entering `$ npm install`
+3. Open your system command line (e.g. Windows CMD) and install required node packages with command `$ npm install`
 
-4. Edit gulpconfig.js file to provide options that suits your project. This action is optional.
+4. Edit _gulpconfig.js_ file to provide options that suits your project. This action is optional.
 
 5. Now you can just run gulp commands from command line. Full list of commands are available [here](/docs/gulp.md).
 
