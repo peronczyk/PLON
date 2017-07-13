@@ -4,7 +4,7 @@
   "description": "Simple SCSS+JS framework based on jQuery and Gulp",
   "repository": {
     "type": "git",
-    "url": "https://github.com/peronczyk/Streamline"
+    "url": "https://github.com/peronczyk/plon"
   },
   "scripts": {
     "watch": "gulp watch",
