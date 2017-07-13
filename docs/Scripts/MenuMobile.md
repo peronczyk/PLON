@@ -5,7 +5,9 @@ Styling is in your hand.
 
 ## Installation
 
-`$('#mobile-menu-toggle').mobileMenu(options);`
+```javascript
+$('#mobile-menu-toggle').mobileMenu(options);
+```
 
 You can pass an object of options to configure how this plugin works. The following options are accepted, each one is optional:
 
