@@ -16,7 +16,7 @@ Simple SCSS & JS framework based on jQuery and Gulp.
 ## Table of Contents
 
 1. [**How to start project with PLON?**](/docs/README.md)
-2. [Scripts](/docs/scripts/README.md) (installation and debuging)
+2. [Scripts](/docs/Scripts/README.md) (installation and debuging)
     * [CookiesInfo](/docs/Scripts/CookiesInfo.md)
     * [GallerySlider](/docs/Scripts/GallerySlider.md)
     * [IsScrolled](/docs/Scripts/IsScrolled.md)
