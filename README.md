@@ -35,5 +35,3 @@ Simple SCSS & JS framework based on jQuery and Gulp.
     * [ToolTips](/docs/Scripts/ToolTips.md)
     * [VideoAutoPause](/docs/Scripts/VideoAutoPause.md)
 3. [Gulp](/docs/gulp.md)
-4. Code Guides
-    * [SCSS/CSS](/docs/CodeGuides/scss.md) (_Polish_)
