@@ -120,6 +120,7 @@ module.exports = function() {
 		// or ['file1.js', 'file2.js', ...]
 
 		jsFiles = [
+			'node_modules/jquery/dist/jquery.js',
 			basePaths.assets + paths.assets.scripts + '**/*.js',
 		],
 

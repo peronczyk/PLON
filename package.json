@@ -1,7 +1,11 @@
 {
-  "name": "streamline",
-  "version": "1.0.0",
-  "description": "Simple CSS+JS framework based on jQuery and Gulp",
+  "name": "plon",
+  "version": "1.0.1",
+  "description": "Simple SCSS+JS framework based on jQuery and Gulp",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/peronczyk/plon"
+  },
   "scripts": {
     "watch": "gulp watch",
     "serve": "gulp serve",
@@ -21,6 +25,7 @@
     "gulp-sourcemaps": "^1.6.0",
     "gulp-uglify": "^1.5.3",
     "gulp-util": "^3.0.7",
-    "run-sequence": "^1.2.1"
+    "run-sequence": "^1.2.1",
+    "jquery": "^3.2.1"
   }
 }

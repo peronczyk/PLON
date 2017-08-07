@@ -1,9 +1,13 @@
-var debug = 1,
-	$document = $(document);
+/* global RichTextEditor */
 
+$(function() {
 
-$document.ready(function() {
+	'use strict';
 
-	$('[data-richtext]').richTextEditor();
+	var options = {debug: true};
+
+	$('[data-rte]').each(function(index, elem) {
+		new RichTextEditor(elem, options);
+	});
 
 });

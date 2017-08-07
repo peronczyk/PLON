@@ -3,45 +3,52 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>Streamline script examples</title>
+	<title>PLON script examples</title>
 
 	<link rel="stylesheet" type="text/css" href="dist/styles/layout.css">
 	<link rel="stylesheet" type="text/css" href="dist/styles/theme-basic.css">
+
+	<style>
+		.l-Wrapper { max-width: 500px; }
+	</style>
 </head>
 
 <body>
 	<div class="l-Wrapper">
-		<div class="l-Inner">
-			<h1><strong>Streamline</strong> script examples</strong></h1>
+		<h1><strong>PLON</strong> script examples</strong></h1>
+		<p><a href="https://github.com/peronczyk/plon">github.com/peronczyk/PLON</a></p>
+		<hr>
+		<p>List of available jQuery plugins:</p>
 
-			<table class="u-Lines_horizontal">
-				<thead>
-					<tr>
-						<th>Script name</th>
-						<th class="u-Text_center">Readme</th>
-					</tr>
-				</thead>
-				<tbody>
-					<?php
-						$examples = scandir('examples/');
-						foreach($examples as $dir) {
-							if ($dir == '.' || $dir == '..') continue;
+		<table class="t-Hoverable">
+			<thead>
+				<tr>
+					<th>Script name</th>
+					<th class="u-Text--center">Readme</th>
+				</tr>
+			</thead>
+			<tbody>
+				<?php
+					$examples = scandir('examples/');
+					foreach($examples as $dir) {
+						if ($dir == '.' || $dir == '..') continue;
 
-							echo('<tr><td>');
+						echo('<tr><td>');
 
-							if (file_exists('examples/' . $dir . '/index.html')) echo('<a href="examples/' . $dir . '">' . $dir . '</a>');
-							else echo($dir);
+						if (file_exists('examples/' . $dir . '/index.html')) echo('<a href="examples/' . $dir . '">' . $dir . '</a>');
+						else echo($dir);
 
-							echo('</td><td class="u-Text_center">');
+						echo('</td><td class="u-Text--center">');
 
-							if (file_exists('examples/' . $dir . '/README.md')) echo('yes');
+						$script_local_address = 'docs/Scripts/' . $dir . '.md';
 
-							echo('</td></tr>');
-						}
-					?>
-				</tbody>
-			</table>
-		</div>
+						if (file_exists($script_local_address)) echo('<a href="https://github.com/peronczyk/PLON/tree/master/' . $script_local_address . '" target="_blank">view</a>');
+
+						echo('</td></tr>');
+					}
+				?>
+			</tbody>
+		</table>
 	</div>
 </body>
 
