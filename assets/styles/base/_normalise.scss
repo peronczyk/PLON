@@ -29,8 +29,8 @@ body {
 
 // Scale window content to viewport size if window is extra small
 @viewport { width: device-width }
-@media screen and (max-width: $breakpoint-h-xs) {
-	@viewport { width: $breakpoint-h-xs; }
+@include max-width(h-xs) {
+	@viewport { width: breakpoint(h-xs); }
 }
 
 *:before,
@@ -62,7 +62,7 @@ p:not(:last-child) { margin-bottom: 1em; }
 del { text-decoration: line-through; }
 
 abbr[title], dfn[title] {
-	border-bottom: 1px dotted rgba(0,0,0,.5);
+	border-bottom: 1px dotted rgba(0,0,0, .5);
 	cursor: help;
 }
 

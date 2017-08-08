@@ -13,21 +13,22 @@
 		float: left;
 		left: 0;
 	}
+
 	&--right {
 		float: right;
 		right: 0;
 	}
 
-	@media (max-width: $breakpoint-h-ul) {
+	@include max-width(h-ul) {
 		width: 350px;
 	}
 
-	@media (max-width: $breakpoint-h-xl) {
+	@include max-width(h-xl) {
 		padding: $gutter/2 $gutter/2 0 $gutter/2;
 		width: 300px;
 	}
 
-	@media (max-width: $breakpoint-h-md) {
+	@include max-width(h-md) {
 		float: none;
 	}
 }

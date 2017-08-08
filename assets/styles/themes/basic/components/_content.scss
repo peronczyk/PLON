@@ -10,20 +10,21 @@
 		float: right;
 		right: 0;
 	}
+
 	&--left {
 		float: left;
 		left: 0;
 	}
 
-	@media (max-width: $breakpoint-h-ul) {
+	@include max-width(h-ul) {
 		width: calc(100% - 350px);
 	}
 
-	@media (max-width: $breakpoint-h-xl) {
+	@include max-width(h-xl) {
 		width: calc(100% - 300px);
 	}
 
-	@media (max-width: $breakpoint-h-md) {
+	@include max-width(h-md) {
 		float: none;
 		position: static !important;
 		padding: $gutter/2 $gutter/2 $gutter/2 $gutter/2;

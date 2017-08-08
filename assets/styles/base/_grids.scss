@@ -38,48 +38,37 @@
  *	Example classname produced by mixin below: .Col-6@XL
  */
 
-@mixin columns($screen-size:'') {
 
-	@for $i from 1 through 12 {
-
-		.Col-#{$i}#{$screen-size} {
-			width: percentage($i/12);
-			flex-basis: percentage($i/12);
-		}
-	}
-
-	.Col-hide#{$screen-size} { display: none; }
-}
 
 // Default screen size
 @include columns();
 
 // Screen size: Ultra large
-@media (max-width: $breakpoint-h-ul) {
+@include max-width(h-ul) {
 	@include columns('\\@UL');
 }
 
 // Screen size: Extra large
-@media (max-width: $breakpoint-h-xl) {
+@include max-width(h-xl) {
 	@include columns('\\@XL');
 }
 
 // Screen size: Large
-@media (max-width: $breakpoint-h-lg) {
+@include max-width(h-lg) {
 	@include columns('\\@LG');
 }
 
 // Screen size: Medium
-@media (max-width: $breakpoint-h-md) {
+@include max-width(h-md) {
 	@include columns('\\@MD');
 }
 
 // Screen size: Small
-@media (max-width: $breakpoint-h-sm) {
+@include max-width(h-sm) {
 	@include columns('\\@SM');
 }
 
 // Screen size: Extra small
-@media (max-width: $breakpoint-h-xs) {
+@include max-width(h-xs) {
 	@include columns('\\@XS');
 }
