@@ -1,0 +1,63 @@
+// Column sizes generator for flex grids
+
+@mixin columns($screen-size:'') {
+	@for $i from 1 through 12 {
+		.Col-#{$i}#{$screen-size} {
+			width: percentage($i/12);
+			flex-basis: percentage($i/12);
+		}
+	}
+	.Col-hide#{$screen-size} { display: none; }
+}
+
+
+// Media breakpoint: max-width
+
+@mixin max-width($size) {
+	@media (max-width: breakpoint($size)) {
+		@content;
+	}
+}
+
+
+// Media breakpoint: min-width
+
+@mixin min-width($size) {
+	@media (min-width: #{breakpoint($size)} - 1) {
+		@content;
+	}
+}
+
+
+// Media breakpoint: max-height
+
+@mixin max-height($size) {
+	@media (max-height: breakpoint($size)) {
+		@content;
+	}
+}
+
+
+// Media breakpoint: min-height
+
+@mixin min-height($size) {
+	@media (min-height: #{breakpoint($size)} - 1) {
+		@content;
+	}
+}
+
+
+// Font face
+
+@mixin font-face($font-name, $file-name, $weight: normal, $style: normal) {
+	@font-face {
+		font-family: quote($font-name);
+		src: url($file-name + '.eot');
+		src: url($file-name + '.eot?#iefix') format('embedded-opentype'),
+		     url($file-name + '.woff2') format('woff2'),
+		     url($file-name + '.woff') format('woff'),
+		     url($file-name + '.ttf') format('truetype');
+		font-weight: $weight;
+		font-style: $style;
+	}
+}
