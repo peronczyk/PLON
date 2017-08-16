@@ -10,13 +10,18 @@
  *	BREAKPOINTS SIZES
  */
 
-$breakpoint-h-ul	: 1520px; // Ultra large
-$breakpoint-h-xl	: 1280px; // Extra large
-$breakpoint-h-lg	: 980px;  // large
-$breakpoint-h-md	: 800px;  // Medium
-$breakpoint-h-sm	: 640px;  // Small
-$breakpoint-h-xs	: 480px;  // Extra small
+$breakpoints: (
 
-$breakpoint-v-lg	: 780px;  // Large
-$breakpoint-v-md	: 700px;  // Medium
-$breakpoint-v-sm	: 620px;  // Small
+	// Horizontal
+	h-ul: 1520px, // Ultra large
+	h-xl: 1280px, // Extra large
+	h-lg: 980px,  // large
+	h-md: 800px,  // Medium
+	h-sm: 640px,  // Small
+	h-xs: 480px,  // Extra small
+
+	// Vertical
+	v-lg: 780px,  // Large
+	v-md: 700px,  // Medium
+	v-sm: 620px,  // Small
+)
