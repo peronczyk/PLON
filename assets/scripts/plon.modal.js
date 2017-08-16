@@ -3,7 +3,7 @@
  *
  *	MODAL COMPONENT
  *
- *	Modified		: 2017-03-30
+ *	Modified		: 2017-08-16
  *	Author			: Bartosz Perończyk (peronczyk.com)
  *	Repository		: https://github.com/peronczyk/plon
  *
@@ -44,6 +44,9 @@ window.Modal = function(options) {
 			// CSS class name added to <body> tag that indicates if modal is open.
 			// Use it to hide browser scroll bar and to add styling to modal.
 			openBodyClassName: 'c-Modal__is-Open',
+
+			// CSS class name added to <body> when content was loaded succesfully.
+			loadedBodyClassName: 'c-Modal__is-Loaded',
 
 			contentTypeClasses: {
 				dom		: 'is-Dom',
@@ -97,16 +100,30 @@ window.Modal = function(options) {
 
 
 	/** ----------------------------------------------------------------------------
+	 * METHOD : Start Modal
+	 * This method adds class names to wrapper to show user that modal is loading
+	 * some data.
+	 */
+
+	this.startModal = function() {
+		$body.addClass(config.openBodyClassName);
+	}
+
+
+	/** ----------------------------------------------------------------------------
 	 * METHOD : Open Modal
 	 * @param {string} contentType
 	 */
 
 	this.openModal = function(contentType) {
-		$body.addClass(config.openBodyClassName);
+		$body.addClass(config.loadedBodyClassName);
 		$wrapper
 			.addClass(config.contentTypeClasses[contentType])
 			.attr('open', '')
-			.attr('aria-hidden', 'false');
+			.attr('aria-hidden', 'false')
+			.scrollTop(0, 0);
+
+		$(window).trigger('modalopen');
 	};
 
 
@@ -115,10 +132,20 @@ window.Modal = function(options) {
 	 */
 
 	this.closeModal = function() {
-		$body.removeClass(config.openBodyClassName);
+		$body.removeClass(config.openBodyClassName + ' ' + config.loadedBodyClassName);
+
 		$wrapper
 			.removeAttr('open')
-			.attr('aria-hidden', 'true');
+			.attr('aria-hidden', 'true')
+			.removeClass($.map(config.contentTypeClasses, function(elem) {
+				return elem;
+			}).join(' '));
+
+		$content.empty();
+
+		$window.css({width: ''});
+
+		$(window).trigger('modalclose');
 	};
 
 
@@ -161,6 +188,7 @@ window.Modal = function(options) {
 	 */
 
 	this.loadTitle = function($elem) {
+		that.startModal();
 		that.insertText($elem.attr('title'));
 		that.openModal('title');
 		if (config.debug) console.info('[PLON / Modal] Text loaded from title attribute');
@@ -174,12 +202,15 @@ window.Modal = function(options) {
 	 */
 
 	this.loadUrl = function(url) {
+		that.startModal();
+
 		$.ajax({
 			url: url,
 			success: function(data) {
 				that.insertText(data);
 				that.openModal('url');
 				if (config.debug) console.info('[PLON / Modal] Content loaded asynchronously from URL ' + url);
+				$(window).trigger('modalcontentloaded');
 			},
 			error: function() {
 				if (config.debug) console.warn('[PLON / Modal] Couldn\'t load content from URL ' + url);
@@ -194,6 +225,8 @@ window.Modal = function(options) {
 	 */
 
 	this.loadImage = function(imageUrl) {
+		that.startModal();
+
 		var image = new Image();
 		$(image)
 			.attr('src', imageUrl)
@@ -201,6 +234,7 @@ window.Modal = function(options) {
 				if (config.debug) console.info('[PLON / Modal] Image loaded from: ' + imageUrl);
 				that.insertImage(this);
 				that.openModal('image');
+				$(window).trigger('modalcontentloaded');
 			})
 			.on('error', function() {
 				console.warn('[PLON / Modal] Image can\'t be loaded from url: ' + imageUrl);
@@ -215,6 +249,7 @@ window.Modal = function(options) {
 	 */
 
 	this.loadDom = function(domId) {
+		that.startModal();
 		var $elem = $(domId);
 		if ($elem.length) {
 			that.insertText($elem.html());
@@ -232,7 +267,7 @@ window.Modal = function(options) {
 
 	this.addClickHandler = function() {
 		if (config.dataSelector) {
-			$body.on('click.modal', '[' + config.dataSelector +']', function(event) {
+			$body.on('click.modal.plon', '[' + config.dataSelector +']', function(event) {
 				event.preventDefault();
 
 				var $clickedElem = $(this);
@@ -275,7 +310,7 @@ window.Modal = function(options) {
 		that.addClickHandler();
 
 		// Handle clicking outside modal content box
-		$wrapper.on('click.modal', function(event) {
+		$wrapper.on('click.modal.plon', function(event) {
 			if (!$(event.target).closest(config.window).length) {
 				if (config.debug) console.info('[PLON / Modal] Clicked outside window');
 				that.closeModal();
