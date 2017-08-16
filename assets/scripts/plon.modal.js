@@ -207,7 +207,14 @@ window.Modal = function(options) {
 		$.ajax({
 			url: url,
 			success: function(data) {
-				that.insertText(data);
+				var loadedData = data,
+					loadedDataBodyTag = $(data).find('body');
+
+				if (loadedDataBodyTag.length) {
+					loadedData = data.html();
+				}
+
+				that.insertText(loadedData);
 				that.openModal('url');
 				if (config.debug) console.info('[PLON / Modal] Content loaded asynchronously from URL ' + url);
 				$(window).trigger('modalcontentloaded');

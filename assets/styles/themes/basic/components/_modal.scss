@@ -3,9 +3,7 @@
  */
 
 .c-Modal {
-	display: flex;
-	align-items: center;
-	justify-content: center;
+	display: block;
 	visibility: hidden;
 	position: fixed;
 	top: 0;
@@ -19,6 +17,15 @@
 	text-align: center;
 	opacity: 0;
 	transition: .3s;
+
+	&:before {
+		content: '';
+		display: inline-block;
+		vertical-align: middle;
+		width: 0;
+		height: 100%;
+		margin-left: -0.5em;
+	}
 
 	&__window {
 		display: inline-block;
@@ -52,7 +59,6 @@
 		left: 50%;
 		transform: translate(-50%, -50%);
 	}
-
 
 	&__is-Open {
 		overflow: hidden;
