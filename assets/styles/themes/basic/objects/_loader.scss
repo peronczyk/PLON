@@ -1,0 +1,43 @@
+.o-Loader {
+	position: relative;
+	margin: auto;
+	width: 54px;
+	height: 54px;
+
+	&::before,
+	&::after {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		border-radius: 50%;
+	}
+
+	// Rotating piece of circle
+	&::before {
+		border-width: 2px;
+		border-style: solid;
+		border-color: $color-white transparent transparent transparent;
+		animation: spin 1s linear infinite;
+	}
+
+	// Background circle
+	&::after {
+		border: 2px solid rgba($color-black, .1);
+	}
+
+
+	@include max-width(h-md) {
+		width: 40px;
+		height: 40px;
+	}
+
+
+	&--white {
+		&::before {
+			border-top-color: $color-white;
+		}
+	}
+}
