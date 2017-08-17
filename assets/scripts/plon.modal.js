@@ -3,7 +3,7 @@
  *
  *	MODAL COMPONENT
  *
- *	Modified		: 2017-03-30
+ *	Modified		: 2017-08-16
  *	Author			: Bartosz Perończyk (peronczyk.com)
  *	Repository		: https://github.com/peronczyk/plon
  *
@@ -44,6 +44,9 @@ window.Modal = function(options) {
 			// CSS class name added to <body> tag that indicates if modal is open.
 			// Use it to hide browser scroll bar and to add styling to modal.
 			openBodyClassName: 'c-Modal__is-Open',
+
+			// CSS class name added to <body> when content was loaded succesfully.
+			loadedBodyClassName: 'c-Modal__is-Loaded',
 
 			contentTypeClasses: {
 				dom		: 'is-Dom',
@@ -92,8 +95,19 @@ window.Modal = function(options) {
 			detected = true;
 		}
 
-		if (!detected && config.debug) console.warn('Modal: Unknown mode');
+		if (!detected && config.debug) console.warn('[PLON / Modal] Unknown mode');
 	};
+
+
+	/** ----------------------------------------------------------------------------
+	 * METHOD : Start Modal
+	 * This method adds class names to wrapper to show user that modal is loading
+	 * some data.
+	 */
+
+	this.startModal = function() {
+		$body.addClass(config.openBodyClassName);
+	}
 
 
 	/** ----------------------------------------------------------------------------
@@ -102,11 +116,14 @@ window.Modal = function(options) {
 	 */
 
 	this.openModal = function(contentType) {
-		$body.addClass(config.openBodyClassName);
+		$body.addClass(config.loadedBodyClassName);
 		$wrapper
 			.addClass(config.contentTypeClasses[contentType])
 			.attr('open', '')
-			.attr('aria-hidden', 'false');
+			.attr('aria-hidden', 'false')
+			.scrollTop(0, 0);
+
+		$(window).trigger('modalopen');
 	};
 
 
@@ -115,10 +132,20 @@ window.Modal = function(options) {
 	 */
 
 	this.closeModal = function() {
-		$body.removeClass(config.openBodyClassName);
+		$body.removeClass(config.openBodyClassName + ' ' + config.loadedBodyClassName);
+
 		$wrapper
 			.removeAttr('open')
-			.attr('aria-hidden', 'true');
+			.attr('aria-hidden', 'true')
+			.removeClass($.map(config.contentTypeClasses, function(elem) {
+				return elem;
+			}).join(' '));
+
+		$content.empty();
+
+		$window.css({width: ''});
+
+		$(window).trigger('modalclose');
 	};
 
 
@@ -150,7 +177,7 @@ window.Modal = function(options) {
 			$window.css({width: windowExpectedWidth});
 		}
 
-		if (config.debug) console.info('Modal: Image inserted');
+		if (config.debug) console.info('[PLON / Modal] Image inserted');
 	};
 
 
@@ -161,9 +188,10 @@ window.Modal = function(options) {
 	 */
 
 	this.loadTitle = function($elem) {
+		that.startModal();
 		that.insertText($elem.attr('title'));
 		that.openModal('title');
-		if (config.debug) console.info('Modal: Text loaded from title attribute');
+		if (config.debug) console.info('[PLON / Modal] Text loaded from title attribute');
 	};
 
 
@@ -174,15 +202,17 @@ window.Modal = function(options) {
 	 */
 
 	this.loadUrl = function(url) {
+		that.startModal();
+
 		$.ajax({
 			url: url,
 			success: function(data) {
 				that.insertText(data);
 				that.openModal('url');
-				if (config.debug) console.info('Modal: Content loaded asynchronously from URL ' + url);
+				$(window).trigger('modalcontentloaded');
 			},
 			error: function() {
-				if (config.debug) console.warn('Modal: Couldn\'t load content from URL ' + url);
+				if (config.debug) console.warn('[PLON / Modal] Couldn\'t load content from URL ' + url);
 			}
 		});
 	};
@@ -194,16 +224,19 @@ window.Modal = function(options) {
 	 */
 
 	this.loadImage = function(imageUrl) {
+		that.startModal();
+
 		var image = new Image();
 		$(image)
 			.attr('src', imageUrl)
 			.on('load', function() {
-				if (config.debug) console.info('Modal: Image loaded from: ' + imageUrl);
+				if (config.debug) console.info('[PLON / Modal] Image loaded from: ' + imageUrl);
 				that.insertImage(this);
 				that.openModal('image');
+				$(window).trigger('modalcontentloaded');
 			})
 			.on('error', function() {
-				console.warn('Modal: Image can\'t be loaded from url: ' + imageUrl);
+				console.warn('[PLON / Modal] Image can\'t be loaded from url: ' + imageUrl);
 			});
 	};
 
@@ -215,13 +248,14 @@ window.Modal = function(options) {
 	 */
 
 	this.loadDom = function(domId) {
+		that.startModal();
 		var $elem = $(domId);
 		if ($elem.length) {
 			that.insertText($elem.html());
 			that.openModal('dom');
-			if (config.debug) console.info('Modal: DOM element "' + domId + '" content loaded');
+			if (config.debug) console.info('[PLON / Modal] DOM element "' + domId + '" content loaded');
 		}
-		else if (config.debug) console.info('Modal: DOM element "' + domId + '" not found');
+		else if (config.debug) console.info('[PLON / Modal] DOM element "' + domId + '" not found');
 	};
 
 
@@ -232,7 +266,7 @@ window.Modal = function(options) {
 
 	this.addClickHandler = function() {
 		if (config.dataSelector) {
-			$body.on('click.modal', '[' + config.dataSelector +']', function(event) {
+			$body.on('click.modal.plon', '[' + config.dataSelector +']', function(event) {
 				event.preventDefault();
 
 				var $clickedElem = $(this);
@@ -249,7 +283,7 @@ window.Modal = function(options) {
 				}
 			});
 		}
-		else if (config.debug) console.log('Modal: dataSelector was not provided - component will not react on any clicks');
+		else if (config.debug) console.log('[PLON / Modal] dataSelector was not provided - component will not react on any clicks');
 	};
 
 
@@ -259,7 +293,7 @@ window.Modal = function(options) {
 
 	this.init = function() {
 		if (!config.wrapper || !config.window || !config.content) {
-			console.warn('Modal: Configuration error - one of the required options is missing: wrapper, window or content');
+			console.warn('[PLON / Modal] Configuration error - one of the required options is missing: wrapper, window or content');
 			return false;
 		}
 
@@ -268,16 +302,16 @@ window.Modal = function(options) {
 		$content	= $wrapper.find(config.content);
 
 		if (!$wrapper.length || !$window.length || !$content.length) {
-			console.warn('Modal: Could not find one of modal key elements.\n - ' + config.wrapper + ': ' + $wrapper.length + '\n - ' + config.window + ': ' + $window.length + '\n - ' + config.content + ': ' + $content.length);
+			console.warn('[PLON / Modal] Could not find one of modal key elements.\n - ' + config.wrapper + ': ' + $wrapper.length + '\n - ' + config.window + ': ' + $window.length + '\n - ' + config.content + ': ' + $content.length);
 			return false;
 		}
 
 		that.addClickHandler();
 
 		// Handle clicking outside modal content box
-		$wrapper.on('click.modal', function(event) {
+		$wrapper.on('click.modal.plon', function(event) {
 			if (!$(event.target).closest(config.window).length) {
-				if (config.debug) console.info('Modal: Clicked outside window');
+				if (config.debug) console.info('[PLON / Modal] Clicked outside window');
 				that.closeModal();
 			}
 		});
