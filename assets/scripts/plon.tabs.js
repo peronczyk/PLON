@@ -93,7 +93,7 @@
 
 			// Trigger catchable event
 			$tabsContainer.add($panelsContainer).trigger({
-				type: 'change.tabs.plon',
+				type: 'change' + config.eventsNamespace,
 				oldTabIndex: that.activeTabIndex,
 				newTabIndex: newTabIndex,
 				tab: $activeTab,
