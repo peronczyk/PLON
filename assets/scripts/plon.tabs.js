@@ -35,7 +35,7 @@
 			eventsNamespace			: '.plon.tabs',
 			dataBinder				: 'data-tabs-panels',
 			classNames				: {active: 'is-Active'},
-			autoActivateTab			: 0,
+			autoActivateTab			: 0, // 0 means first tab
 		};
 
 		// Setting instance configuration
@@ -45,7 +45,7 @@
 		this.activeTabIndex = null;
 		this.panelsId;
 
-		// Common variables definition
+		// Common variables definitions
 		var $tabsContainer = $(elem),
 			$tabsList,
 			$panelsContainer,
@@ -66,7 +66,7 @@
 
 		this.changeTab = function(newTabIndex) {
 			if (newTabIndex > $panelsList.length - 1 || newTabIndex < 0) {
-				if (config.debug) console.warn('Tabs: Tabs panel with index "' + newTabIndex + '" doesn\'t exist');
+				if (config.debug) console.warn('[PLON / Tabs] Tabs panel with index "' + newTabIndex + '" doesn\'t exist');
 				return false;
 			}
 
@@ -87,7 +87,7 @@
 
 			that.activeTabIndex = newTabIndex;
 
-			if (config.debug) console.log('Tabs: Switched to tab with index: ' + newTabIndex);
+			if (config.debug) console.log('[PLON / Tabs] Switched to tab with index: ' + newTabIndex);
 		};
 
 
@@ -101,7 +101,7 @@
 			if (that.activeTabIndex !== null) {
 				newTabIndex = that.activeTabIndex === $tabsList.length - 1 ? 0 : that.activeTabIndex + 1;
 			}
-			if (config.debug) console.log('Tabs: Switching to next tab (index: ' + newTabIndex + ')');
+			if (config.debug) console.log('[PLON / Tabs] Switching to next tab (index: ' + newTabIndex + ')');
 			that.changeTab(newTabIndex);
 		};
 
@@ -113,7 +113,7 @@
 
 		this.previousTab = function() {
 			var newTabIndex = that.activeTabIndex <= 0 ? $tabsList.length - 1 : that.activeTabIndex - 1;
-			if (config.debug) console.log('Tabs: Switching to previous tab (index: ' + newTabIndex + ')');
+			if (config.debug) console.log('[PLON / Tabs] Switching to previous tab (index: ' + newTabIndex + ')');
 			that.changeTab(newTabIndex);
 		};
 
@@ -162,13 +162,13 @@
 		 */
 
 		if (!$tabsContainer.length) {
-			if (config.debug) console.warn('Tabs: TabList container not found: ' + elem);
+			if (config.debug) console.warn('[PLON / Tabs] TabList container not found: ' + elem);
 			return false;
 		}
 
 		$tabsList = $tabsContainer.find(config.tabSelector);
 		if (!$tabsList.length) {
-			if (config.debug) console.warn('Tabs: No tabs found');
+			if (config.debug) console.warn('[PLON / Tabs] No tabs found');
 			return false;
 		}
 
@@ -179,14 +179,14 @@
 				that.panelsId = $elemWithBindingId.attr(config.dataBinder);
 			}
 			else {
-				if (config.debug) console.warn('Tabs: Selected tabs list container or any parent element doesn\'t have data selector (' + config.dataBinder + ') or it\'s empty: "' + that.panelsId + '"');
+				if (config.debug) console.warn('[PLON / Tabs] Selected tabs list container or any parent element doesn\'t have data selector (' + config.dataBinder + ') or it\'s empty: "' + that.panelsId + '"');
 				return false;
 			}
 		}
 
 		$panelsContainer = $('#' + that.panelsId);
 		if (!$panelsContainer) {
-			if (config.debug) console.warn('Tabs: Specified panels container doesn\'t exist: ' + that.panelsId);
+			if (config.debug) console.warn('[PLON / Tabs] Specified panels container doesn\'t exist: ' + that.panelsId);
 			return false;
 		}
 
@@ -224,7 +224,7 @@
 	 */
 
 	$.fn.tabs = function(options) {
-		if (options.debug) console.log('jQ Plugin initiated: Tabs. Objects found: ' + this.length);
+		if (options.debug) console.log('[PLON] Tabs initiated. Objects found: ' + this.length);
 
 		/* global Tabs */
 		this.each(function(index, elem) {
