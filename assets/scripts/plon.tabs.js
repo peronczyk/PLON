@@ -3,7 +3,7 @@
  *
  *	JQ: TABS
  *
- *	Modified		: 2017-03-22
+ *	Modified		: 2017-08-18
  *	Author			: Bartosz Perończyk (peronczyk.com)
  *	Repository		: https://github.com/peronczyk/plon
  *
@@ -29,13 +29,13 @@
 
 		// Default configuration
 		var defaults = {
-			debug					: false,
-			tabSelector				: '[role="tab"]',
-			panelSelector			: '[role="tabpanel"]',
-			eventsNamespace			: '.plon.tabs',
-			dataBinder				: 'data-tabs-panels',
-			classNames				: {active: 'is-Active'},
-			autoActivateTab			: 0, // 0 means first tab
+			debug				: false,
+			tabSelector			: '[role="tab"]',
+			panelSelector		: '[role="tabpanel"]',
+			eventsNamespace		: '.plon.tabs',
+			dataBinder			: 'data-tabs-panels',
+			classNames			: {active: 'is-Active'},
+			autoActivateTab		: 0, // 0 means first tab
 		};
 
 		// Setting instance configuration
@@ -49,7 +49,9 @@
 		var $tabsContainer = $(elem),
 			$tabsList,
 			$panelsContainer,
-			$panelsList;
+			$panelsList,
+			$activeTab,
+			$activePanel;
 
 		// Events monitored by script
 		var monitoredEvents =
@@ -72,18 +74,30 @@
 
 			$tabsList
 				.removeClass(config.classNames.active)
-				.attr('tabindex', -1)
-				.eq(newTabIndex)
+				.attr('tabindex', -1);
+
+			$activeTab = $tabsList.eq(newTabIndex);
+			$activeTab
 				.addClass(config.classNames.active)
 				.attr('tabindex', 0)
 				.trigger('focus', {selfInitiated: true});
 
 			$panelsList
 				.removeClass(config.classNames.active)
-				.attr('aria-hidden', true)
-				.eq(newTabIndex)
+				.attr('aria-hidden', true);
+
+			$activePanel = $panelsList.eq(newTabIndex);
+			$activePanel
 				.addClass(config.classNames.active)
 				.attr('aria-hidden', false);
+
+			// Trigger catchable event
+			$tabsContainer.add($panelsContainer).trigger({
+				type: 'change.tabs.plon',
+				tabIndex: newTabIndex,
+				tab: $activeTab,
+				panel: $activePanel
+			});
 
 			that.activeTabIndex = newTabIndex;
 
