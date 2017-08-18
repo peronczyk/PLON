@@ -34,6 +34,6 @@ $('.tabs-list').tabs(options);
   * `active` - indicates both tabs *list link* and tabs *panels panel* when their active (open). Default: `is-Active`.
   * `panel`
 
-## ToDo
+## Catchable events
 
-* Navigation with keyboard and reacting on history back/forward
+* `change.tabs.plon` - Triggered on tabs list and tabs container each time tabs are changed.
