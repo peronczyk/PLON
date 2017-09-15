@@ -1,10 +1,11 @@
 /**
  * =================================================================================
  *
- * PLON example gulpfile.js
+ * PLON Gulp
+ * Example gulpfile.js
  *
  * @author		Bartosz Perończyk <peronczyk.com>
- * @created		2017-09-14
+ * @created		2017-09-10
  * @modified	2017-09-14
  * @repository	https://github.com/peronczyk/plon
  *

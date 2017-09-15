@@ -1,5 +1,15 @@
 /**
- * Default configuration file for PLON Gulp
+ * =================================================================================
+ *
+ * PLON Gulp
+ * Default configuration file
+ *
+ * @author		Bartosz Perończyk <peronczyk.com>
+ * @created		2017-09-10
+ * @modified	2017-09-14
+ * @repository	https://github.com/peronczyk/plon
+ *
+ * =================================================================================
  */
 
 module.exports = {
@@ -9,6 +19,12 @@ module.exports = {
 	 */
 
 	jsFiles: [],
+
+
+	/**
+	 * Name of file that is a result of JS files concatenation
+	 */
+
 	jsConcatenatedFileName: 'scripts.js',
 
 

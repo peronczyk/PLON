@@ -1,5 +1,15 @@
 /**
- * PLON Gulp starting file
+ * =================================================================================
+ *
+ * PLON Gulp
+ * Starting file
+ *
+ * @author		Bartosz Perończyk <peronczyk.com>
+ * @created		2017-09-10
+ * @modified	2017-09-14
+ * @repository	https://github.com/peronczyk/plon
+ *
+ * =================================================================================
  */
 
 module.exports = function(passedConfig) {
