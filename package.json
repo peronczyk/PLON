@@ -1,6 +1,6 @@
 {
   "name": "plon",
-  "version": "1.1.4",
+  "version": "1.2.0",
   "description": "Simple SCSS+JS framework based on jQuery and Gulp",
   "repository": {
     "type": "git",
