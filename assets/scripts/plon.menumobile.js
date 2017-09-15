@@ -1,13 +1,13 @@
-
-/*	================================================================================
+/**
+ * =================================================================================
  *
- *	MENU MOBILE COMPONENT
+ * PLON Component : MenuMobile
  *
- *	Modified		: 2017-04-04
- *	Author			: Bartosz Perończyk (peronczyk.com)
- *	Repository		: https://github.com/peronczyk/plon
+ * @author			Bartosz Perończyk (peronczyk.com)
+ * @modified		2017-09-15
+ * @repository		https://github.com/peronczyk/plon
  *
- *	================================================================================
+ * =================================================================================
  */
 
 

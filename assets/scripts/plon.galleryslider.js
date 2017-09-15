@@ -1,13 +1,13 @@
-/*
- *	================================================================================
+/**
+ * =================================================================================
  *
- *	PLON Component	: Gallery Slider
+ * PLON Component : GallerySlider
  *
- *	Modified		: 2017-04-06
- *	Author			: Bartosz Perończyk (peronczyk.com)
- *	Repository		: https://github.com/peronczyk/Streamline
+ * @author			Bartosz Perończyk (peronczyk.com)
+ * @modified		2017-09-15
+ * @repository		https://github.com/peronczyk/plon
  *
- *	================================================================================
+ * =================================================================================
  */
 
 
@@ -16,8 +16,8 @@
 	'use strict';
 
 
-	/*	----------------------------------------------------------------------------
-	 *	PLUGIN DEFAULT CONFIGURATION
+	/** ----------------------------------------------------------------------------
+	 * PLUGIN DEFAULT CONFIGURATION
 	 */
 
 	var defaults = {
@@ -31,8 +31,8 @@
 		dir;
 
 
-	/*	----------------------------------------------------------------------------
-	 *	SET UP JQUERY PLUGIN
+	/** ----------------------------------------------------------------------------
+	 * SET UP JQUERY PLUGIN
 	 */
 
 	$.fn.gallerySlider = function(options) {
