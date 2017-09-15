@@ -6,7 +6,7 @@
 	<title>PLON script examples</title>
 
 	<link rel="stylesheet" type="text/css" href="dist/styles/layout.css">
-	<link rel="stylesheet" type="text/css" href="dist/styles/theme-basic.css">
+	<link rel="stylesheet" type="text/css" href="dist/styles/skin-basic.css">
 
 	<style>
 		.l-Wrapper { max-width: 500px; }
