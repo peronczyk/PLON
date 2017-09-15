@@ -1,24 +1,14 @@
-
-/*	================================================================================
+/**
+ * =================================================================================
  *
- *	JQ: CURSOR POSITION TILT
+ * PLON Component : TiltIt
  *
- *	Author	: Bartosz Perończyk (peronczyk.com)
- *	Created	:
- *	Version	: 1.0
+ * @author			Bartosz Perończyk (peronczyk.com)
+ * @modified		2017-09-15
+ * @repository		https://github.com/peronczyk/plon
  *
- *	--------------------------------------------------------------------------------
- *	DESCRIPTION:
- *
- *	Tilts layer depending on cursor position over viewport or specific area
- *
- *	--------------------------------------------------------------------------------
- *	INSTALATION:
- *
- *	Example usage: $('.tilt').tiltIt({'strength': 30});
- *	To invert tilting direction set strength to nagative value
- *
- *	================================================================================ */
+ * =================================================================================
+ */
 
 
 (function($) {
@@ -37,14 +27,14 @@
 			perspective	: 600,
 		},
 
-			// Other definitions
+		// Other definitions
 		frameRequested	= false,
 		canvasChanged	= false,
 		offsetX, offsetY, canvasWidth, canvasHeight, cursorPos;
 
 
-	/*	----------------------------------------------------------------------------
-	 *	SET UP JQUERY PLUGIN
+	/** ----------------------------------------------------------------------------
+	 * SET UP JQUERY PLUGIN
 	 */
 
 	$.fn.tiltIt = function(options) {
@@ -72,7 +62,7 @@
 			return _self;
 		}
 
-		_self.css({'transform': 'scale(' + config.scale + ')'}); // Set default scale transform
+		_self.css({transform: 'scale(' + config.scale + ')'}); // Set default scale transform
 
 		// React on mouse move
 		config.canvas.on('mousemove.tiltit', function(e) {
@@ -90,7 +80,7 @@
 				offsetY = ((canvasHeight / 2) - cursorPos.y) / canvasHeight * config.strength;
 
 				// Set transformations to tilted element
-				_self.css({'transform': 'scale(' + config.scale + ') perspective(' + config.perspective + 'px) translate3d(0px, 0px, 0px) rotate3d(1, 0, 0, ' + offsetY + 'deg) rotate3d(0, 1, 0, ' + offsetX + 'deg)'}
+				_self.css({transform: 'scale(' + config.scale + ') perspective(' + config.perspective + 'px) translate3d(0px, 0px, 0px) rotate3d(1, 0, 0, ' + offsetY + 'deg) rotate3d(0, 1, 0, ' + offsetX + 'deg)'}
 				);
 
 				frameRequested = false;

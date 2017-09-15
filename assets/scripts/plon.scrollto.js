@@ -1,13 +1,13 @@
-/*
- *	================================================================================
+/**
+ * =================================================================================
  *
- *	SCROLL TO COMPONENT
+ * PLON Component : ScrollTo
  *
- *	Modified		: 2017-04-06
- *	Author			: Bartosz Perończyk (peronczyk.com)
- *	Repository		: https://github.com/peronczyk/plon
+ * @author			Bartosz Perończyk (peronczyk.com)
+ * @modified		2017-09-15
+ * @repository		https://github.com/peronczyk/plon
  *
- *	================================================================================
+ * =================================================================================
  */
 
 
@@ -15,8 +15,8 @@
 
 	'use strict';
 
-	/*	----------------------------------------------------------------------------
-	 *	PLUGIN DEFAULT CONFIGURATION
+	/** ----------------------------------------------------------------------------
+	 * PLUGIN DEFAULT CONFIGURATION
 	 */
 
 	var defaults = {
@@ -38,18 +38,17 @@
 		scrolled;
 
 
-	/*	----------------------------------------------------------------------------
-	 *	SET UP JQUERY PLUGIN
+	/** ----------------------------------------------------------------------------
+	 * SET UP JQUERY PLUGIN
 	 */
 
 	$.fn.scrollTo = function(options) {
 
-		var
-			// Setup configuration
-			config = $.extend({}, defaults, options),
+		// Setup configuration
+		var config = $.extend({}, defaults, options);
 
-			// Definitions
-			_self			= $(this),
+		// Definitions
+		var _self			= $(this),
 			$htmlAndBody	= $('html,body'),
 			$document		= $(document);
 

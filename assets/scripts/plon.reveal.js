@@ -1,13 +1,13 @@
-
-/*	================================================================================
+/**
+ * =================================================================================
  *
- *	JQ: REVEAL
+ * PLON Component : Reveal
  *
- *	Modified		: 2017-03-14
- *	Author			: Bartosz Perończyk (peronczyk.com)
- *	Repository		: https://github.com/peronczyk/plon
+ * @author			Bartosz Perończyk (peronczyk.com)
+ * @modified		2017-09-15
+ * @repository		https://github.com/peronczyk/plon
  *
- *	================================================================================
+ * =================================================================================
  */
 
 
@@ -15,45 +15,49 @@
 
 	'use strict';
 
-	/*	----------------------------------------------------------------------------
-	 *	PLUGIN DEFAULT CONFIGURATION
+	/** ----------------------------------------------------------------------------
+	 * PLUGIN DEFAULT CONFIGURATION
 	 */
 
-	var defaults = {
+	var defaults =
+		{
 			// Debug mode
-			'debug': 0,
+			debug: 0,
 
 			// data-xxx selector that defines class name to be added to the element,
 			// eg.: data-reveal="js-Reveal--left"
-			'selector': 'data-reveal',
+			selector: 'data-reveal',
 
 			// Class name added to all elements that will be revealed
-			'defaultClassName': 'js-Reveal',
+			defaultClassName: 'js-Reveal',
 
 			// Class name thar turns CSS animations off
-			'noTransitionClassName': 'u-noTransition',
+			noTransitionClassName: 'u-noTransition',
 
 			// How many pixels need to be scrolled after element will show
-			'diff': 300,
+			diff: 300,
 
-			'eventsNamespace': '.plon.reveal',
+			eventsNamespace: '.plon.reveal',
 		},
 		$document		= $(document),
-		$window			= $(window),
 		frameRequested	= false,
 
-		currentElement, elementsToReveal = [], i, offset, height;
+		currentElement,
+		elementsToReveal = [],
+		i,
+		offset,
+		height;
 
 
-	/*	----------------------------------------------------------------------------
-	 *	MONITOR REVEAL ELEMENTS DISTANCE FROM TOP
+	/** ----------------------------------------------------------------------------
+	 * MONITOR REVEAL ELEMENTS DISTANCE FROM TOP
 	 */
 
 	var checkElementsToReveal = function(config) {
 
 		// If array of elements to be animated is not empty check their distance from top
 		if (elementsToReveal.length > 0) {
-			for(i = 0; i < elementsToReveal.length; i++) {
+			for (i = 0; i < elementsToReveal.length; i++) {
 				if (!elementsToReveal[i]) continue; // Skip empty elements
 
 				// Change CSS classes if viewport reached this element
@@ -74,8 +78,8 @@
 	}
 
 
-	/*	----------------------------------------------------------------------------
-	 *	SET UP JQUERY PLUGIN
+	/** ----------------------------------------------------------------------------
+	 * SET UP JQUERY PLUGIN
 	 */
 
 	$.reveal = function(options) {

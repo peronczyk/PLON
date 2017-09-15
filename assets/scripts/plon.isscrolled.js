@@ -1,38 +1,22 @@
-
-/*	================================================================================
+/**
+ * =================================================================================
  *
- *	JQ: NAVBAR SCROLL RESIZE
+ * PLON Component : IsScrolled
  *
- *	Script author: Bartosz Perończyk (peronczyk.com)
+ * @author			Bartosz Perończyk (peronczyk.com)
+ * @modified		2017-09-15
+ * @repository		https://github.com/peronczyk/plon
  *
- *	--------------------------------------------------------------------------------
- *	DESCRIPTION:
- *
- *	Script monitors scrolling on selected DOM element and if scroll was
- *	made adds specified class name to another DOM element. By default
- *	class name 'is-scrolled' is added to <body>
- *
- *	--------------------------------------------------------------------------------
- *	INSTALATION:
- *
- *	Default usage that monitors scrolling on whole document and adds
- *	class 'is-scrolled' to <body> :
- *	$(document).isScrolled();
- *
- *	--------------------------------------------------------------------------------
- *	TODO
- *
- *	Triggering DOM event after isScrolled detection.
- *
- *	================================================================================ */
+ * =================================================================================
+ */
 
 
 (function($) {
 
 	'use strict';
 
-	/*	----------------------------------------------------------------------------
-	 *	PLUGIN DEFAULT CONFIGURATION
+	/** ----------------------------------------------------------------------------
+	 * PLUGIN DEFAULT CONFIGURATION
 	 */
 
 	var defaults = {
@@ -47,8 +31,8 @@
 		$target;
 
 
-	/*	----------------------------------------------------------------------------
-	 *	CHECK IF ELEMENT WAS SCROLLED
+	/** ----------------------------------------------------------------------------
+	 * CHECK IF ELEMENT WAS SCROLLED
 	 */
 
 	function checkScroll(config, _self, $target) {
@@ -68,8 +52,8 @@
 	}
 
 
-	/*	----------------------------------------------------------------------------
-	 *	SET UP JQUERY PLUGIN
+	/** ----------------------------------------------------------------------------
+	 * SET UP JQUERY PLUGIN
 	 */
 
 	$.fn.isScrolled = function(options) {

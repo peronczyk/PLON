@@ -1,28 +1,14 @@
-
-/*	================================================================================
+/**
+ * =================================================================================
  *
- *	JQ: MOVIE AUTO PAUSE
+ * PLON Component : VideoAutoPause
  *
- *	Script author	: Bartosz Perończyk
- *	Created			: 2015-08-14
- *	Modified		: 2016-07-26
+ * @author			Bartosz Perończyk (peronczyk.com)
+ * @modified		2017-09-15
+ * @repository		https://github.com/peronczyk/plon
  *
- *	--------------------------------------------------------------------------------
- *	DESCRIPTION:
- *
- *	Pauses embeded movies when tab is inactive
- *
- *	--------------------------------------------------------------------------------
- *	INSTALATION:
- *
- *	$('[data-autopause]').movieAutoPause();
- *
- *	--------------------------------------------------------------------------------
- *	TODO
- *
- *	Configuration of autplay if window is active again
- *
- *	================================================================================ */
+ * =================================================================================
+ */
 
 
 (function($) {
@@ -30,19 +16,19 @@
 	'use strict';
 
 
-	/*	----------------------------------------------------------------------------
-	 *	PLUGIN DEFAULT CONFIGURATION
+	/** ----------------------------------------------------------------------------
+	 * PLUGIN DEFAULT CONFIGURATION
 	 */
 
 	var defaults = {
-			'debug' : 0,
+			debug: 0,
 		},
 		visibilityStateSupport = false, // Stores information about page visibility state
-		browserPrefixes = ['webkit','moz','ms','o'];
+		browserPrefixes = ['webkit', 'moz', 'ms', 'o'];
 
 
-	/*	----------------------------------------------------------------------------
-	 *	PLAY VIDEOS
+	/** ----------------------------------------------------------------------------
+	 * PLAY VIDEOS
 	 */
 
 	function playVideos(config, $videos) {
@@ -53,8 +39,8 @@
 	}
 
 
-	/*	----------------------------------------------------------------------------
-	 *	PAUSE VIDEOS
+	/** ----------------------------------------------------------------------------
+	 * PAUSE VIDEOS
 	 */
 
 	function pauseVideos(config, $videos) {
@@ -65,18 +51,17 @@
 	}
 
 
-	/*	----------------------------------------------------------------------------
-	 *	SET UP JQUERY PLUGIN
+	/** ----------------------------------------------------------------------------
+	 * SET UP JQUERY PLUGIN
 	 */
 
 	$.fn.videoAutoPause = function(options) {
 
-		var
-			// Setup configuration
-			config = $.extend({}, defaults, options),
+		// Setup configuration
+		var config = $.extend({}, defaults, options);
 
-			// Definitions
-			_self = $(this);
+		// Definitions
+		var _self = $(this);
 
 		if (config.debug) console.info('Plugin loaded: videoAutoPause');
 
@@ -99,7 +84,7 @@
 		// Modern browser with visibilityState support
 		if (visibilityStateSupport) {
 			console.info('videoAutoPause: Browser supports visibilityState');
-			$(document).on('visibilitychange.videoautopause', function(e) {
+			$(document).on('visibilitychange.videoautopause', function() {
 				if (document.hidden) pauseVideos(config, _self);
 				else playVideos(config, _self);
 			});

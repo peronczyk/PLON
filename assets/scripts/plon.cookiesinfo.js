@@ -1,11 +1,11 @@
-
-/*	================================================================================
+/**
+ * =================================================================================
  *
- *	PLON Component	: CookiesInfo
+ * PLON Component : CookiesInfo
  *
- *	Modified		: 2017-03-09
- *	Author			: Bartosz Perończyk (peronczyk.com)
- *	Repository		: https://github.com/peronczyk/plon
+ * @author			Bartosz Perończyk (peronczyk.com)
+ * @modified		2017-09-15
+ * @repository		https://github.com/peronczyk/plon
  *
  *	================================================================================
  */
@@ -15,8 +15,8 @@
 
 	'use strict';
 
-	/*	----------------------------------------------------------------------------
-	 *	PLUGIN DEFAULT CONFIGURATION
+	/** ----------------------------------------------------------------------------
+	 * PLUGIN DEFAULT CONFIGURATION
 	 */
 
 	var defaults = {
@@ -40,9 +40,9 @@
 		cookieStr, date, expires;
 
 
-	/*	----------------------------------------------------------------------------
-	 *	SET COOKIE
-	 *	To remove cookie just set days to negative value
+	/** ----------------------------------------------------------------------------
+	 * SET COOKIE
+	 * To remove cookie just set days to negative value
 	 */
 
 	var cookieSet = function(config) {
@@ -54,8 +54,8 @@
 	};
 
 
-	/*	----------------------------------------------------------------------------
-	 *	GET COOKIE
+	/** ----------------------------------------------------------------------------
+	 * GET COOKIE
 	 */
 
 	var cookieGet = function(config) {
@@ -70,8 +70,8 @@
 	};
 
 
-	/*	----------------------------------------------------------------------------
-	 *	SET UP JQUERY PLUGIN
+	/** ----------------------------------------------------------------------------
+	 * SET UP JQUERY PLUGIN
 	 */
 
 	$.fn.cookiesInfo = function(options) {

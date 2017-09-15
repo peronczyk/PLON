@@ -1,6 +1,6 @@
 {
   "name": "plon",
-  "version": "1.1.4",
+  "version": "1.2.0",
   "description": "Simple SCSS+JS framework based on jQuery and Gulp",
   "repository": {
     "type": "git",
@@ -9,23 +9,27 @@
   "scripts": {
     "watch": "gulp watch",
     "serve": "gulp serve",
-    "production": "gulp"
+    "dev": "gulp --development",
+    "prod": "gulp --production",
+    "development": "gulp --development",
+    "production": "gulp --production"
   },
   "author": "peronczyk.com",
   "license": "ISC",
   "devDependencies": {
-    "browser-sync": "^2.13.0",
-    "del": "^2.2.0",
+    "babel-core": "^6.26.0",
+    "babel-preset-env": "^1.6.0",
+    "browser-sync": "^2.18.13",
     "gulp": "^3.9.1",
-    "gulp-autoprefixer": "^3.1.0",
-    "gulp-concat": "^2.6.0",
-    "gulp-notify": "^2.2.0",
+    "gulp-autoprefixer": "^4.0.0",
+    "gulp-babel": "^7.0.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-imagemin": "^3.3.0",
+    "gulp-notify": "^3.0.0",
     "gulp-rename": "^1.2.2",
-    "gulp-sass": "^2.3.1",
-    "gulp-sourcemaps": "^1.6.0",
-    "gulp-uglify": "^1.5.3",
-    "gulp-util": "^3.0.7",
-    "run-sequence": "^1.2.1",
+    "gulp-sass": "^3.1.0",
+    "gulp-sourcemaps": "^2.6.1",
+    "gulp-uglify": "^3.0.0",
     "jquery": "^3.2.1"
   }
 }

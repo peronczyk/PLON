@@ -1,78 +1,58 @@
-
-/*	================================================================================
+/**
+ * =================================================================================
  *
- *	JQ: SCROLL PARALLAX
+ * PLON Component : ScrollParallax
  *
- *	Script author	: Bartosz Perończyk (peronczyk.com)
- *	Created			: 2015-06-23
- *	Modified		: 2016-10-11
+ * @author			Bartosz Perończyk (peronczyk.com)
+ * @modified		2017-09-15
+ * @repository		https://github.com/peronczyk/plon
  *
- *	--------------------------------------------------------------------------------
- *	DESCRIPTION:
- *
- *	data-parallax-speed sets the speed of parallax layer
- *		0		- no parallax
- *		<1		- slow
- *		1		- fixed with screen
- *		>1		- fast
- *
- *	--------------------------------------------------------------------------------
- *	INSTALATION:
- *
- *
- *
- *	--------------------------------------------------------------------------------
- *	TODO
- *
- *
- *
- *	================================================================================ */
-
+ * =================================================================================
+ */
 
 
 (function($) {
 
 	'use strict';
 
-	/*	----------------------------------------------------------------------------
-	 *	PLUGIN DEFAULT CONFIGURATION
+	/** ----------------------------------------------------------------------------
+	 * PLUGIN DEFAULT CONFIGURATION
 	 */
 
 	var defaults = {
-			'debug': 0,
-			'dataSelector': 'data-parallax',
-			'defaultSpeed': 0.7,
-			'eventsNamespace': '.plon.scrollparallax',
+			debug: 0,
+			dataSelector: 'data-parallax',
+			defaultSpeed: 0.7,
+			eventsNamespace: '.plon.scrollparallax',
 		},
 		$document 		= $(document),
 		frameRequested	= false,
 		offset, speed;
 
 
-	/*	----------------------------------------------------------------------------
-	 *	ADJUST PARALLAX LAYERS
+	/** ----------------------------------------------------------------------------
+	 * ADJUST PARALLAX LAYERS
 	 */
 
 	function paralaxAdjust(config, layers) {
-		for(var n = 0 ; n < layers.length ; n++) {
+		for (var n = 0 ; n < layers.length ; n++) {
 			offset = $document.scrollTop() * layers[n].speed;
-			layers[n].obj.css({'transform': 'translate3d(0,' + offset + 'px,0)'});
+			layers[n].obj.css({transform: 'translate3d(0,' + offset + 'px,0)'});
 		}
 	}
 
 
-	/*	----------------------------------------------------------------------------
-	 *	SET UP JQUERY PLUGIN
+	/** ----------------------------------------------------------------------------
+	 * SET UP JQUERY PLUGIN
 	 */
 
 	$.scrollParallax = function(options) {
 
-		var
-			// Setup configuration
-			config = $.extend({}, defaults, options),
+		// Setup configuration
+		var config = $.extend({}, defaults, options);
 
-			// Definitions
-			layers = [],
+		// Definitions
+		var layers = [],
 			_self = $('[' + config.dataSelector + ']'),
 			elem,
 			layersCount = 0;

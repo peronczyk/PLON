@@ -1,13 +1,13 @@
-
-/*	================================================================================
+/**
+ * =================================================================================
  *
- *	MODAL COMPONENT
+ * PLON Component : Modal
  *
- *	Modified		: 2017-08-16
- *	Author			: Bartosz Perończyk (peronczyk.com)
- *	Repository		: https://github.com/peronczyk/plon
+ * @author			Bartosz Perończyk (peronczyk.com)
+ * @modified		2017-09-15
+ * @repository		https://github.com/peronczyk/plon
  *
- *	================================================================================
+ * =================================================================================
  */
 
 window.Modal = function(options) {
