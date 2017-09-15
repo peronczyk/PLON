@@ -6,8 +6,6 @@ module.exports = function() {
 	'use strict';
 
 	var babel = require('gulp-babel');
-	var sourcemaps = require('gulp-sourcemaps');
-	var concat = require('gulp-concat');
 	var uglify = require('gulp-uglify');
 	var rename = require('gulp-rename');
 

@@ -9,7 +9,10 @@
   "scripts": {
     "watch": "gulp watch",
     "serve": "gulp serve",
-    "production": "gulp"
+    "dev": "gulp --development",
+    "prod": "gulp --production",
+    "development": "gulp --development",
+    "production": "gulp --production"
   },
   "author": "peronczyk.com",
   "license": "ISC",

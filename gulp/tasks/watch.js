@@ -6,7 +6,6 @@ module.exports = function() {
 	'use strict';
 
 	return gulp.task('watch', config.tasksToWatch, function() {
-
 		if (config.tasksToWatch && config.tasksToWatch.length > 0) {
 			for (var i = 0; i < config.tasksToWatch.length; i++) {
 				if (config.subDirs.assets[config.tasksToWatch[i]]) {
