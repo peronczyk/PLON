@@ -37,8 +37,10 @@
 			// How many pixels need to be scrolled after element will show
 			diff: 300,
 
+			// Events namespace
 			eventsNamespace: '.plon.reveal',
 		},
+
 		$document		= $(document),
 		frameRequested	= false,
 
@@ -66,7 +68,7 @@
 						.removeClass(config.noTransitionClassName)
 						.removeClass(elementsToReveal[i].className);
 
-					if (config.debug) console.info('Reveal: Element ' + elementsToReveal[i].num + ' shown');
+					if (config.debug) console.info('[PLON / Reveal] Element ' + elementsToReveal[i].num + ' shown');
 
 					elementsToReveal.splice(i, 1); // Remove animated element from array
 				}
@@ -75,7 +77,7 @@
 
 		// Turn of scroll monitoring if all elements was animated
 		else $document.off(config.eventsNamespace);
-	}
+	};
 
 
 	/** ----------------------------------------------------------------------------
@@ -88,19 +90,19 @@
 		var config = $.extend({}, defaults, options);
 
 		if (!config.selector) {
-			console.error('Reveal: selector not defined');
+			console.error('[PLON / Reveal] Selector not defined');
 			return false;
 		}
 
-		if (config.debug) console.info('Plugin loaded: Reveal');
+		if (config.debug) console.info('[PLON] Plugin loaded: Reveal');
 
 		var _self = $('[' + config.selector + ']');
 
 		if (_self.length < 1) {
-			if (config.debug) console.info('Reveal: No elements found to reveal with selector: [' + config.reveal + ']');
+			if (config.debug) console.info('[PLON / Reveal] No elements found to reveal with selector: [' + config.reveal + ']');
 			return _self;
 		}
-		else if (config.debug) console.info('Reveal: ' + _self.length + ' elements found');
+		else if (config.debug) console.info('[PLON / Reveal] ' + _self.length + ' elements found');
 
 		// Building array of all elements that needs to be animated
 		_self.each(function(i) {
@@ -111,15 +113,15 @@
 
 			// Ignore this element if it's visible in actual viewport
 			if ((offset.top + config.diff) < (window.pageYOffset + window.innerHeight) && (offset.top + currentElement.outerHeight() - config.diff) > window.pageYOffset) {
-				console.info('Reveal: Element [' + i + '] ignored becouse it is already in viewport');
+				console.info('[PLON / Reveal] Element [' + i + '] ignored becouse it is already in viewport');
 				return;
 			}
 
 			elementsToReveal[i] = {
-				'num'		: i,
-				'object'	: currentElement,
-				'className'	: currentElement.attr(config.selector),
-				'fromTop'	: offset.top
+				num			: i,
+				object		: currentElement,
+				className	: currentElement.attr(config.selector),
+				fromTop		: offset.top
 			};
 
 			currentElement
@@ -127,7 +129,7 @@
 				.addClass(elementsToReveal[i].className)
 				.addClass(config.defaultClassName);
 
-			if (config.debug) console.log('Reveal: Element [' + i + '] found, class name - ' + elementsToReveal[i].className + ', ' + elementsToReveal[i].fromTop + 'px from top');
+			if (config.debug) console.log('[PLON / Reveal] Element [' + i + '] found, class name - ' + elementsToReveal[i].className + ', ' + elementsToReveal[i].fromTop + 'px from top');
 		});
 
 		// Monitor document scrolling
@@ -141,6 +143,6 @@
 		});
 
 		return _self;
-	}
+	};
 
 }(jQuery));
