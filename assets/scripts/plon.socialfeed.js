@@ -1,13 +1,13 @@
-
-/*	================================================================================
+/**
+ * =================================================================================
  *
- *	SOCIAL FEED COMPONENT
+ * PLON Component : SocialFeed
  *
- *	Modified		: 2017-04-06
- *	Author			: Bartosz Perończyk (peronczyk.com)
- *	Repository		: https://github.com/peronczyk/plon
+ * @author			Bartosz Perończyk (peronczyk.com)
+ * @modified		2017-09-15
+ * @repository		https://github.com/peronczyk/plon
  *
- *	================================================================================
+ * =================================================================================
  */
 
 

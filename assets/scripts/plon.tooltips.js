@@ -1,74 +1,58 @@
-
-/*	================================================================================
+/**
+ * =================================================================================
  *
- *	JQ: TOOLTIP
+ * PLON Component : ToolTips
  *
- *	Script author: Bartosz Perończyk (peronczyk.com)
+ * @author			Bartosz Perończyk (peronczyk.com)
+ * @modified		2017-09-15
+ * @repository		https://github.com/peronczyk/plon
  *
- *	--------------------------------------------------------------------------------
- *	DESCRIPTION:
- *
- *	Simple tooltipt, that pops out after hovering specified element.
- *	Content of the tooltip is taken from 'title' attribute.
- *
- *	--------------------------------------------------------------------------------
- *	INSTALATION:
- *
- *	$(element).tooltip();
- *	Sample JS:		$('[data-tooltip]').tooltip({'debug': 1});
- *	Sample HTML:	<a title="Some description" data-tooltip>Some text</a>
- *
- *	--------------------------------------------------------------------------------
- *	TODO:
- *
- *		- Additional params alowing to display wider tooltips (data-tooltip="wide")
- *
- *	================================================================================ */
+ * =================================================================================
+ */
 
 
 (function($) {
 
 	'use strict';
 
-	/*	----------------------------------------------------------------------------
-	 *	PLUGIN DEFAULT CONFIGURATION
+	/** ----------------------------------------------------------------------------
+	 * PLUGIN DEFAULT CONFIGURATION
 	 */
 
 	var defaults = {
-			'debug'				: 0,
-			'tooltipID'			: 'tooltip', // CSS ID of tooltip DOM element
-			'openClassName'		: 'is-Open', // CSS class that indicates open state
-			'eventsNamespace'	: '.plon.tooltips',
+			debug			: 0,
+			tooltipID		: 'tooltip', // CSS ID of tooltip DOM element
+			openClassName	: 'is-Open', // CSS class that indicates open state
+			eventsNamespace	: '.plon.tooltips',
 		},
 		offset, text, $hoveredElem;
 
 
-	/*	----------------------------------------------------------------------------
-	 *	SET UP JQUERY PLUGIN
+	/** ----------------------------------------------------------------------------
+	 * SET UP JQUERY PLUGIN
 	 */
 
 	$.fn.toolTips = function(options) {
 
-		var
-			// Setup configuration
-			config = $.extend({}, defaults, options),
+		// Setup configuration
+		var config = $.extend({}, defaults, options);
 
-			// Definitions
-			_self		= $(this),
+		// Definitions
+		var _self		= $(this),
 			$tooltip	= $('#' + config.tooltipID),
 			$inner		= $tooltip.children();
 
-		if (config.debug) console.info('Plugin loaded: toolTips');
+		if (config.debug) console.info('Plugin loaded: ToolTips');
 
 		// If tooltip DIV wasn't found in DOM
 		if ($tooltip.length < 1) {
-			var $tooltip	= $('<div/>', {
-					'id'			: config.tooltipID,
-					'class'			: 'c-Tooltip',
-					'role'			: 'tooltip',
+			var $tooltip = $('<div/>', {
+					id				: config.tooltipID,
+					class			: 'c-Tooltip',
+					role			: 'tooltip',
 					'aria-hidden'	: 'true'
 				}),
-				$inner		= $('<div/>').appendTo($tooltip);
+				$inner = $('<div/>').appendTo($tooltip);
 
 			$('body').append($tooltip); // Add tooltip code to body
 			if (config.debug) console.info('toolTip: div#tooltip and inner div added to body');
@@ -87,7 +71,7 @@
 
 				$hoveredElem = $(this);
 
-				switch(event.type) {
+				switch (event.type) {
 
 					// Cursor hovers element
 					case 'mouseenter':
@@ -103,8 +87,8 @@
 								.addClass(config.openClassName)
 								.attr('aria-hidden', 'false')
 								.css({
-									'top'	: offset.top,
-									'left'	: offset.left + ($hoveredElem.width() / 2)
+									top		: offset.top,
+									left	: offset.left + ($hoveredElem.width() / 2)
 								});
 
 							if (config.debug) console.info('toolTip: Element hovered - open tooltip');
@@ -122,10 +106,10 @@
 							.attr('aria-hidden', 'true');
 
 						break;
-			}
-		});
+				}
+			});
 
 		return _self;
-	}
+	};
 
 })(jQuery);

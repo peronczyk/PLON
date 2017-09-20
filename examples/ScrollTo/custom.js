@@ -1,10 +1,11 @@
-var debug = 1;
-
 $(function() {
 
+	'use strict';
+
 	$('[data-scrollto]').scrollTo({
-		'debug': debug,
-		'speed': 100
+		debug: 1,
+		speed: 100,
+		shift: -80
 	});
 
 });

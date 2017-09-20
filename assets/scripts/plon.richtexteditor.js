@@ -1,14 +1,15 @@
-
-/*	================================================================================
+/**
+ * =================================================================================
  *
- *	RICH TEXT EDITOR COMPONENT
+ * PLON Component : RichTextEditor
  *
- *	Modified		: 2017-03-30
- *	Author			: Bartosz Perończyk (peronczyk.com)
- *	Repository		: https://github.com/peronczyk/plon
+ * @author			Bartosz Perończyk (peronczyk.com)
+ * @modified		2017-09-15
+ * @repository		https://github.com/peronczyk/plon
  *
- *	================================================================================
+ * =================================================================================
  */
+
 
 window.RichTextEditor = function(elem, options) {
 

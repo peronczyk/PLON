@@ -1,13 +1,13 @@
-
-/*	================================================================================
+/**
+ * =================================================================================
  *
- *	JQ: REVEAL
+ * PLON Component : Reveal
  *
- *	Modified		: 2017-03-14
- *	Author			: Bartosz Perończyk (peronczyk.com)
- *	Repository		: https://github.com/peronczyk/plon
+ * @author			Bartosz Perończyk (peronczyk.com)
+ * @modified		2017-09-15
+ * @repository		https://github.com/peronczyk/plon
  *
- *	================================================================================
+ * =================================================================================
  */
 
 
@@ -15,12 +15,12 @@
 
 	'use strict';
 
-	/*	----------------------------------------------------------------------------
-	 *	PLUGIN DEFAULT CONFIGURATION
+	/** ----------------------------------------------------------------------------
+	 * PLUGIN DEFAULT CONFIGURATION
 	 */
 
-	var defaults = {
-
+	var defaults =
+		{
 			// Debug mode
 			debug: 0,
 
@@ -51,8 +51,8 @@
 		height;
 
 
-	/*	----------------------------------------------------------------------------
-	 *	MONITOR REVEAL ELEMENTS DISTANCE FROM TOP
+	/** ----------------------------------------------------------------------------
+	 * MONITOR REVEAL ELEMENTS DISTANCE FROM TOP
 	 */
 
 	var checkElementsToReveal = function(config) {
@@ -80,8 +80,8 @@
 	};
 
 
-	/*	----------------------------------------------------------------------------
-	 *	SET UP JQUERY PLUGIN
+	/** ----------------------------------------------------------------------------
+	 * SET UP JQUERY PLUGIN
 	 */
 
 	$.reveal = function(options) {

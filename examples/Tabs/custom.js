@@ -9,8 +9,16 @@ $(function() {
 	'use strict';
 
 	// Use as jQuery plugin
-	$('#tabs1 [role="tablist"]').tabs({
+	var $tabs1 = $('#tabs1 [role="tablist"]');
+	$tabs1.tabs({
 		debug: debug
+	});
+
+	// Event catching example
+	$tabs1.on('change.tabs.plon', function(event) {
+		console.group('Catched tabs event');
+		console.log(event);
+		console.groupEnd();
 	});
 
 	// Use as constructor
@@ -33,7 +41,5 @@ $(function() {
 		event.preventDefault();
 		tabs2.changeTab(0);
 	});
-
-	console.log(tabs2);
 
 });

@@ -1,38 +1,28 @@
-
-/*	================================================================================
+/**
+ * =================================================================================
  *
- *	JQ: SCROLL SECTIONS
+ * PLON Component : ScrollSections
  *
- *	Author			: Bartosz Perończyk
- *	Created			: 2016-05-11
- *	Modified		: 2016-07-19
+ * @author			Bartosz Perończyk (peronczyk.com)
+ * @modified		2017-09-15
+ * @repository		https://github.com/peronczyk/plon
  *
- *	--------------------------------------------------------------------------------
- *	DESCRIPTION:
- *
- *
- *
- *	--------------------------------------------------------------------------------
- *	INSTALATION:
- *
- *
- *
- *	================================================================================ */
+ * =================================================================================
+ */
 
 
 (function($) {
 
 	'use strict';
 
-
 	/*	----------------------------------------------------------------------------
 	 *	PLUGIN DEFAULT CONFIGURATION
 	 */
 
 	var defaults = {
-			'debug'				: 0,
-			'activeClassName'	: 'is-Active',
-			'eventsNamespace'	: '.plon.scrollsections',
+			debug			: 0,
+			activeClassName	: 'is-Active',
+			eventsNamespace	: '.plon.scrollsections',
 		},
 		$document			= $(document),
 		$window				= $(window),
@@ -43,8 +33,8 @@
 		sectionHeight;
 
 
-	/*	----------------------------------------------------------------------------
-	 *	SECTION SCROLL
+	/** ----------------------------------------------------------------------------
+	 * SECTION SCROLL
 	 */
 
 	function sectionScroll(config, $sections, dir, noscroll) {
@@ -54,7 +44,7 @@
 			viewportPos = $window.scrollTop();
 
 		// Break if scrolling is performed multiple times at the same direction
-		if ($('html, body').is(':animated') && dir == prevDir) return false;
+		if ($('html, body').is(':animated') && dir === prevDir) return false;
 
 		// Break if page is at top and user want to scroll up
 		if (viewportPos == 0 && dir < 0) return false;
@@ -117,8 +107,8 @@
 	}
 
 
-	/*	----------------------------------------------------------------------------
-	 *	GET SECTIONS PARAMS
+	/** ----------------------------------------------------------------------------
+	 * GET SECTIONS PARAMS
 	 */
 
 	function setSectionsSize(config, $sections) {
@@ -129,8 +119,8 @@
 	}
 
 
-	/*	----------------------------------------------------------------------------
-	 *	SET UP JQUERY PLUGIN
+	/** ----------------------------------------------------------------------------
+	 * SET UP JQUERY PLUGIN
 	 */
 
 	$.fn.scrollSections = function(options) {
@@ -163,7 +153,7 @@
 
 		$document.on('keydown' + config.eventsNamespace, function(event) {
 			var dir = 0;
-			switch(event.which) {
+			switch (event.which) {
 				case 38: dir--; break; // UP
 				case 40: dir++; break; // DOWN
 			}
