@@ -90,9 +90,12 @@ module.exports = function(passedConfig) {
 		notify({
 			title: 'Task Failed [' + error.plugin + ']',
 			message: 'File: ' + error.relativePath + '\nLine: ' + error.line
-		}).write(error);
+		});
 
 		gutil.log(style.error(error.name), 'in file', style.path(error.relativePath), '[', style.task(error.plugin), ']\n', error.formatted);
+
+		// Prevent errors from breaking watch mode
+		this.emit('end');
 	}
 
 
