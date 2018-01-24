@@ -87,12 +87,30 @@ module.exports = function(passedConfig) {
 	 */
 
 	global.reportError = function(error) {
+		// Prefer formatted messages if returned
+		var message = (error.formatted) ? error.formatted : error.toString();
+
+		// Prefer relative paths if returned
+		var file = (error.relativePath) ? error.relativePath : error.fileName;
+
+		// Some plugins don't give 'line' property, eg.: 'gulp-babel'
+		var line = (error.line) ? error.line : error.loc.line + ', column: ' + error.loc.column;
+
+		// Open system notification toast with basic info
 		notify({
-			title: 'Task Failed [' + error.plugin + ']',
-			message: 'File: ' + error.relativePath + '\nLine: ' + error.line
+			title   : 'Task Failed [' + error.plugin + ']',
+			message : 'File: ' + file + '\nLine: ' + line,
+			sound   : 'Sosumi'
 		}).write(error);
 
-		gutil.log(style.error(error.name), 'in file', style.path(error.relativePath), '[', style.task(error.plugin), ']\n', error.formatted);
+		// Beep 'Sosumi' sound again
+		gutil.beep();
+
+		// Log additional informations in to console window
+		gutil.log(style.error(error.name), 'in file', style.path(file), '[', style.task(error.plugin), ']\n', message);
+
+		// Prevent the 'watch' task from stopping
+		this.emit('end');
 	}
 
 
