@@ -23,7 +23,7 @@
 // Media breakpoint: min-width
 
 @mixin min-width($size) {
-	@media (min-width: #{breakpoint($size)} - 1) {
+	@media (min-width: #{breakpoint($size) - 1}) {
 		@content;
 	}
 }
@@ -41,7 +41,7 @@
 // Media breakpoint: min-height
 
 @mixin min-height($size) {
-	@media (min-height: #{breakpoint($size)} - 1) {
+	@media (min-height: #{breakpoint($size) - 1}) {
 		@content;
 	}
 }
