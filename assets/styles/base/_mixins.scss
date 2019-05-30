@@ -7,14 +7,17 @@
 			flex-basis: percentage($i/12);
 		}
 	}
-	.Col-hide#{$screen-size} { display: none; }
+
+	.Col-hide#{$screen-size} {
+		display: none;
+	}
 }
 
 
 // Media breakpoint: max-width
 
-@mixin max-width($size) {
-	@media (max-width: breakpoint($size)) {
+@mixin narrower-than($size) {
+	@media (max-width: breakpoint(h-#{$size})) {
 		@content;
 	}
 }
@@ -22,8 +25,8 @@
 
 // Media breakpoint: min-width
 
-@mixin min-width($size) {
-	@media (min-width: #{breakpoint($size) - 1}) {
+@mixin wider-than($size) {
+	@media (min-width: #{breakpoint(h-#{$size})} - 1) {
 		@content;
 	}
 }
@@ -31,7 +34,7 @@
 
 // Media breakpoint: max-height
 
-@mixin max-height($size) {
+@mixin lower-than($size) {
 	@media (max-height: breakpoint($size)) {
 		@content;
 	}
@@ -40,8 +43,8 @@
 
 // Media breakpoint: min-height
 
-@mixin min-height($size) {
-	@media (min-height: #{breakpoint($size) - 1}) {
+@mixin higher-than($size) {
+	@media (min-height: #{breakpoint($size)} - 1) {
 		@content;
 	}
 }

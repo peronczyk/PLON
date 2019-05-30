@@ -1,9 +1,10 @@
 
-/*	================================================================================
+/**
+ * =================================================================================
  *
- *	NORMALISE
+ * NORMALISE
  *
- *	================================================================================
+ * =================================================================================
  */
 
 * {
@@ -28,9 +29,13 @@ body {
 }
 
 // Scale window content to viewport size if window is extra small
-@viewport { width: device-width }
-@include max-width(h-xs) {
-	@viewport { width: breakpoint(h-xs); }
+@viewport {
+	width: device-width;
+}
+@include narrower-than(h-xs) {
+	@viewport {
+		width: breakpoint(h-xs);
+	}
 }
 
 *:before,
@@ -38,7 +43,22 @@ body {
 	box-sizing: inherit;
 }
 
-article, aside, details, figure, figcaption, header, footer, hgroup, main, menu, nav, section, summary, hr { display: block; }
+article,
+aside,
+details,
+figure,
+figcaption,
+header,
+footer,
+hgroup,
+main,
+menu,
+nav,
+section,
+summary,
+hr {
+	display: block;
+}
 
 audio,
 canvas,
@@ -48,22 +68,34 @@ video {
 	vertical-align: baseline;
 }
 
-img { border: none; }
+img {
+	border: none;
+}
 
-svg:not(:root) { overflow: hidden; } // Correct overflow not hidden in IE 9/10/11.
+// Correct overflow not hidden in IE 9/10/11.
+svg:not(:root) {
+	overflow: hidden;
+}
 
 
-/*	--------------------------------------------------------------------------------
- *	TYPOGRAPHY, LISTS, LINKS
+/** --------------------------------------------------------------------------------
+ * TYPOGRAPHY, LISTS, LINKS
  */
 
-p:not(:last-child) { margin-bottom: 1em; }
+p:not(:last-child) {
+	margin-bottom: 1em;
+}
 
-del { text-decoration: line-through; }
+del {
+	text-decoration: line-through;
+}
 
-abbr[title], dfn[title] {
-	border-bottom: 1px dotted rgba(0,0,0, .5);
-	cursor: help;
+abbr,
+dfn {
+	&[title] {
+		border-bottom: 1px dotted rgba(black, .5);
+		cursor: help;
+	}
 }
 
 sub,
@@ -73,8 +105,12 @@ sup {
 	vertical-align: baseline;
 	position: relative;
 }
-sup { top: -.5em; }
-sub { bottom: -.25em; }
+sup {
+	top: -.5em;
+}
+sub {
+	bottom: -.25em;
+}
 
 a {
 	text-decoration: none;
@@ -82,11 +118,13 @@ a {
 	background-color: transparent; // Remove the gray background color from active links in IE 10.
 }
 
-address { font-style: normal; }
+address {
+	font-style: normal;
+}
 
 
-/*	--------------------------------------------------------------------------------
- *	TABLES
+/** --------------------------------------------------------------------------------
+ * TABLES
  */
 
 table {
@@ -95,22 +133,26 @@ table {
 	border-spacing: 0;
 }
 
-th, td { text-align: left; }
+th,
+td {
+	text-align: left;
+}
 
-input[type='radio'],
-input[type='checkbox'] {
-	position: relative;
-	top: -1px;
-	vertical-align: middle;
+input {
+	&[type='radio'],
+	&[type='checkbox'] {
+		position: relative;
+		top: -1px;
+		vertical-align: middle;
+	}
 }
 
 
-/*	--------------------------------------------------------------------------------
- *	FORMS
+/** --------------------------------------------------------------------------------
+ * FORMS
  */
 
 button,
-.Btn,
 label,
 input[type='button'],
 input[type='submit'],
@@ -118,16 +160,22 @@ input[type='file'] {
 	-webkit-appearance: none;
 	-moz-appearance: none;
 
-	&:hover { z-index: +1; }
+	&:hover {
+		z-index: +1;
+	}
 }
 
-label { user-select: none; }
+label {
+	user-select: none;
+}
 
-[disabled] { cursor: default; }
+[disabled] {
+	cursor: default;
+}
 
 
-/*	--------------------------------------------------------------------------------
- *	OTHER ELEMETS
+/** --------------------------------------------------------------------------------
+ * OTHER ELEMETS
  */
 
 hr {

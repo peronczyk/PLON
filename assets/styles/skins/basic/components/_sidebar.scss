@@ -19,16 +19,16 @@
 		right: 0;
 	}
 
-	@include max-width(h-ul) {
+	@include narrower-than(h-ul) {
 		width: 350px;
 	}
 
-	@include max-width(h-xl) {
+	@include narrower-than(h-xl) {
 		padding: $gutter/2 $gutter/2 0 $gutter/2;
 		width: 300px;
 	}
 
-	@include max-width(h-md) {
+	@include narrower-than(h-md) {
 		float: none;
 	}
 }
