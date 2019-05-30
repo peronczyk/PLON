@@ -10,8 +10,9 @@
  * =================================================================================
  */
 
+window.plon = window.plon || {};
 
-window.RichTextEditor = function(elem, options) {
+window.plon.RichTextEditor = function(elem, options) {
 
 	'use strict';
 

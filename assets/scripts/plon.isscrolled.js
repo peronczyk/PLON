@@ -3,88 +3,104 @@
  *
  * PLON Component : IsScrolled
  *
- * @author			Bartosz Perończyk (peronczyk.com)
- * @modified		2017-09-15
- * @repository		https://github.com/peronczyk/plon
+ * @author     Bartosz Perończyk (peronczyk.com)
+ * @modified   2019-04-23
+ * @repository https://github.com/peronczyk/plon
  *
  * =================================================================================
  */
 
+window.plon = window.plon || {};
 
-(function($) {
-
-	'use strict';
-
-	/** ----------------------------------------------------------------------------
-	 * PLUGIN DEFAULT CONFIGURATION
-	 */
-
-	var defaults = {
-			debug				: 0,
-			scrolledClassName	: 'is-Scrolled', // CSS class name added after reaching scrollRange
-			classChangeTarget	: 'body', // Which DOM element will get scrolled class name
-			scrollRange			: 10, // After how many pixels class name will be changed
-			debounceTime		: 200 // Miliseconds
-		},
-		checkPending	= false, // For debounce purposes
-		lastStatus		= 0, // 1 - scrolled, 0 - not scrolled
-		$target;
-
+window.plon.IsScrolled = class IsScrolled {
 
 	/** ----------------------------------------------------------------------------
-	 * CHECK IF ELEMENT WAS SCROLLED
+	 * Constructor
+	 * @param {Object} options
 	 */
 
-	function checkScroll(config, _self, $target) {
-		if (_self.scrollTop() > 10) {
-			if (lastStatus == 0) {
-				$target.addClass(config.scrolledClassName);
-				if (config.debug) console.info('isScrolled: Element scrolled');
-				lastStatus = 1;
+	constructor(options) {
+		const defaults = {
+			debug             : false,
+			monitoredElement  : window,
+			classChangeTarget : 'body', // Which DOM element will get scrolled class name
+			scrolledClassName : 'is-Scrolled', // CSS class name added after reaching scrollRange
+			scrollRange       : 10, // After how many pixels class name will be changed
+			debounceTime      : 200 // Miliseconds
+		};
+
+		this.config = { ...defaults, ...options };
+		this.lastStatus = 0; // 1 - scrolled, 0 - not scrolled
+		this.$monitoredElement;
+		this.$classChangeTarget;
+		this.$monitoredElement = $(this.config.monitoredElement);
+
+
+		if (!this.$monitoredElement.length) {
+			this.debugLog('Monitored element could not be found.', 'warn');
+			return this;
+		}
+
+		this.$classChangeTarget = $(this.config.classChangeTarget);
+
+		if (this.$classChangeTarget.length < 1) {
+			this.debugLog('Class change target could not be found.', 'warn');
+			return this;
+		}
+
+		this.$monitoredElement.on('scroll.plon.isscrolled', this.debounce(this.checkScroll));
+
+		this.checkScroll();
+
+		this.debugLog('Initiated.', 'info');
+	}
+
+
+	/** ----------------------------------------------------------------------------
+	 * Check if element was scrolled
+	 */
+
+	checkScroll() {
+		if (this.$monitoredElement.scrollTop() > 10) {
+			if (this.lastStatus === 0) {
+				this.$classChangeTarget.addClass(this.config.scrolledClassName);
+				this.lastStatus = 1;
+				this.debugLog('Element scrolled.');
 			}
 		}
 		else {
-			$target.removeClass(config.scrolledClassName);
-			if (config.debug) console.info('isScrolled: Element not scrolled');
-			lastStatus = 0;
+			this.$classChangeTarget.removeClass(this.config.scrolledClassName);
+			this.lastStatus = 0;
+			this.debugLog('Element not scrolled.');
 		}
-		checkPending = false;
 	}
 
 
 	/** ----------------------------------------------------------------------------
-	 * SET UP JQUERY PLUGIN
+	 * Timeout debounce
+	 * @param {Function} callback
+	 * @returns {Function}
 	 */
 
-	$.fn.isScrolled = function(options) {
+	debounce(callback) {
+		let timeout;
 
-		var
-			// Setup configuration
-			config = $.extend({}, defaults, options),
-
-			// Definitions
-			_self = $(this);
-
-		if (config.debug) console.info('Plugin loaded: isScrolled');
-
-		$target = $(config.classChangeTarget);
-
-		if ($target.length < 1) {
-			if (config.debug) console.log('isScrolled: Class change target couldn\'t be found');
-			return _self;
-		}
-
-
-		// Monitor scroll events
-
-		_self.on('scroll.isscrolled', function() {
-			if (!checkPending) {
-				checkPending = true;
-				setTimeout(function() { checkScroll(config, _self, $target) }, config.debounceTime);
-			}
-		});
-
-		return _self;
+		return () => {
+			clearTimeout(timeout);
+			timeout = setTimeout(callback.bind(this), this.config.debounceTime);
+		};
 	}
 
-})(jQuery);
+
+	/** ----------------------------------------------------------------------------
+	 * Debug logging
+	 * @var {String} message
+	 * @var {String} type
+	 */
+
+	debugLog(message, type = 'log') {
+		if (this.config.debug) {
+			console[type]('[PLON / IsScrolled]', message);
+		}
+	}
+};

@@ -10,8 +10,9 @@
  * =================================================================================
  */
 
+window.plon = window.plon || {};
 
-window.SocialFeed = function(options) {
+window.plon.SocialFeed = function(options) {
 
 	'use strict';
 
