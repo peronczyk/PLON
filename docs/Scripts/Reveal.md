@@ -19,7 +19,7 @@ Example CSS code can be found in _examples/Reveal/index.html_ file.
 * `debug` - Debug mode. Default: `0`.
 * `selector` - "data-xxx" selector that defines class name to be added to the element, eg.: `data-reveal="js-Reveal--left"`. Default: `data-reveal`.
 * `defaultClassName` - Class name added to all elements that will be revealed. Default: `js-Reveal`.
-* `noTransitionClassName` - Class name thar turns CSS animations off. Default: `u-noTransition`.
+* `noTransitionClassName` - Class name thar turns CSS animations off. Default: `u-NoTransition`.
 * `diff` -  How many pixels need to be scrolled after element will show. Default: `300`.
 
 ## ToDo

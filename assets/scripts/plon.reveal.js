@@ -32,7 +32,7 @@
 			defaultClassName: 'js-Reveal',
 
 			// Class name thar turns CSS animations off
-			noTransitionClassName: 'u-noTransition',
+			noTransitionClassName: 'u-NoTransition',
 
 			// How many pixels need to be scrolled after element will show
 			diff: 300,

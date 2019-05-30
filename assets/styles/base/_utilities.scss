@@ -31,50 +31,50 @@
  */
 
 .u-Text {
-	&--left {
+	&--Left {
 		text-align: left;
 	}
 
-	&--center {
+	&--Center {
 		text-align: center;
 	}
 
-	&--right {
+	&--Right {
 		text-align: right;
 	}
 
-	&--justify {
+	&--Justify {
 		text-align: justify;
 	}
 }
 
 .u-Valign {
-	&--top {
+	&--Top {
 		vertical-align: top;
 	}
 
-	&--middle {
+	&--Middle {
 		vertical-align: middle;
 	}
 
-	&--bottom {
+	&--Bottom {
 		vertical-align: bottom;
 	}
 }
 
 .u-Box {
-	&--center {
+	&--Center {
 		margin-left: auto;
 		margin-right: auto;
 	}
 }
 
 .u-Float {
-	&--left {
+	&--Left {
 		float: left;
 	}
 
-	&--right {
+	&--Right {
 		float: right;
 	}
 }
@@ -113,7 +113,7 @@
 	display: block;
 }
 
-.u-notDisplayed {
+.u-NotDisplayed {
 	display: none;
 }
 
@@ -124,12 +124,12 @@
 .u-Table {
 	display: table;
 
-	&__row {
+	&__Row {
 		display: table-row;
 	}
 
-	&__row > *,
-	&__cell {
+	&__Row > *,
+	&__Cell {
 		display: table-cell;
 		vertical-align: middle;
 	}
@@ -138,16 +138,16 @@
 .u-Flex {
 	display: flex;
 
-	&--center {
+	&--Center {
 		align-items: center
 	}
 }
 
-.u-inlineFlex {
+.u-InlineFlex {
 	display: inline-flex;
 }
 
-.u-notSelectable {
+.u-NotSelectable {
 	user-select: none;
 }
 
@@ -157,21 +157,21 @@
  */
 
 .u-Width {
-	&--full {
+	&--Full {
 		width: 100%;
 	}
 
-	&--half {
+	&--Half {
 		width: 50%;
 	}
 }
 
 .u-Height {
-	&--full {
+	&--Full {
 		height: 100%;
 	}
 
-	&--half {
+	&--Half {
 		height: 50%;
 	}
 }
@@ -209,16 +209,16 @@
 }
 
 .u-Overflow {
-	&--hidden {
+	&--Hidden {
 		overflow: hidden;
 	}
 
-	&--scroll {
+	&--Scroll {
 		overflow: scroll;
 	}
 }
 
-.u-noTransition	{
+.u-NoTransition	{
 	transition: none !important;
 }
 

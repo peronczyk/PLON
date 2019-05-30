@@ -13,15 +13,15 @@
 	flex-direction: row;
 	flex-wrap: wrap;
 
-	&--top {
+	&--Top {
 		align-items: flex-start;
 	}
 
-	&--center {
+	&--Center {
 		align-items: center;
 	}
 
-	&--bottom {
+	&--Bottom {
 		align-items: flex-end;
 	}
 
@@ -29,13 +29,13 @@
 		flex: 0 0 auto;
 
 		&.Col {
-			&--top {
+			&--Top {
 				align-self: flex-start;
 			}
-			&--center {
+			&--Center {
 				align-self: center;
 			}
-			&--bottom {
+			&--Bottom {
 				align-self: flex-end;
 			}
 		}
