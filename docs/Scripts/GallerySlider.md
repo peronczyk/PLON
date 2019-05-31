@@ -3,5 +3,5 @@
 ## Installation
 
 ```javascript
-$('.o-Gallery-slider').gallerySlider(options);
+$('.o-GallerySlider').gallerySlider(options);
 ```

@@ -19,36 +19,32 @@
 	 * PLUGIN DEFAULT CONFIGURATION
 	 */
 
-	var defaults =
-		{
-			// Debug mode
-			debug: 0,
+	var defaults = {
+		// Debug mode
+		debug: 0,
 
-			// data-xxx selector that defines class name to be added to the element,
-			// eg.: data-reveal="js-Reveal--left"
-			selector: 'data-reveal',
+		// data-xxx selector that defines class name to be added to the element,
+		// eg.: data-reveal="js-Reveal--left"
+		selector: 'data-reveal',
 
-			// Class name added to all elements that will be revealed
-			defaultClassName: 'js-Reveal',
+		// Class name added to all elements that will be revealed
+		defaultClassName: 'js-Reveal',
 
-			// Class name thar turns CSS animations off
-			noTransitionClassName: 'u-noTransition',
+		// Class name thar turns CSS animations off
+		noTransitionClassName: 'u-NoTransition',
 
-			// How many pixels need to be scrolled after element will show
-			diff: 300,
+		// How many pixels need to be scrolled after element will show
+		diff: 300,
 
-			// Events namespace
-			eventsNamespace: '.plon.reveal',
-		},
+		// Events namespace
+		eventsNamespace: '.plon.reveal',
+	};
 
-		$document		= $(document),
-		frameRequested	= false,
+	var $document = $(document);
+	var frameRequested = false;
 
-		currentElement,
-		elementsToReveal = [],
-		i,
-		offset,
-		height;
+	var elementsToReveal = [];
+	var currentElement, i, offset, height;
 
 
 	/** ----------------------------------------------------------------------------
@@ -60,7 +56,9 @@
 		// If array of elements to be animated is not empty check their distance from top
 		if (elementsToReveal.length > 0) {
 			for (i = 0; i < elementsToReveal.length; i++) {
-				if (!elementsToReveal[i]) continue; // Skip empty elements
+				if (!elementsToReveal[i]) {
+					continue; // Skip empty elements
+				}
 
 				// Change CSS classes if viewport reached this element
 				if (elementsToReveal[i].fromTop < ($document.scrollTop() + window.innerHeight - config.diff)) {

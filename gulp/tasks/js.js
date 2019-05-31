@@ -11,17 +11,15 @@ module.exports = function() {
 	var uglify = require('gulp-uglify');
 
 	return gulp.task('js', function() {
-		var jsFilesList;
-		if (config.jsFiles && config.jsFiles.length > 0) {
-			jsFilesList = config.jsFiles;
-		}
-		else jsFilesList = config.assetsDir + config.subDirs.assets.js + '*.js';
+		var jsFilesList = (config.jsFiles && config.jsFiles.length > 0)
+			? config.jsFiles
+			: config.assetsDir + config.subDirs.assets.js + '*.js';
 
 		return gulp
 			.src(jsFilesList)
 			.pipe(env.development ? sourcemaps.init() : gutil.noop())
 			.pipe(babel({
-				presets: ['env']
+				presets: ['@babel/env']
 			}).on('error', reportError))
 			.pipe(concat({path: config.jsConcatenatedFileName}).on('error', reportError))
 			.pipe(env.development ? sourcemaps.write() : gutil.noop())

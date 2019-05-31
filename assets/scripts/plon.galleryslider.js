@@ -21,14 +21,14 @@
 	 */
 
 	var defaults = {
-			debug: 0,
-			classNames: {
-				imageList	: 'o-Gallery-slider__list',
-				prev		: 'o-Gallery-slider__prev',
-				next		: 'o-Gallery-slider__next'
-			}
-		},
-		dir;
+		debug: 0,
+		classNames: {
+			imageList	: 'o-GallerySlider__List',
+			prev		: 'o-GallerySlider__Prev',
+			next		: 'o-GallerySlider__Next'
+		}
+	};
+	var dir;
 
 
 	/** ----------------------------------------------------------------------------

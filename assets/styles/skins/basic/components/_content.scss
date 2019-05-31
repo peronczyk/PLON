@@ -6,25 +6,25 @@
 	width: calc(100% - 400px);
 	height: 100%;
 
-	&--right {
+	&--Right {
 		float: right;
 		right: 0;
 	}
 
-	&--left {
+	&--Left {
 		float: left;
 		left: 0;
 	}
 
-	@include max-width(h-ul) {
+	@include narrower-than(ul) {
 		width: calc(100% - 350px);
 	}
 
-	@include max-width(h-xl) {
+	@include narrower-than(xl) {
 		width: calc(100% - 300px);
 	}
 
-	@include max-width(h-md) {
+	@include narrower-than(md) {
 		float: none;
 		position: static !important;
 		padding: $gutter/2 $gutter/2 $gutter/2 $gutter/2;

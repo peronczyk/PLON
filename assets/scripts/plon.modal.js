@@ -4,21 +4,21 @@
  * PLON Component : Modal
  *
  * @author			Bartosz Perończyk (peronczyk.com)
- * @modified		2017-09-15
+ * @modified		2019-05-30
  * @repository		https://github.com/peronczyk/plon
  *
  * =================================================================================
  */
 
-window.Modal = function(options) {
+window.plon = window.plon || {};
+
+window.plon.Modal = function(options) {
 
 	'use strict';
 
 	/** ----------------------------------------------------------------------------
 	 * DEFINITIONS
 	 */
-
-	var that = this;
 
 	// Default configuration
 	var defaults =
@@ -31,11 +31,11 @@ window.Modal = function(options) {
 			// CSS selector for child element of wrapper that will position content.
 			// this class is used to determine if user clicked inside modal
 			// or outside to close it.
-			window: '.c-Modal__window',
+			window: '.c-Modal__Window',
 
 			// CSS selector for child element of wraper that will contain
 			// content of modal (eg.: text, images)
-			content: '.c-Modal__content',
+			content: '.c-Modal__Content',
 
 			// Data attribute name for DOM elements that should open modals
 			// after clicking on them
@@ -49,18 +49,18 @@ window.Modal = function(options) {
 			loadedBodyClassName: 'c-Modal__is-Loaded',
 
 			contentTypeClasses: {
-				dom		: 'is-Dom',
-				image	: 'is-Image',
-				title	: 'is-Title',
-				url		: 'is-Url'
+				dom	  : 'is-Dom',
+				image : 'is-Image',
+				title : 'is-Title',
+				url   : 'is-Url'
 			}
 		};
 
 	// Shortcuts
-	var $body = $('body');
+	const $body = $('body');
 
 	// Setting up configuration
-	var config = $.extend({}, defaults, options);
+	this.config = $.extend({}, defaults, options);
 
 	// Common variables definition
 	var $wrapper, $window, $content;
@@ -71,31 +71,33 @@ window.Modal = function(options) {
 	 * @param {object} $elem
 	 */
 
-	this.autoDetectMode = function($elem) {
-		var href = $elem.attr('href'),
-			title = $elem.attr('title'),
-			detected = false;
+	this.autoDetectMode = ($elem) => {
+		let href     = $elem.attr('href');
+		let title    = $elem.attr('title');
+		let detected = false;
 
-		if (href.length < 3) {
+		if (!href || href.length < 3) {
 			if (title && title.length) {
-				that.loadTitle($elem);
+				this.loadTitle($elem);
 				detected = true;
 			}
 		}
 		else if (href.substring(0, 1) === '#') {
-			that.loadDom(href);
+			this.loadDom(href);
 			detected = true;
 		}
 		else if (href.match(/\.(jpeg|jpg|gif|png)$/) !== null) {
-			that.loadImage(href);
+			this.loadImage(href);
 			detected = true;
 		}
 		else if (href.substring(0, 8) === 'https://' || href.substring(0, 7) === 'http://') {
-			that.loadUrl(href);
+			this.loadUrl(href);
 			detected = true;
 		}
 
-		if (!detected && config.debug) console.warn('[PLON / Modal] Unknown mode');
+		if (!detected && this.config.debug) {
+			console.warn('[PLON / Modal] Unknown mode');
+		}
 	};
 
 
@@ -105,9 +107,9 @@ window.Modal = function(options) {
 	 * some data.
 	 */
 
-	this.startModal = function() {
-		$body.addClass(config.openBodyClassName);
-	}
+	this.startModal = () => {
+		$body.addClass(this.config.openBodyClassName);
+	};
 
 
 	/** ----------------------------------------------------------------------------
@@ -115,10 +117,11 @@ window.Modal = function(options) {
 	 * @param {string} contentType
 	 */
 
-	this.openModal = function(contentType) {
-		$body.addClass(config.loadedBodyClassName);
+	this.openModal = (contentType) => {
+		$body.addClass(this.config.loadedBodyClassName);
+
 		$wrapper
-			.addClass(config.contentTypeClasses[contentType])
+			.addClass(this.config.contentTypeClasses[contentType])
 			.attr('open', '')
 			.attr('aria-hidden', 'false')
 			.scrollTop(0, 0);
@@ -131,15 +134,13 @@ window.Modal = function(options) {
 	 * METHOD : Close Modal
 	 */
 
-	this.closeModal = function() {
-		$body.removeClass(config.openBodyClassName + ' ' + config.loadedBodyClassName);
+	this.closeModal = () => {
+		$body.removeClass(this.config.openBodyClassName + ' ' + this.config.loadedBodyClassName);
 
 		$wrapper
 			.removeAttr('open')
 			.attr('aria-hidden', 'true')
-			.removeClass($.map(config.contentTypeClasses, function(elem) {
-				return elem;
-			}).join(' '));
+			.removeClass($.map(this.config.contentTypeClasses, (elem) => elem).join(' '));
 
 		$content.empty();
 
@@ -153,7 +154,7 @@ window.Modal = function(options) {
 	 * METHOD : Insert Text
 	 */
 
-	this.insertText = function(text) {
+	this.insertText = (text) => {
 		$content.html(text);
 	};
 
@@ -163,10 +164,10 @@ window.Modal = function(options) {
 	 * @param {object} image
 	 */
 
-	this.insertImage = function(image) {
-		var imageWidth = image.width,
-			imageHeight = image.height,
-			$image = $(image);
+	this.insertImage = (image) => {
+		let imageWidth  = image.width;
+		let imageHeight = image.height;
+		let $image      = $(image);
 
 		$image.wrap('<div></div>').appendTo($content.empty());
 
@@ -177,7 +178,9 @@ window.Modal = function(options) {
 			$window.css({width: windowExpectedWidth});
 		}
 
-		if (config.debug) console.info('[PLON / Modal] Image inserted');
+		if (this.config.debug) {
+			console.info('[PLON / Modal] Image inserted');
+		}
 	};
 
 
@@ -187,11 +190,14 @@ window.Modal = function(options) {
 	 * @param {object} $elem
 	 */
 
-	this.loadTitle = function($elem) {
-		that.startModal();
-		that.insertText($elem.attr('title'));
-		that.openModal('title');
-		if (config.debug) console.info('[PLON / Modal] Text loaded from title attribute');
+	this.loadTitle = ($elem) => {
+		this.startModal();
+		this.insertText($elem.attr('title'));
+		this.openModal('title');
+
+		if (this.config.debug) {
+			console.info('[PLON / Modal] Text loaded from title attribute');
+		}
 	};
 
 
@@ -201,18 +207,20 @@ window.Modal = function(options) {
 	 * @param {string} url
 	 */
 
-	this.loadUrl = function(url) {
-		that.startModal();
+	this.loadUrl = (url) => {
+		this.startModal();
 
 		$.ajax({
 			url: url,
-			success: function(data) {
-				that.insertText(data);
-				that.openModal('url');
+			success: (data) => {
+				this.insertText(data);
+				this.openModal('url');
 				$(window).trigger('modalcontentloaded');
 			},
-			error: function() {
-				if (config.debug) console.warn('[PLON / Modal] Couldn\'t load content from URL ' + url);
+			error: () => {
+				if (this.config.debug) {
+					console.warn('[PLON / Modal] Couldn\'t load content from URL ' + url);
+				}
 			}
 		});
 	};
@@ -223,19 +231,22 @@ window.Modal = function(options) {
 	 * @param {string} imageUrl
 	 */
 
-	this.loadImage = function(imageUrl) {
-		that.startModal();
+	this.loadImage = (imageUrl) => {
+		this.startModal();
 
-		var image = new Image();
+		let image = new Image();
+
 		$(image)
 			.attr('src', imageUrl)
-			.on('load', function() {
-				if (config.debug) console.info('[PLON / Modal] Image loaded from: ' + imageUrl);
-				that.insertImage(this);
-				that.openModal('image');
+			.on('load', (event) => {
+				if (this.config.debug) {
+					console.info('[PLON / Modal] Image loaded from: ' + imageUrl);
+				}
+				this.insertImage(this);
+				this.openModal('image');
 				$(window).trigger('modalcontentloaded');
 			})
-			.on('error', function() {
+			.on('error', () => {
 				console.warn('[PLON / Modal] Image can\'t be loaded from url: ' + imageUrl);
 			});
 	};
@@ -247,15 +258,21 @@ window.Modal = function(options) {
 	 * @param {string} domId
 	 */
 
-	this.loadDom = function(domId) {
-		that.startModal();
+	this.loadDom = (domId) => {
+		this.startModal();
 		var $elem = $(domId);
+
 		if ($elem.length) {
-			that.insertText($elem.html());
-			that.openModal('dom');
-			if (config.debug) console.info('[PLON / Modal] DOM element "' + domId + '" content loaded');
+			this.insertText($elem.html());
+			this.openModal('dom');
+
+			if (this.config.debug) {
+				console.info('[PLON / Modal] DOM element "' + domId + '" content loaded');
+			}
 		}
-		else if (config.debug) console.info('[PLON / Modal] DOM element "' + domId + '" not found');
+		else if (this.config.debug) {
+			console.warn('[PLON / Modal] DOM element "' + domId + '" not found');
+		}
 	};
 
 
@@ -264,26 +281,42 @@ window.Modal = function(options) {
 	 * Handle clicking on links marked as modal togglers
 	 */
 
-	this.addClickHandler = function() {
-		if (config.dataSelector) {
-			$body.on('click.modal.plon', '[' + config.dataSelector +']', function(event) {
+	this.addClickHandler = () => {
+		if (this.config.dataSelector) {
+			$body.on('click.modal.plon', '[' + this.config.dataSelector +']', (event) => {
 				event.preventDefault();
 
-				var $clickedElem = $(this);
+				var $clickedElem = $(event.target);
 
-				switch ($clickedElem.attr(config.dataSelector)) {
-					case 'close'	: that.closeModal(); break;
+				switch ($clickedElem.attr(this.config.dataSelector)) {
+					case 'close':
+						this.closeModal();
+						break;
 
-					case 'dom'		: that.loadDom($clickedElem.attr('href')); break;
-					case 'image'	: that.loadImage($clickedElem.attr('href')); break;
-					case 'title'	: that.loadTitle($clickedElem); break;
-					case 'url'		: that.loadUrl($clickedElem.attr('href')); break;
+					case 'dom':
+						this.loadDom($clickedElem.attr('href'));
+						break;
 
-					default: that.autoDetectMode($clickedElem);
+					case 'image':
+						this.loadImage($clickedElem.attr('href'));
+						break;
+
+					case 'title':
+						this.loadTitle($clickedElem);
+						break;
+
+					case 'url':
+						this.loadUrl($clickedElem.attr('href'));
+						break;
+
+					default:
+						this.autoDetectMode($clickedElem);
 				}
 			});
 		}
-		else if (config.debug) console.log('[PLON / Modal] dataSelector was not provided - component will not react on any clicks');
+		else if (this.config.debug) {
+			console.warn('[PLON / Modal] dataSelector was not provided - component will not react on any clicks');
+		}
 	};
 
 
@@ -291,38 +324,39 @@ window.Modal = function(options) {
 	 * METHOD : Init
 	 */
 
-	this.init = function() {
-		if (!config.wrapper || !config.window || !config.content) {
+	this.init = () => {
+		if (!this.config.wrapper || !this.config.window || !this.config.content) {
 			console.warn('[PLON / Modal] Configuration error - one of the required options is missing: wrapper, window or content');
 			return false;
 		}
 
-		$wrapper	= $(config.wrapper);
-		$window		= $wrapper.find(config.window);
-		$content	= $wrapper.find(config.content);
+		$wrapper = $(this.config.wrapper);
+		$window  = $wrapper.find(this.config.window);
+		$content = $wrapper.find(this.config.content);
 
 		if (!$wrapper.length || !$window.length || !$content.length) {
-			console.warn('[PLON / Modal] Could not find one of modal key elements.\n - ' + config.wrapper + ': ' + $wrapper.length + '\n - ' + config.window + ': ' + $window.length + '\n - ' + config.content + ': ' + $content.length);
+			console.warn('[PLON / Modal] Could not find one of modal key elements.\n - ' + this.config.wrapper + ': ' + $wrapper.length + '\n - ' + this.config.window + ': ' + $window.length + '\n - ' + this.config.content + ': ' + $content.length);
 			return false;
 		}
 
-		that.addClickHandler();
+		this.addClickHandler();
 
 		// Handle clicking outside modal content box
-		$wrapper.on('click.modal.plon', function(event) {
-			if (!$(event.target).closest(config.window).length) {
-				if (config.debug) console.info('[PLON / Modal] Clicked outside window');
-				that.closeModal();
+		$wrapper.on('click.modal.plon', (event) => {
+			if (!$(event.target).closest(this.config.window).length) {
+				if (this.config.debug) {
+					console.info('[PLON / Modal] Clicked outside window');
+				}
+				this.closeModal();
 			}
 		});
 
-		return true;
+		if (this.config.debug) {
+			console.info('[PLON / Modal] Initiated');
+		}
+
+		return this;
 	};
 
-
-	/** ----------------------------------------------------------------------------
-	 * INITIATE COMPONENT
-	 */
-
-	if (this.init() && config.debug) console.info('[PLON] Modal initiated');
+	return this.init();
 };

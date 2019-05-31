@@ -4,100 +4,132 @@
  * PLON Component : VideoAutoPause
  *
  * @author			Bartosz Perończyk (peronczyk.com)
- * @modified		2017-09-15
+ * @modified		2019-05-31
  * @repository		https://github.com/peronczyk/plon
  *
  * =================================================================================
  */
 
+window.plon = window.plon || {};
 
-(function($) {
+window.plon.VideoAutoPause = class {
 
-	'use strict';
+	/** ----------------------------------------------------------------------------
+	 * Construct
+	 * @var {String} scrollElementSelector
+	 * @var {Object} options
+	 */
+
+	constructor(options) {
+
+		// Default configuration values
+		const defaults = {
+
+			/**
+			 * Decide if you want to show user-friendly notifications in conssole
+			 * window of the browser.
+			 * @var {Boolean}
+			 */
+			debug: false,
+
+			/**
+			 * CSS selector for videos that should be pause/played.
+			 * @var {String}
+			 */
+			videoSelector: 'video',
+
+			/**
+			 * Events namespace.
+			 * @var {String}
+			 */
+			eventsNameSpace: '.plon.videoautopause',
+		};
+
+		this.config = { ...defaults, ...options };
+		this.$videos = $(this.config.videoSelector);
+
+		if (!this.$videos.length) {
+			this.debugLog(`No video elements were found in current document.`);
+			return false;
+		}
+
+		this.visibilityStateSupport = this.checkVisibilityStateSupport();
+
+		// Modern browser with visibilityState support
+		if (this.visibilityStateSupport) {
+			$(document).on('visibilitychange' + this.config.eventsNameSpace, () => {
+				(document.hidden)
+					? this.pauseVideos()
+					: this.playVideos();
+			});
+		}
+
+		// Older browsers
+		else {
+			this.debugLog(`Browser do not support visibilityState. Switched to blur/focus mode`);
+
+			$(window).on('blur' + this.config.eventsNameSpace + ' focus' + this.config.eventsNameSpace, (event) => {
+				(event.type === 'blur')
+					? this.pauseVideos()
+					: this.playVideos();
+			});
+		}
+
+		this.debugLog(`Initiated. Videos found: ${this.$videos.length}`, 'info');
+	}
 
 
 	/** ----------------------------------------------------------------------------
-	 * PLUGIN DEFAULT CONFIGURATION
+	 * Check if browser supports visibilityState
 	 */
 
-	var defaults = {
-			debug: 0,
-		},
-		visibilityStateSupport = false, // Stores information about page visibility state
-		browserPrefixes = ['webkit', 'moz', 'ms', 'o'];
+	checkVisibilityStateSupport() {
+		const browserPrefixes = ['', 'webkit', 'moz', 'ms', 'o'];
+
+		for (let i = 0; i < browserPrefixes.length; i++) {
+			if ((browserPrefixes[i] + 'VisibilityState') in document) {
+				return true;
+			}
+		}
+
+		return false;
+	}
 
 
 	/** ----------------------------------------------------------------------------
 	 * PLAY VIDEOS
 	 */
 
-	function playVideos(config, $videos) {
-		if (config.debug) console.info('videoAutoPause: Page is visible, play videos');
-		$videos.each(function() {
-			$(this).get(0).play();
+	playVideos() {
+		this.debugLog(`Videos played.`);
+
+		this.$videos.each((index, elem) => {
+			elem.play();
 		});
-	}
+	};
 
 
 	/** ----------------------------------------------------------------------------
 	 * PAUSE VIDEOS
 	 */
 
-	function pauseVideos(config, $videos) {
-		if (config.debug) console.info('videoAutoPause: Page is hidden, pause videos');
-		$videos.each(function() {
-			$(this).get(0).pause();
+	pauseVideos() {
+		this.debugLog(`Viedos paused.`);
+
+		this.$videos.each((index, elem) => {
+			elem.pause();
 		});
-	}
+
+	};
 
 
 	/** ----------------------------------------------------------------------------
-	 * SET UP JQUERY PLUGIN
+	 * Debug logging
 	 */
 
-	$.fn.videoAutoPause = function(options) {
-
-		// Setup configuration
-		var config = $.extend({}, defaults, options);
-
-		// Definitions
-		var _self = $(this);
-
-		if (config.debug) console.info('Plugin loaded: videoAutoPause');
-
-		if (_self.length < 1) {
-			if (config.debug) console.info('videoAutoPause: no video elements were selected');
-			return false;
-		}
-
-		// Check if browser supports visibilityState
-		if ('visibilityState' in document) visibilityStateSupport = true;
-		else {
-			for (var i = 0; i < browserPrefixes.length; i++) {
-				if ((browserPrefixes[i] + 'VisibilityState') in document) {
-					visibilityStateSupport = true;
-					break;
-				}
-			}
-		}
-
-		// Modern browser with visibilityState support
-		if (visibilityStateSupport) {
-			console.info('videoAutoPause: Browser supports visibilityState');
-			$(document).on('visibilitychange.videoautopause', function() {
-				if (document.hidden) pauseVideos(config, _self);
-				else playVideos(config, _self);
-			});
-		}
-
-		// Older browsers
-		else {
-			console.info('videoAutoPause: Browser don\'t support visibilityState. Switched to blur/focus mode');
-			$(window).on('blur.videoautopause focus.videoautopause', function(e) {
-				if (e.type === 'blur') pauseVideos(config, _self);
-				else playVideos(config, _self);
-			});
+	debugLog(message, type = 'log') {
+		if (this.config.debug) {
+			console[type]('[PLON / VideoAutoPause]', message);
 		}
 	}
-
-})(jQuery);
+};

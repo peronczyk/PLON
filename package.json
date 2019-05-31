@@ -1,6 +1,6 @@
 {
   "name": "plon",
-  "version": "1.2.2",
+  "version": "2.0.0",
   "description": "Simple SCSS+JS framework based on jQuery and Gulp",
   "repository": {
     "type": "git",
@@ -9,20 +9,21 @@
   "scripts": {
     "watch": "gulp watch",
     "serve": "gulp serve",
-    "dev": "gulp --development",
+    "build": "gulp --production",
     "prod": "gulp --production",
+    "dev": "gulp --development",
     "development": "gulp --development",
     "production": "gulp --production"
   },
   "author": "peronczyk.com",
   "license": "ISC",
   "devDependencies": {
-    "babel-core": "^6.26.0",
-    "babel-preset-env": "^1.6.0",
+    "@babel/core": "^7.4.5",
+    "@babel/preset-env": "^7.4.5",
     "browser-sync": "^2.18.13",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^4.0.0",
-    "gulp-babel": "^7.0.0",
+    "gulp-babel": "^8.0.0",
     "gulp-concat": "^2.6.1",
     "gulp-imagemin": "^3.3.0",
     "gulp-notify": "^3.0.0",
@@ -30,6 +31,6 @@
     "gulp-sass": "^3.1.0",
     "gulp-sourcemaps": "^2.6.1",
     "gulp-uglify": "^3.0.0",
-    "jquery": "^3.2.1"
+    "jquery": "^3.4.1"
   }
 }

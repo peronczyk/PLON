@@ -27,7 +27,7 @@
 		margin-left: -0.5em;
 	}
 
-	&__window {
+	&__Window {
 		display: inline-block;
 		vertical-align: middle;
 		width: 100%;
@@ -41,13 +41,13 @@
 		transition: .3s;
 	}
 
-	&__close {
+	&__Close {
 		position: absolute;
 		top: -8px;
 		right: -8px;
 	}
 
-	&__content {
+	&__Content {
 		padding: 30px;
 		overflow: hidden;
 		text-align: left;
@@ -74,7 +74,7 @@
 	}
 
 	&__is-Loaded {
-		.c-Modal__window {
+		.c-Modal__Window {
 			opacity: 1;
 			transform: scale(1);
 		}

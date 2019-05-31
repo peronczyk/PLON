@@ -4,7 +4,7 @@ $(function() {
 
 	'use strict';
 
-	$('.o-Gallery-slider').gallerySlider({
+	$('.o-GallerySlider').gallerySlider({
 		'debug': debug
 	});
 

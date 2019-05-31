@@ -1,9 +1,9 @@
-var debug = 1;
+var debug = true;
 
 $(function() {
 
-	$('[data-tooltip]').toolTips({
-		'debug': debug
+	new plon.ToolTips('[data-tooltip]', {
+		debug: debug
 	});
 
 });

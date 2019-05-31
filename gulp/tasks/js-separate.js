@@ -10,16 +10,14 @@ module.exports = function() {
 	var rename = require('gulp-rename');
 
 	return gulp.task('js-separate', function() {
-		var jsFilesList;
-		if (config.jsFiles && config.jsFiles.length > 0) {
-			jsFilesList = config.jsFiles;
-		}
-		else jsFilesList = config.assetsDir + config.subDirs.assets.js + '*.js';
+		var jsFilesList = (config.jsFiles && config.jsFiles.length > 0)
+			? config.jsFiles
+			: config.assetsDir + config.subDirs.assets.js + '*.js';
 
 		return gulp
 			.src(jsFilesList)
 			.pipe(babel({
-				presets: ['env']
+				presets: ['@babel/env']
 			}).on('error', reportError))
 			.pipe(gulp.dest(config.distDir + config.subDirs.dist.js))
 			.pipe(uglify().on('error', reportError))

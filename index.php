@@ -24,7 +24,7 @@
 			<thead>
 				<tr>
 					<th>Script name</th>
-					<th class="u-Text--center">Readme</th>
+					<th class="u-Text--Center">Readme</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -38,7 +38,7 @@
 						if (file_exists('examples/' . $dir . '/index.html')) echo('<a href="examples/' . $dir . '">' . $dir . '</a>');
 						else echo($dir);
 
-						echo('</td><td class="u-Text--center">');
+						echo('</td><td class="u-Text--Center">');
 
 						$script_local_address = 'docs/Scripts/' . $dir . '.md';
 

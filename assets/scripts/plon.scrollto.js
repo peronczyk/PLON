@@ -4,97 +4,125 @@
  * PLON Component : ScrollTo
  *
  * @author			Bartosz Perończyk (peronczyk.com)
- * @modified		2017-09-15
+ * @modified		2019-04-24
  * @repository		https://github.com/peronczyk/plon
  *
  * =================================================================================
  */
 
+window.plon = window.plon || {};
 
-(function($) {
-
-	'use strict';
+window.plon.ScrollTo = class {
 
 	/** ----------------------------------------------------------------------------
-	 * PLUGIN DEFAULT CONFIGURATION
+	 * Construct
+	 * @var {String} scrollElementSelector
+	 * @var {Object} options
 	 */
 
-	var defaults = {
-			debug: 0,
+	constructor(scrollElementSelector, options) {
 
-			// Decide how fast page will be scrolled
+		// Default configuration values
+		const defaults = {
+
+			/**
+			 * Decide if you want to show user-friendly notifications in conssole
+			 * window of the browser.
+			 * @var {Boolean}
+			 */
+			debug: false,
+
+			/**
+			 * Decide how fast page will be scrolled.
+			 * @var {Boolean}
+			 */
 			speed: 25,
 
-			// Decide how far from destination viewport will stop
-			shift: 0
-		},
+			/**
+			 * Decide how far from the destination viewport should stop.
+			 * @var {Number}
+			 */
+			shift: 0,
 
-		// Events that should immedietly stop smooth scrolling
-		scrollBreakEvents = 'mousewheel.scrollto DOMMouseScroll.scrollto',
+			/**
+			 * Events that should immedietly stop smooth scrolling.
+			 * @var {String}
+			 */
+			scrollBreakEvents: 'mousewheel.scrollto DOMMouseScroll.scrollto',
 
-		$scrollTarget,
-		scrollTime,
-		offsetTop,
-		scrolled;
+			/**
+			 * Decide if hash should be added to current address after succesfull
+			 * scrolling.
+			 * @var {Boolean}
+			 */
+			useHistory: true,
+		};
+
+		this.config = { ...defaults, ...options };
+		this.$links = $(scrollElementSelector).filter('a');
+		this.$htmlAndBody = $('html,body');
+		this.$document = $(document);
+
+		this.$links.on('click', (event) => this.linkClickReaction(event));
+
+		this.debugLog(`Initiated. Links found: ${this.$links.length}`, 'info');
+	}
 
 
 	/** ----------------------------------------------------------------------------
-	 * SET UP JQUERY PLUGIN
+	 * React on click event
 	 */
 
-	$.fn.scrollTo = function(options) {
+	linkClickReaction(event) {
+		event.preventDefault();
 
-		// Setup configuration
-		var config = $.extend({}, defaults, options);
+		let $clickedElement = $(event.currentTarget)[0];
 
-		// Definitions
-		var _self			= $(this),
-			$htmlAndBody	= $('html,body'),
-			$document		= $(document);
+		// Stop if there is no target specified (no #element in href)
+		if (!$clickedElement.hash) {
+			this.debugLog('Clicked element does not have hash in href atribute.');
+			return;
+		}
 
-		if (config.debug) console.info('Plugin loaded: ScrollTo');
+		let $scrollTarget = $($clickedElement.hash);
 
-		this.filter('a').on('click', function(event) {
-			event.preventDefault();
+		// Check if target element exists
+		if (!$scrollTarget.length) {
+			this.debugLog(`Element ${$clickedElement.hash} not found.`);
+			return;
+		}
 
-			// Stop if there is no target specified (no #element in href)
-			if (!this.hash) {
-				if (config.debug) console.log('[PLON / ScrollTo] Clicked element didn\' have hash in href');
-				return false;
-			}
+		let offsetTop  = $scrollTarget.offset().top + this.config.shift;
+		let scrolled   = $(window).scrollTop();
+		let scrollTime = Math.sqrt(Math.abs(offsetTop - scrolled)) * this.config.speed;
 
-			$scrollTarget = $(this.hash);
-
-			// Check if target element exists
-			if ($scrollTarget.length > 0) {
-
-				offsetTop	= $scrollTarget.offset().top + config.shift;
-				scrolled	= $(window).scrollTop();
-				scrollTime	= Math.sqrt(Math.abs(offsetTop - scrolled)) * config.speed;
-
-				$document.on(scrollBreakEvents, function() {
-					$htmlAndBody.stop();
-					$document.off(scrollBreakEvents);
-					if (config.debug) console.log('[PLON / ScrollTo] Scrolling stopped by breaking event');
-				});
-
-				$htmlAndBody.stop().animate(
-					{scrollTop: offsetTop},
-					scrollTime,
-					function() {
-						$document.off(scrollBreakEvents);
-					});
-
-				window.history.pushState(null, null, this.href);
-
-				if (config.debug) console.log('[PLON / ScrollTo] Scrolled to ' + this.hash + ', placed at pos: ' + offsetTop + 'px, which took: ' + scrollTime + 's');
-			}
-
-			else if (config.debug) console.log('[PLON / ScrollTo] Element ' + this.hash + ' not found');
+		this.$document.on(this.config.scrollBreakEvents, () => {
+			this.$htmlAndBody.stop();
+			this.$document.off(this.config.scrollBreakEvents);
+			this.debugLog('Scrolling stopped by breaking event');
 		});
 
-		return _self;
+		this.$htmlAndBody.stop().animate(
+			{ scrollTop: offsetTop },
+			scrollTime,
+			() => this.$document.off(this.config.scrollBreakEvents)
+		);
 
-	};
+		if (this.config.useHistory) {
+			window.history.pushState(null, null, $clickedElement.href);
+		}
 
-})(jQuery);
+		this.debugLog(`Scrolled to ${$clickedElement.hash}, placed at pos: ${offsetTop} px, which took: ${scrollTime}s.`);
+	}
+
+
+	/** ----------------------------------------------------------------------------
+	 * Debug logging
+	 */
+
+	debugLog(message, type = 'log') {
+		if (this.config.debug) {
+			console[type]('[PLON / ScrollTo]', message);
+		}
+	}
+};

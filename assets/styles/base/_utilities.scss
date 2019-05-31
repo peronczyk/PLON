@@ -17,75 +17,119 @@
 	height: 100vh;
 }
 
-.u-Clear::after {
-	content: '';
-	display: block;
-	clear: both;
+.u-Clear {
+	&::after {
+		content: '';
+		display: block;
+		clear: both;
+	}
 }
 
 
-/*	----------------------------------------------------------------------------
- *	ALIGNMENTS
+/** --------------------------------------------------------------------------------
+ * ALIGNMENTS
  */
 
 .u-Text {
-	&--left		{ text-align: left; }
-	&--center	{ text-align: center; }
-	&--right	{ text-align: right; }
-	&--justify	{ text-align: justify; }
+	&--Left {
+		text-align: left;
+	}
+
+	&--Center {
+		text-align: center;
+	}
+
+	&--Right {
+		text-align: right;
+	}
+
+	&--Justify {
+		text-align: justify;
+	}
 }
 
 .u-Valign {
-	&--top		{ vertical-align: top; }
-	&--middle	{ vertical-align: middle; }
-	&--bottom	{ vertical-align: bottom; }
+	&--Top {
+		vertical-align: top;
+	}
+
+	&--Middle {
+		vertical-align: middle;
+	}
+
+	&--Bottom {
+		vertical-align: bottom;
+	}
 }
 
 .u-Box {
-	&--center {
+	&--Center {
 		margin-left: auto;
 		margin-right: auto;
 	}
 }
 
 .u-Float {
-	&--left		{ float: left; }
-	&--right	{ float: right; }
+	&--Left {
+		float: left;
+	}
+
+	&--Right {
+		float: right;
+	}
 }
 
 
-/*	----------------------------------------------------------------------------
- *	POSITIONS
+/** --------------------------------------------------------------------------------
+ * POSITIONS
  */
 
-.u-Relative		{ position: relative; }
-.u-Absolute		{ position: absolute; }
-.u-Fixed		{ position: fixed; }
+.u-Relative {
+	position: relative;
+}
 
-.u-z {
-	&Plus		{ z-index: +1; }
-	&Minus		{ z-index: -1; }
+.u-Absolute {
+	position: absolute;
+}
+
+.u-Fixed {
+	position: fixed;
 }
 
 
-/*	----------------------------------------------------------------------------
- *	DISPLAY
+/** --------------------------------------------------------------------------------
+ * DISPLAY
  */
 
-.u-Hidden		{ visibility: hidden; }
-.u-Visible		{ visibility: visible; }
+.u-Hidden {
+	visibility: hidden;
+}
 
-.u-Block		{ display: block; }
-.u-notDisplayed	{ display: none; }
-.u-Inline		{ display: inline; }
+.u-Visible {
+	visibility: visible;
+}
+
+.u-Block {
+	display: block;
+}
+
+.u-NotDisplayed {
+	display: none;
+}
+
+.u-Inline {
+	display: inline;
+}
 
 .u-Table {
 	display: table;
 
-	&__row { display: table-row; }
+	&__Row {
+		display: table-row;
+	}
 
-	&__row > *,
-	&__cell {
+	&__Row > *,
+	&__Cell {
 		display: table-cell;
 		vertical-align: middle;
 	}
@@ -94,54 +138,89 @@
 .u-Flex {
 	display: flex;
 
-	&--center { align-items: center }
+	&--Center {
+		align-items: center
+	}
 }
 
-.u-inlineFlex	{ display: inline-flex; }
+.u-InlineFlex {
+	display: inline-flex;
+}
 
-.u-notSelectable { user-select: none; }
+.u-NotSelectable {
+	user-select: none;
+}
 
 
-/*	----------------------------------------------------------------------------
- *	SIZES
+/** --------------------------------------------------------------------------------
+ * SIZES
  */
 
 .u-Width {
-	&--full		{ width: 100%; }
-	&--half		{ width: 50%; }
+	&--Full {
+		width: 100%;
+	}
+
+	&--Half {
+		width: 50%;
+	}
 }
 
 .u-Height {
-	&--full		{ height: 100%; }
-	&--half		{ height: 50%; }
+	&--Full {
+		height: 100%;
+	}
+
+	&--Half {
+		height: 50%;
+	}
 }
 
 
-/*	----------------------------------------------------------------------------
- *	TRANSFORMATIONS
+/** --------------------------------------------------------------------------------
+ * TRANSFORMATIONS
  */
 
 .u-Rotate {
-	&--90		{ transform: rotate(90deg); }
-	&--180		{ transform: rotate(180deg); }
-	&--270		{ transform: rotate(270deg); }
+	&--90 {
+		transform: rotate(90deg);
+	}
+
+	&--180 {
+		transform: rotate(180deg);
+	}
+
+	&--270 {
+		transform: rotate(270deg);
+	}
 }
 
 
-/*	----------------------------------------------------------------------------
- *	OTHER
+/** --------------------------------------------------------------------------------
+ * OTHER
  */
 
-.u-Clickable	{ cursor: pointer; }
-
-.u-Disabled		{ pointer-events: none; }
-
-.u-Overflow {
-	&--hidden	{ overflow: hidden; }
-	&--scroll	{ overflow: scroll; }
+.u-Clickable {
+	cursor: pointer;
 }
 
-.u-noTransition	{ transition: none !important; }
+.u-Disabled {
+	pointer-events: none;
+}
+
+.u-Overflow {
+	&--Hidden {
+		overflow: hidden;
+	}
+
+	&--Scroll {
+		overflow: scroll;
+	}
+}
+
+.u-NoTransition	{
+	transition: none !important;
+}
 
 .u-Reset {
 	&--styles {

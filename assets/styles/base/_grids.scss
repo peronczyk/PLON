@@ -1,74 +1,82 @@
 
-/*	================================================================================
+/**
+ * =================================================================================
  *
- *	GRID SYSTEM BASED ON FLEX
+ * GRID SYSTEM BASED ON FLEX BOX
  *
- *	================================================================================
+ * =================================================================================
  */
 
-
-.Grid {
+ .Grid {
 	display: flex;
 	flex: 0 1 auto;
 	flex-direction: row;
 	flex-wrap: wrap;
 
+	&--Top {
+		align-items: flex-start;
+	}
+
+	&--Center {
+		align-items: center;
+	}
+
+	&--Bottom {
+		align-items: flex-end;
+	}
+
 	[class*='Col-'] {
 		flex: 0 0 auto;
 
-		// Vertical column alignments applicable to each column separately
 		&.Col {
-			&--top		{ align-self: flex-start; }
-			&--center	{ align-self: center; }
-			&--bottom	{ align-self: flex-end; }
+			&--Top {
+				align-self: flex-start;
+			}
+			&--Center {
+				align-self: center;
+			}
+			&--Bottom {
+				align-self: flex-end;
+			}
 		}
-	}
-
-	// Vertical columns alignments applied to each column in grid
-	&.Grid {
-		&--top		{ align-items: flex-start; }
-		&--center	{ align-items: center; }
-		&--bottom	{ align-items: flex-end; }
 	}
 }
 
 
-/*	--------------------------------------------------------------------------------
- *	COLUMN DEFINITIONS FOR GRID SYSTEMS
- *	Example classname produced by mixin below: .Col-6@XL
+/** --------------------------------------------------------------------------------
+ * COLUMN DEFINITIONS FOR GRID SYSTEM
+ * Example classname produced by mixin below: .Col-6@XL
  */
-
-
 
 // Default screen size
 @include columns();
 
 // Screen size: Ultra large
-@include max-width(h-ul) {
+@include narrower-than(ul) {
 	@include columns('\\@UL');
 }
 
 // Screen size: Extra large
-@include max-width(h-xl) {
+@include narrower-than(xl) {
 	@include columns('\\@XL');
 }
 
 // Screen size: Large
-@include max-width(h-lg) {
+@include narrower-than(lg) {
 	@include columns('\\@LG');
 }
 
 // Screen size: Medium
-@include max-width(h-md) {
+@include narrower-than(md) {
 	@include columns('\\@MD');
 }
 
 // Screen size: Small
-@include max-width(h-sm) {
+@include narrower-than(sm) {
 	@include columns('\\@SM');
 }
 
 // Screen size: Extra small
-@include max-width(h-xs) {
+@include narrower-than(xs) {
 	@include columns('\\@XS');
 }

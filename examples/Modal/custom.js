@@ -6,7 +6,7 @@ $(function() {
 
 	'use strict';
 
-	new Modal({
+	new plon.Modal({
 		debug: debug
 	});
 

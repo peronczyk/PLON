@@ -1,9 +1,9 @@
-var debug = 1;
+var debug = true;
 
 $(function() {
 
-	$('[data-autopause]').videoAutoPause({
-		'debug': debug
+	new plon.VideoAutoPause({
+		debug: debug
 	});
 
 });

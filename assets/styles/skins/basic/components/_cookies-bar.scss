@@ -1,8 +1,8 @@
-/*	----------------------------------------------------------------------------
- *	COOKIES BAR
+/** --------------------------------------------------------------------------------
+ * COOKIES BAR
  */
 
-.c-Cookies-bar {
+.c-CookiesBar {
 	visibility: hidden;
 	position: fixed;
 	z-index: 999;
@@ -20,5 +20,7 @@
 		opacity: 1;
 	}
 
-	button { margin: 0; }
+	.o-Btn {
+		margin: 0;
+	}
 }

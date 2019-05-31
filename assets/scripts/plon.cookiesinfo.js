@@ -21,23 +21,23 @@
 
 	var defaults = {
 
-			// Debug mode
-			debug: 0,
+		// Debug mode
+		debug: false,
 
-			// Name of CSS class name, that makes cookies bar visible
-			visibleClassName: 'is-Open',
+		// Name of CSS class name, that makes cookies bar visible
+		visibleClassName: 'is-Open',
 
-			// DOM element inside cookies info box, that accepts cookie law
-			acceptButton: 'button',
+		// DOM element inside cookies info box, that accepts cookie law
+		acceptButton: 'button',
 
-			// Cookie name stored in visitor's computer
-			cookieName: 'cookies_accepted',
+		// Cookie name stored in visitor's computer
+		cookieName: 'plon/cookiesAccepted',
 
-			// Number of days after which cookies will be expired
-			cookieExpiresAfter: 90,
-		},
-		cookies = document.cookie.split('; '),
-		cookieStr, date, expires;
+		// Number of days after which cookies will be expired
+		cookieExpiresAfter: 90,
+	};
+	var cookies = document.cookie.split('; ');
+	var cookieStr, date, expires;
 
 
 	/** ----------------------------------------------------------------------------
@@ -82,16 +82,22 @@
 
 		// Check if cookies bar exists in DOM
 		if ($that.length < 1) {
-			if (config.debug) console.error('cookiesInfo: Cookies bar not found.');
+			if (config.debug) {
+				console.error('[CookiesInfo] Cookies bar not found.');
+			}
 			return $that;
 		}
 
 		// Check if cookies law was accepted
 		if (cookieGet(config) !== '1') {
-			if (config.debug) console.info('cookiesInfo: Not accepted, open bar.');
 			$that.addClass(config.visibleClassName);
+			if (config.debug) {
+				console.info('[CookiesInfo] Not accepted, open bar.');
+			}
 		}
-		else if (config.debug) console.log('cookiesInfo: Cookies accepted. Bar not shown.');
+		else if (config.debug) {
+			console.log('[CookiesInfo] Cookies accepted. Bar not shown.');
+		}
 
 		// Accept cookies law
 		$that.on('click', config.acceptButton, function(event) {
@@ -99,7 +105,7 @@
 
 			if (cookieSet(config)) {
 				$that.removeClass(config.visibleClassName);
-				if (config.debug) console.info('cookiesInfo: Accepted, close bar.');
+				if (config.debug) console.info('[CookiesInfo] Accepted, close bar.');
 			}
 		});
 
