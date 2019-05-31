@@ -4,7 +4,7 @@
  * PLON Component : VideoAutoPause
  *
  * @author			Bartosz Perończyk (peronczyk.com)
- * @modified		2017-09-15
+ * @modified		2019-05-31
  * @repository		https://github.com/peronczyk/plon
  *
  * =================================================================================
@@ -12,75 +12,51 @@
 
 window.plon = window.plon || {};
 
-window.plon.VideoAutoPause = function(options) {
-
-	'use strict';
-
-	const defaults = {
-		debug: false,
-		videoSelector: 'video',
-		eventsNameSpace: '.plon.videoautopause',
-	};
-	const browserPrefixes = ['', 'webkit', 'moz', 'ms', 'o'];
-	var visibilityStateSupport = false; // Stores information about page visibility state
-
-	this.$videos;
-
+window.plon.VideoAutoPause = class {
 
 	/** ----------------------------------------------------------------------------
-	 * PLAY VIDEOS
+	 * Construct
+	 * @var {String} scrollElementSelector
+	 * @var {Object} options
 	 */
 
-	this.playVideos = () => {
-		this.$videos.each(($elem) => {
-			$elem.get(0).play();
-		});
-	};
+	constructor(options) {
 
+		// Default configuration values
+		const defaults = {
 
-	/** ----------------------------------------------------------------------------
-	 * PAUSE VIDEOS
-	 */
+			/**
+			 * Decide if you want to show user-friendly notifications in conssole
+			 * window of the browser.
+			 * @var {Boolean}
+			 */
+			debug: false,
 
-	this.pauseVideos = () => {
-		this.$videos.each(($elem) => {
-			$elem.get(0).pause();
-		});
-	};
+			/**
+			 * CSS selector for videos that should be pause/played.
+			 * @var {String}
+			 */
+			videoSelector: 'video',
 
+			/**
+			 * Events namespace.
+			 * @var {String}
+			 */
+			eventsNameSpace: '.plon.videoautopause',
+		};
 
-	/** ----------------------------------------------------------------------------
-	 * SET UP JQUERY PLUGIN
-	 */
-
-	this.init = () => {
-
-		// Setup configuration
-		this.config = Object.assign({}, defaults, options);
-
+		this.config = { ...defaults, ...options };
 		this.$videos = $(this.config.videoSelector);
 
 		if (!this.$videos.length) {
-			if (this.config.debug) {
-				console.info('[PLON / VideoAutoPause] No video elements were found in current document.');
-			}
+			this.debugLog(`No video elements were found in current document.`);
 			return false;
 		}
 
-		// Check if browser supports visibilityState
-		for (let i = 0; i < browserPrefixes.length; i++) {
-			if ((browserPrefixes[i] + 'VisibilityState') in document) {
-				visibilityStateSupport = true;
-				break;
-			}
-		}
+		this.visibilityStateSupport = this.checkVisibilityStateSupport();
 
 		// Modern browser with visibilityState support
-		if (visibilityStateSupport) {
-			if (this.config.debug) {
-				console.info('[PLON / VideoAutoPause] Browser supports visibilityState');
-			}
-
+		if (this.visibilityStateSupport) {
 			$(document).on('visibilitychange' + this.config.eventsNameSpace, () => {
 				(document.hidden)
 					? this.pauseVideos()
@@ -90,7 +66,7 @@ window.plon.VideoAutoPause = function(options) {
 
 		// Older browsers
 		else {
-			console.info('[PLON / VideoAutoPause] Browser do not support visibilityState. Switched to blur/focus mode');
+			this.debugLog(`Browser do not support visibilityState. Switched to blur/focus mode`);
 
 			$(window).on('blur' + this.config.eventsNameSpace + ' focus' + this.config.eventsNameSpace, (event) => {
 				(event.type === 'blur')
@@ -99,10 +75,61 @@ window.plon.VideoAutoPause = function(options) {
 			});
 		}
 
-		if (this.config.debug) {
-			console.info('Plugin loaded: videoAutoPause');
+		this.debugLog(`Initiated. Videos found: ${this.$videos.length}`, 'info');
+	}
+
+
+	/** ----------------------------------------------------------------------------
+	 * Check if browser supports visibilityState
+	 */
+
+	checkVisibilityStateSupport() {
+		const browserPrefixes = ['', 'webkit', 'moz', 'ms', 'o'];
+
+		for (let i = 0; i < browserPrefixes.length; i++) {
+			if ((browserPrefixes[i] + 'VisibilityState') in document) {
+				return true;
+			}
 		}
+
+		return false;
+	}
+
+
+	/** ----------------------------------------------------------------------------
+	 * PLAY VIDEOS
+	 */
+
+	playVideos() {
+		this.debugLog(`Videos played.`);
+
+		this.$videos.each((index, elem) => {
+			elem.play();
+		});
 	};
 
-	return this.init();
+
+	/** ----------------------------------------------------------------------------
+	 * PAUSE VIDEOS
+	 */
+
+	pauseVideos() {
+		this.debugLog(`Viedos paused.`);
+
+		this.$videos.each((index, elem) => {
+			elem.pause();
+		});
+
+	};
+
+
+	/** ----------------------------------------------------------------------------
+	 * Debug logging
+	 */
+
+	debugLog(message, type = 'log') {
+		if (this.config.debug) {
+			console[type]('[PLON / VideoAutoPause]', message);
+		}
+	}
 };

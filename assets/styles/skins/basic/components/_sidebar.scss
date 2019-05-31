@@ -9,26 +9,26 @@
 	font-size: 14px;
 	line-height: 20px;
 
-	&--left {
+	&--Left {
 		float: left;
 		left: 0;
 	}
 
-	&--right {
+	&--Right {
 		float: right;
 		right: 0;
 	}
 
-	@include narrower-than(h-ul) {
+	@include narrower-than(ul) {
 		width: 350px;
 	}
 
-	@include narrower-than(h-xl) {
+	@include narrower-than(xl) {
 		padding: $gutter/2 $gutter/2 0 $gutter/2;
 		width: 300px;
 	}
 
-	@include narrower-than(h-md) {
+	@include narrower-than(md) {
 		float: none;
 	}
 }

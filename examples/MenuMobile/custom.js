@@ -4,11 +4,10 @@ $(function() {
 
 	'use strict';
 
-	new MenuMobile({
-		debug					: true,
-		toggleElem				: '#mobile-menu-toggle',
-		menuElem				: '#main-menu',
-		closeByClickingMenuLink	: true,
+	new plon.MenuMobile('#mobile-menu-toggle', {
+		menuElem: '#main-menu',
+		debug: true,
+		closeByClickingMenuLink: true,
 	});
 
 });

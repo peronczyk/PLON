@@ -8,21 +8,14 @@ $(function() {
 
 	'use strict';
 
-	// Use as jQuery plugin
-	var $tabs1 = $('#tabs1 [role="tablist"]');
-	$tabs1.tabs({
-		debug: debug
+	// First tabs
+
+	var tabs1 = new plon.Tabs('#tabs1', {
+		debug: debug,
 	});
 
-	// Event catching example
-	$tabs1.on('change.tabs.plon', function(event) {
-		console.group('Catched tabs event');
-		console.log(event);
-		console.groupEnd();
-	});
-
-	// Use as constructor
-	var tabs2 = new Tabs('#tabs2', {
+	// Second tabs
+	var tabs2 = new plon.Tabs('#tabs2', {
 		debug: debug,
 		autoActivateTab: 2
 	});

@@ -1,11 +1,11 @@
-var debug = 1;
+var debug = true;
 
 $(function() {
 
 	'use strict';
 
 	// Plugin setup
-	$('#cookies-bar').cookiesInfo({
+	$('.c-CookiesBar').cookiesInfo({
 		debug: debug
 	});
 

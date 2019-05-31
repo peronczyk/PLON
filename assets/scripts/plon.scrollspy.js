@@ -12,7 +12,7 @@
 
 window.plon = window.plon || {};
 
-window.plon.ScrollSpy = class ScrollSpy {
+window.plon.ScrollSpy = class {
 
 	/** ----------------------------------------------------------------------------
 	 * Construct

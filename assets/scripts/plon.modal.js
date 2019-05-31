@@ -31,11 +31,11 @@ window.plon.Modal = function(options) {
 			// CSS selector for child element of wrapper that will position content.
 			// this class is used to determine if user clicked inside modal
 			// or outside to close it.
-			window: '.c-Modal__window',
+			window: '.c-Modal__Window',
 
 			// CSS selector for child element of wraper that will contain
 			// content of modal (eg.: text, images)
-			content: '.c-Modal__content',
+			content: '.c-Modal__Content',
 
 			// Data attribute name for DOM elements that should open modals
 			// after clicking on them
@@ -76,7 +76,7 @@ window.plon.Modal = function(options) {
 		let title    = $elem.attr('title');
 		let detected = false;
 
-		if (href.length < 3) {
+		if (!href || href.length < 3) {
 			if (title && title.length) {
 				this.loadTitle($elem);
 				detected = true;
@@ -239,8 +239,6 @@ window.plon.Modal = function(options) {
 		$(image)
 			.attr('src', imageUrl)
 			.on('load', (event) => {
-				console.log(event);
-
 				if (this.config.debug) {
 					console.info('[PLON / Modal] Image loaded from: ' + imageUrl);
 				}

@@ -6,10 +6,13 @@
 			float: left;
 			font-weight: bold;
 		}
-		ul { float: right; }
+
+		ul {
+			float: right;
+		}
 	}
 
-	&__list {
+	&__List {
 		margin-bottom: 10px;
 		border-bottom: 1px solid $color-line;
 
@@ -43,7 +46,7 @@
 		}
 	}
 
-	&__panels {
+	&__Panels {
 		margin-bottom: 20px;
 		border: 1px solid $color-line;
 		min-height: $gutter;

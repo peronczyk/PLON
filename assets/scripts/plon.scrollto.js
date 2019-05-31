@@ -12,7 +12,7 @@
 
 window.plon = window.plon || {};
 
-window.plon.ScrollTo = class ScrollTo {
+window.plon.ScrollTo = class {
 
 	/** ----------------------------------------------------------------------------
 	 * Construct

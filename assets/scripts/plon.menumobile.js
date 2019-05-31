@@ -65,7 +65,7 @@ window.plon.MenuMobile = function(toggleElem, options) {
 			 * Set it to 'null' if you want to disable adding class to <body>.
 			 * Used also for disabling scroll.
 			 */
-			openBody: 'is-MenuMobile--open',
+			openBody: 'is-MenuMobile--Open',
 
 			/**
 			 * CSS class added to toggle element and menu element.

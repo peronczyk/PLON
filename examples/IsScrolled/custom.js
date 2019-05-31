@@ -1,9 +1,9 @@
-var debug = 1;
+var debug = true;
 
 $(function() {
 
-	$(document).isScrolled({
-		'debug': debug
+	new plon.IsScrolled({
+		debug: debug,
 	});
 
 });

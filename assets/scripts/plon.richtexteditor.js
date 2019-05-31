@@ -27,10 +27,10 @@ window.plon.RichTextEditor = function(elem, options) {
 		debug: false,
 		classNames: {
 			wrapper	: 'o-Rte',
-			toolbar	: 'o-Rte__toolbar',
-			editor	: 'o-Rte__editor',
-			source	: 'o-Rte__source',
-			sublist	: 'o-Rte__sublist',
+			toolbar	: 'o-Rte__Toolbar',
+			editor	: 'o-Rte__Editor',
+			source	: 'o-Rte__Source',
+			sublist	: 'o-Rte__Sublist',
 			hidden	: 'u-Hidden',
 			active	: 'is-Active',
 			disabled: 'is-Disabled',
@@ -312,5 +312,7 @@ window.plon.RichTextEditor = function(elem, options) {
 	 * INITIATE COMPONENT
 	 */
 
-	if (this.init() && config.debug) console.info('[PLON] RichTextEditor initiated');
+	if (this.init() && config.debug) {
+		console.info('[PLON] RichTextEditor initiated');
+	}
 };

@@ -2,8 +2,8 @@ $(function() {
 
 	'use strict';
 
-	$('[data-scrollto]').scrollTo({
-		debug: 1,
+	new plon.ScrollTo('[data-scrollto]', {
+		debug: true,
 		speed: 100,
 		shift: -80
 	});

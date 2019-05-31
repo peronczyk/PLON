@@ -31,7 +31,7 @@
 		}
 	}
 
-	&__toggle {
+	&__Toggle {
 		display: inline-block;
 		position: relative;
 		margin: 10px;
@@ -39,7 +39,9 @@
 		height: 42px;
 		transition: all .2s cubic-bezier(0.40, 0.14, 0.50, 0.78);
 
-		&:hover { border-color: #8f8f8f; }
+		&:hover {
+			border-color: #8f8f8f;
+		}
 
 		hr {
 			position: absolute;
@@ -50,21 +52,35 @@
 			background-color: #56b9fe;
 			transition: all .3s cubic-bezier(0.40, 0.14, 0.50, 0.78);
 
-			&:nth-child(1) { top: 12px; }
-			&:nth-child(2) { top: 19px; }
-			&:nth-child(3) { top: 26px; }
+			&:nth-child(1) {
+				top: 12px;
+			}
+			&:nth-child(2) {
+				top: 19px;
+			}
+			&:nth-child(3) {
+				top: 26px;
+			}
 		}
 
-		.is-menuMobile--open & {
+		.is-MenuMobile--Open & {
 			hr {
-				&:nth-child(1) { top: 20px; transform: rotate(45deg); }
-				&:nth-child(2) { left: 30px; opacity: 0; }
-				&:nth-child(3) { top: 20px; transform: rotate(-45deg); }
+				&:nth-child(1) {
+					top: 20px; transform: rotate(45deg);
+				}
+
+				&:nth-child(2) {
+					left: 30px; opacity: 0;
+				}
+
+				&:nth-child(3) {
+					top: 20px; transform: rotate(-45deg);
+				}
 			}
 		}
 	}
 
-	&__nav {
+	&__Nav {
 		transition: .3s;
 
 		ul {
@@ -76,7 +92,7 @@
 			padding: 10px 30px;
 		}
 
-		.c-Header--mobile & {
+		.c-Header--Mobile & {
 			visibility: hidden;
 			position: fixed;
 			top: 0;
@@ -85,18 +101,18 @@
 			height: 100%;
 			width: 300px;
 			opacity: 0;
-			transform: scale(.9) translateX(100px);
+			transform: scaleX(.9) translateX(100px);
 			will-change: visibility, opacity, transform;
 		}
 
-		.is-menuMobile--open & {
+		.is-MenuMobile--Open & {
 			visibility: visible;
 			opacity: 1;
 			transform: scale(1) translateX(0);
 		}
 	}
 
-	&__menu {
+	&__Menu {
 		float: right;
 		height: 100%;
 		list-style: none;
@@ -116,7 +132,9 @@
 				color: #7b7b7b;
 				transition: all .2s ease-out;
 
-				&:hover { color: #000; }
+				&:hover {
+					color: #000;
+				}
 
 				&:after {
 					content: '';
@@ -140,7 +158,7 @@
 		}
 	}
 
-	&__badge {
+	&__Badge {
 		ul {
 			list-style: none;
 			visibility: hidden;
@@ -165,7 +183,7 @@
 		}
 	}
 
-	&__badge-photo {
+	&__BadgePhoto {
 		display: inline-block;
 		margin-right: 8px;
 		vertical-align: middle;

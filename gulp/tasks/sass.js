@@ -10,8 +10,10 @@ module.exports = function() {
 	var sourcemaps = require('gulp-sourcemaps');
 
 	return gulp.task('sass', function() {
+		var scssFilesList = config.assetsDir + config.subDirs.assets.sass + '*.scss';
+
 		return gulp
-			.src(config.assetsDir + config.subDirs.assets.sass + '*.scss')
+			.src(scssFilesList)
 			.pipe(env.development ? sourcemaps.init() : gutil.noop())
 			.pipe(sass({
 				outputStyle: env.production ? 'compressed' : 'nested'

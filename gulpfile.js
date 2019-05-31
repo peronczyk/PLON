@@ -21,7 +21,7 @@ var options = {
 	jsFiles: [],
 
 	// Task that will be run as default "$ gulp"
-	defaultTasks: ['sass', 'js', 'images', 'fonts', 'add-jquery'],
+	defaultTasks: ['sass', 'js', 'js-separate', 'images', 'fonts', 'add-jquery'],
 };
 
 

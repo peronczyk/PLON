@@ -32,7 +32,7 @@ body {
 @viewport {
 	width: device-width;
 }
-@include narrower-than(h-xs) {
+@include narrower-than(xs) {
 	@viewport {
 		width: breakpoint(h-xs);
 	}

@@ -15,14 +15,14 @@
 	<script type="text/javascript" async src="custom.js"></script>
 
 	<style>
-		.o-Gallery-slider {
+		.o-GallerySlider {
 			position: relative;
 			overflow: hidden;
 			white-space: nowrap;
 		}
 
-			.o-Gallery-slider__prev,
-			.o-Gallery-slider__next {
+			.o-GallerySlider__Prev,
+			.o-GallerySlider__Next {
 				position: absolute;
 				top: 0;
 				width: 20%;
@@ -32,22 +32,22 @@
 				transition: all .3s;
 			}
 
-			.o-Gallery-slider__prev { left: 0; }
-			.o-Gallery-slider__next { right: 0; }
+			.o-GallerySlider__Prev { left: 0; }
+			.o-GallerySlider__Next { right: 0; }
 
-			.o-Gallery-slider__prev:hover,
-			.o-Gallery-slider__next:hover {
+			.o-GallerySlider__Prev:hover,
+			.o-GallerySlider__Next:hover {
 				opacity: .2;
 			}
 
-			.o-Gallery-slider__list {
+			.o-GallerySlider__List {
 				transition: all .3s;
 				font-size: 0;
 				will-change: transform;
 				transform: stranslateX(0);
 			}
 
-				.o-Gallery-slider__list figure {
+				.o-GallerySlider__List figure {
 					display: inline-block;
 					width: 20%;
 					height: 100%;
@@ -55,17 +55,17 @@
 					white-space: normal;
 				}
 
-					.o-Gallery-slider__list figure a {
+					.o-GallerySlider__List figure a {
 						display: block;
 						height: 300px;
 					}
 
-					.o-Gallery-slider__list figure img {
+					.o-GallerySlider__List figure img {
 						width: 100%;
 						height: auto;
 					}
 
-					.o-Gallery-slider__list figure figcaption {
+					.o-GallerySlider__List figure figcaption {
 						display: block;
 						padding: 20px 10px 15px 10px;
 						font-size: 14px;
@@ -80,8 +80,8 @@
 		<p>Hover over the first or the last box and click on it to move boxes in this direction</p>
 	</div>
 
-	<div class="o-Gallery-slider">
-		<div class="o-Gallery-slider__list">
+	<div class="o-GallerySlider">
+		<div class="o-GallerySlider__List">
 			<figure>
 				<a href="#" class="t-Orange"><!-- Put IMG here --></a>
 				<figcaption>Lorem ipsum dolor sit amet consectetur</figcaption>
@@ -133,8 +133,8 @@
 			</figure>
 		</div>
 
-		<a href="#" class="o-Gallery-slider__prev"></a>
-		<a href="#" class="o-Gallery-slider__next"></a>
+		<a href="#" class="o-GallerySlider__Prev"></a>
+		<a href="#" class="o-GallerySlider__Next"></a>
 	</div>
 
 </body>

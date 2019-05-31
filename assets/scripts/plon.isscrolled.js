@@ -12,7 +12,7 @@
 
 window.plon = window.plon || {};
 
-window.plon.IsScrolled = class IsScrolled {
+window.plon.IsScrolled = class {
 
 	/** ----------------------------------------------------------------------------
 	 * Constructor
