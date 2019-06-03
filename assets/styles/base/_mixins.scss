@@ -26,7 +26,7 @@
 // Media breakpoint for viewport wider than defined width
 
 @mixin wider-than($size) {
-	@media (min-width: #{breakpoint(h-#{$size})} - 1) {
+	@media (min-width: #{breakpoint(h-#{$size}) - 1px}) {
 		@content;
 	}
 }
@@ -44,7 +44,7 @@
 // Media breakpoint for viewport higher than defined height
 
 @mixin higher-than($size) {
-	@media (min-height: #{breakpoint($size)} - 1) {
+	@media (min-height: #{breakpoint($size) - 1px}) {
 		@content;
 	}
 }
