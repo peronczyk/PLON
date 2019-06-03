@@ -51,7 +51,7 @@ window.plon.ScrollSpy = class {
 			debounceTime: 40,
 
 			/**
-			 * Decide if you want to show user-friendly notifications in conssole
+			 * Decide if you want to show user-friendly notifications in console
 			 * window of the broowser.
 			 * @var {Boolean}
 			 */

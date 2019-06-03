@@ -26,7 +26,7 @@ window.plon.VideoAutoPause = class {
 		const defaults = {
 
 			/**
-			 * Decide if you want to show user-friendly notifications in conssole
+			 * Decide if you want to show user-friendly notifications in console
 			 * window of the browser.
 			 * @var {Boolean}
 			 */

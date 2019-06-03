@@ -12,105 +12,186 @@
 
 window.plon = window.plon || {};
 
-window.plon.Tabs = function(elem, options) {
+window.plon.Tabs = class {
 
-	'use strict';
+	/** ----------------------------------------------------------------------------
+	 * Construct
+	 * @param {String} elem
+	 * @param {Object} options
+	 */
 
-	// Default configuration
-	var defaults = {
+	constructor(elem, options) {
+
+		// Default configuration values
+		const defaults = {
+
+			/**
+			 * Decide if you want to show user-friendly notifications in console
+			 * window of the browser.
+			 * @var {Boolean}
+			 */
+			debug: false,
+
+			/**
+			 * CSS selector for tab elements.
+			 */
+			tabSelector: '[role="tab"]',
+
+			/**
+			 * CSS selector for tabs panel.
+			 */
+			panelSelector: '[role="tabpanel"]',
+
+			/**
+			 * Decide if hovering the tab will mark it as active.
+			 * @var {Boolean}
+			 */
+			hoverCangesTab: false,
+
+			/**
+			 * Plugin events namespace.
+			 */
+			eventsNameSpace: '.plon.tabs',
+
+			/**
+			 * Data attribute that binds tabs list with panels.
+			 */
+			dataBinder: 'data-tabs-panels',
+
+			/**
+			 * Specify which tab will be automatically selected when the page loads.
+			 * 0 means first tab.
+			 * @var {Integer|null}
+			 */
+			autoActivateTab: 0,
+
+			/**
+			 * Decide if tab element will be focused after tabs navigation action (next
+			 * / previous). Setting this option to false prevents from viewport position
+			 * change when tab is automatically changed within some external script.
+			 * @var {Boolean}
+			 */
+			focusOnTabNavAction: false,
+
+			/**
+			 * Define the size of the viewport in which tab change will automatically
+			 * scroll the page to the tab content. This is usefull in mobile versions
+			 * of tabs.
+			 * @var {Number|Boolean}
+			 */
+			autoScrollOnScreenNarrowerThan: false,
+
+			/**
+			 * Run provided callback when tab changes.
+			 * @var {Function}
+			 */
+			tabChangeCallback: null,
+
+			/**
+			 * CSS class names (without dot at the beginning).
+			 */
+			classNames: {
+				active: 'is-Active'
+			},
+		};
+
+		// Shortcuts
+		this.$document = $(document);
+
+		// Variables available for constructor
+		this.config = { ...defaults, ...options };
+		this.activeTabIndex = null;
+		this.$panelsContainer;
+		this.$panelsList;
+
+		this.$tabsContainer = $(elem);
+
+		this.monitoredEvents =
+			` click ${this.config.eventsNameSpace}` +
+			` focusin ${this.config.eventsNameSpace}` +
+			` focusout ${this.config.eventsNameSpace}`;
+
+		if (this.config.hoverCangesTab) {
+			this.monitoredEvents += ` mouseenter ${this.config.eventsNameSpace}`;
+		}
+
+		if (!this.$tabsContainer.length) {
+			this.debugLog(`TabList container not found: ${elem}`, 'warn');
+			return false;
+		}
+
+		this.$tabsList = this.$tabsContainer.find(this.config.tabSelector);
+		if (!this.$tabsList.length) {
+			this.debugLog(`No tabs found`);
+			return false;
+		}
+
+		this.panelsId = this.$tabsContainer.attr(this.config.dataBinder);
+		if (typeof this.panelsId === 'undefined' || this.panelsId === false) {
+			let $elemWithBindingId = this.$tabsContainer.closest('[' + this.config.dataBinder + ']');
+
+			if ($elemWithBindingId.length) {
+				this.panelsId = $elemWithBindingId.attr(this.config.dataBinder);
+			}
+			else {
+				this.debugLog(`Selected tabs list container or any parent element doesn\'t have data selector (${this.config.dataBinder}) or it\'s empty: "${this.panelsId}".`);
+				return false;
+			}
+		}
+
+		this.$panelsContainer = $('#' + this.panelsId);
+		if (!this.$panelsContainer) {
+			this.debugLog(`Specified panels container doesn\'t exist: ${this.panelsId}`);
+			return false;
+		}
+
+		this.$panelsList = this.$panelsContainer.children(this.config.panelSelector);
+		this.activeTabIndex = this.$tabsContainer.find('.' + this.config.classNames.active).index();
+
 
 		/**
-		 * Decide if you want to see all informations in console
-		 * @var {Boolean}
+		 * Events monitoring
 		 */
-		debug: false,
+
+		this.$tabsList.on(this.monitoredEvents, (event, params) => {
+			if (event.type === 'click' || (this.config.hoverCangesTab && event.type === 'mouseenter')) {
+				this.changeTab($(event.currentTarget).index());
+			}
+
+			// Turn ON or OFF keyboard monitoring
+			// if event wasn't triggered by this component
+			if (!params || !params.selfInitiated) {
+				switch (event.type) {
+					case 'focusin':
+						this.bindKeyboardNav();
+						break;
+
+					case 'focusout':
+						this.unbindKeyboardNav();
+						break;
+				}
+			}
+		});
+
 
 		/**
-		 * CSS selector for tab elements.
+		 * Auto activating configured tab if none of tabs are active.
 		 */
-		tabSelector: '[role="tab"]',
 
-		/**
-		 * CSS selector for tabs panel.
-		 */
-		panelSelector: '[role="tabpanel"]',
-
-		/**
-		 * Decide if hovering the tab will mark it as active.
-		 * @var {Boolean}
-		 */
-		hoverCangesTab: false,
-
-		/**
-		 * Plugin events namespace.
-		 */
-		eventsNameSpace: '.plon.tabs',
-
-		/**
-		 * Data attribute that binds tabs list with panels.
-		 */
-		dataBinder: 'data-tabs-panels',
-
-		/**
-		 * Specify which tab will be automatically selected when the page loads.
-		 * 0 means first tab.
-		 * @var {Integer|null}
-		 */
-		autoActivateTab: 0,
-
-		/**
-		 * Decide if tab element will be focused after tabs navigation action (next
-		 * / previous). Setting this option to false prevents from viewport position
-		 * change when tab is automatically changed within some external script.
-		 * @var {Boolean}
-		 */
-		focusOnTabNavAction: false,
-
-		/**
-		 * Define the size of the viewport in which tab change will automatically
-		 * scroll the page to the tab content. This is usefull in mobile versions
-		 * of tabs.
-		 * @var {Number|Boolean}
-		 */
-		autoScrollOnScreenNarrowerThan: false,
-
-		/**
-		 * Run provided callback when tab changes.
-		 * @var {Function}
-		 */
-		tabChangeCallback: null,
-
-		/**
-		 * CSS class names (without dot at the beginning).
-		 */
-		classNames: {
-			active: 'is-Active'
-		},
+		if (this.config.autoActivateTab !== false && this.activeTabIndex === -1) {
+			this.changeTab(this.config.autoActivateTab);
+		}
 	};
-
-	// Shortcuts
-	var $document = $(document);
-
-	// Variables available for constructor
-	this.config;
-	this.activeTabIndex = null;
-	this.panelsId;
-	this.monitoredEvents;
-	this.$tabsContainer;
-	this.$tabsList;
-	this.$panelsContainer;
-	this.$panelsList;
 
 
 	/** ----------------------------------------------------------------------------
-	 * METHOD: Change Tab
+	 * Change Tab
 	 * @param {Number} newTabIndex
 	 */
-	this.changeTab = (newTabIndex) => {
+
+	changeTab(newTabIndex) {
 		if (newTabIndex > this.$panelsList.length - 1 || newTabIndex < 0) {
-			if (this.config.debug) {
-				console.warn('[PLON / Tabs] Tabs panel with index "' + newTabIndex + '" does not exist.');
-			}
+			this.debugLog(`Tabs panel with index "${newTabIndex}" does not exist.`);
 			return false;
 		}
 
@@ -157,17 +238,15 @@ window.plon.Tabs = function(elem, options) {
 			this.config.tabChangeCallback(this);
 		}
 
-		if (this.config.debug) {
-			console.info('[PLON / Tabs] Switched to tab with index: ' + newTabIndex);
-		}
+		this.debugLog(`Switched to tab with index: ${newTabIndex}`);
 	};
 
 
 	/** ----------------------------------------------------------------------------
-	 * METHOD: Naxt Tab
+	 * Naxt Tab
 	 */
 
-	this.nextTab = () => {
+	nextTab() {
 		let newTabIndex = 0;
 
 		if (this.activeTabIndex !== null) {
@@ -176,37 +255,31 @@ window.plon.Tabs = function(elem, options) {
 				: this.activeTabIndex + 1;
 		}
 
-		if (this.config.debug) {
-			console.log('[PLON / Tabs] Switching to next tab (index: ' + newTabIndex + ')');
-		}
-
+		this.debugLog(`Switching to next tab (index: ${newTabIndex})`);
 		this.changeTab(newTabIndex);
 	};
 
 
 	/** ----------------------------------------------------------------------------
-	 * METHOD: Previous Tab
+	 * Previous Tab
 	 */
 
-	this.previousTab = () => {
+	previousTab() {
 		let newTabIndex = (this.activeTabIndex <= 0)
 			? this.$tabsList.length - 1
 			: this.activeTabIndex - 1;
 
 		this.changeTab(newTabIndex);
-
-		if (this.config.debug) {
-			console.info('[PLON / Tabs] Switching to previous tab (index: ' + newTabIndex + ')');
-		}
+		this.debugLog(`Switching to previous tab (index: ${newTabIndex})`);
 	};
 
 
 	/** ----------------------------------------------------------------------------
-	 * METHOD: Bind Keyboard Nav
+	 * Bind Keyboard Nav
 	 */
 
-	this.bindKeyboardNav = () => {
-		$document.on('keydown' + this.config.eventsNameSpace, (event) => {
+	bindKeyboardNav() {
+		this.$document.on('keydown' + this.config.eventsNameSpace, (event) => {
 			switch (event.which) {
 				case 32: // Space
 					event.preventDefault();
@@ -230,21 +303,21 @@ window.plon.Tabs = function(elem, options) {
 
 
 	/** ----------------------------------------------------------------------------
-	 * METHOD: Unbind Keyboard Nav
+	 * Unbind Keyboard Nav
 	 */
 
-	this.unbindKeyboardNav = () => {
-		$document.off(this.config.eventsNameSpace);
+	unbindKeyboardNav() => {
+		this.$document.off(this.config.eventsNameSpace);
 	};
 
 
 	/** ----------------------------------------------------------------------------
-	 * METHOD: Scroll viewport to tab panels wrapper. If wrapper is smaller than
+	 * Scroll viewport to tab panels wrapper. If wrapper is smaller than
 	 * viewport height bottom of the wrapper is taken as the base. Thanks to this
 	 * behavior both tabs and panels are visible after scrolling.
 	 */
 
-	this.scrollToPanels = () => {
+	scrollToPanels() {
 		let panelsTopOffset = this.$panelsContainer.offset().top;
 		let panelsHeight = this.$panelsContainer.height();
 		let windowHeight = $(window).height();
@@ -263,98 +336,12 @@ window.plon.Tabs = function(elem, options) {
 
 
 	/** ----------------------------------------------------------------------------
-	 * Initiate script - check passed options, etc.
+	 * Debug logging
 	 */
 
-	this.init = () => {
-		this.config = { ...defaults, ...options };
-
-		this.$tabsContainer = $(elem);
-
-		this.monitoredEvents =
-			' click' + this.config.eventsNameSpace +
-			' focusin' + this.config.eventsNameSpace +
-			' focusout' + this.config.eventsNameSpace;
-
-		if (this.config.hoverCangesTab) {
-			this.monitoredEvents += ' mouseenter' + this.config.eventsNameSpace;
-		}
-
-		if (!this.$tabsContainer.length) {
-			if (this.config.debug) {
-				console.warn('[PLON / Tabs] TabList container not found: ' + elem);
-			}
-			return false;
-		}
-
-		this.$tabsList = this.$tabsContainer.find(this.config.tabSelector);
-		if (!this.$tabsList.length) {
-			if (this.config.debug) {
-				console.warn('[PLON / Tabs] No tabs found');
-			}
-			return false;
-		}
-
-		this.panelsId = this.$tabsContainer.attr(this.config.dataBinder);
-		if (typeof this.panelsId === 'undefined' || this.panelsId === false) {
-			let $elemWithBindingId = this.$tabsContainer.closest('[' + this.config.dataBinder + ']');
-
-			if ($elemWithBindingId.length) {
-				this.panelsId = $elemWithBindingId.attr(this.config.dataBinder);
-			}
-			else {
-				if (this.config.debug) {
-					console.warn('[PLON / Tabs] Selected tabs list container or any parent element doesn\'t have data selector (' + this.config.dataBinder + ') or it\'s empty: "' + this.panelsId + '".');
-				}
-				return false;
-			}
-		}
-
-		this.$panelsContainer = $('#' + this.panelsId);
-		if (!this.$panelsContainer) {
-			if (this.config.debug) {
-				console.warn('[PLON / Tabs] Specified panels container doesn\'t exist: ' + this.panelsId);
-			}
-			return false;
-		}
-
-		this.$panelsList = this.$panelsContainer.children(this.config.panelSelector);
-		this.activeTabIndex = this.$tabsContainer.find('.' + this.config.classNames.active).index();
-
-
-		/**
-		 * Events monitoring
-		 */
-
-		this.$tabsList.on(this.monitoredEvents, (event, params) => {
-			if (event.type === 'click' || (this.config.hoverCangesTab && event.type === 'mouseenter')) {
-				this.changeTab($(event.currentTarget).index());
-			}
-
-			// Turn ON or OFF keyboard monitoring
-			// if event wasn't triggered by this component
-			if (!params || !params.selfInitiated) {
-				switch (event.type) {
-					case 'focusin':
-						this.bindKeyboardNav();
-						break;
-
-					case 'focusout':
-						this.unbindKeyboardNav();
-						break;
-				}
-			}
-		});
-
-
-		/**
-		 * Auto activating configured tab if none of tabs are active.
-		 */
-
-		if (this.config.autoActivateTab !== false && this.activeTabIndex === -1) {
-			this.changeTab(this.config.autoActivateTab);
+	debugLog(message, type = 'log') {
+		if (this.config.debug) {
+			console[type]('[PLON / Modal]', message);
 		}
 	};
-
-	return this.init();
 };
