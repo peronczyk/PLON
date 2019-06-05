@@ -4,7 +4,7 @@
  * PLON Component : TiltIt
  *
  * @author			Bartosz Perończyk (peronczyk.com)
- * @modified		2017-09-15
+ * @modified		2019-06-05
  * @repository		https://github.com/peronczyk/plon
  *
  * =================================================================================

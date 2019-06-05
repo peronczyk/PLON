@@ -26,6 +26,13 @@ window.plon.ScrollSpy = class {
 		const defaults = {
 
 			/**
+			 * Decide if you want to show user-friendly notifications in console
+			 * window of the broowser.
+			 * @var {Boolean}
+			 */
+			debug: false,
+
+			/**
 			 * @var {String}
 			 */
 			activeLinkClassName: 'is-Active',
@@ -49,13 +56,6 @@ window.plon.ScrollSpy = class {
 			 * @var {Number} in miliseconds.
 			 */
 			debounceTime: 40,
-
-			/**
-			 * Decide if you want to show user-friendly notifications in console
-			 * window of the broowser.
-			 * @var {Boolean}
-			 */
-			debug: false,
 		};
 
 		// Setup class properties
@@ -74,8 +74,8 @@ window.plon.ScrollSpy = class {
 
 		this.$window.on('scroll', this.debounce(this.scrollActionHandler));
 
-		this.debugLog('Initiated.', 'info');
-	}
+		this.debugLog('Initiated.');
+	};
 
 
 	/** ----------------------------------------------------------------------------
@@ -100,7 +100,7 @@ window.plon.ScrollSpy = class {
 				hash,
 			});
 		});
-	}
+	};
 
 
 	/** ----------------------------------------------------------------------------
@@ -139,7 +139,7 @@ window.plon.ScrollSpy = class {
 		}
 
 		return false;
-	}
+	};
 
 
 	/** ----------------------------------------------------------------------------
@@ -154,7 +154,7 @@ window.plon.ScrollSpy = class {
 		activeEntry.$link.addClass(this.config.activeLinkClassName);
 
 		this.debugLog(`Highlighted link: ${linkIndex}, with id: ${activeEntry.hash}.`);
-	}
+	};
 
 
 	/** ----------------------------------------------------------------------------
@@ -165,7 +165,7 @@ window.plon.ScrollSpy = class {
 		this.linksCollection.forEach((entry) => {
 			entry.$link.removeClass(this.config.activeLinkClassName);
 		});
-	}
+	};
 
 
 	/** ----------------------------------------------------------------------------
@@ -181,7 +181,7 @@ window.plon.ScrollSpy = class {
 			clearTimeout(timeout);
 			timeout = setTimeout(callback.bind(this), this.config.debounceTime);
 		};
-	}
+	};
 
 
 	/** ----------------------------------------------------------------------------
@@ -190,9 +190,9 @@ window.plon.ScrollSpy = class {
 	 * @var {String} type
 	 */
 
-	debugLog(message, type = 'log') {
+	debugLog(message, type = 'info') {
 		if (this.config.debug) {
 			console[type]('[PLON / ScrollSpy]', message);
 		}
-	}
+	};
 };

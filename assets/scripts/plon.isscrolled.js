@@ -21,12 +21,43 @@ window.plon.IsScrolled = class {
 
 	constructor(options) {
 		const defaults = {
-			debug             : false,
-			monitoredElement  : window,
-			classChangeTarget : 'body', // Which DOM element will get scrolled class name
-			scrolledClassName : 'is-Scrolled', // CSS class name added after reaching scrollRange
-			scrollRange       : 10, // After how many pixels class name will be changed
-			debounceTime      : 200 // Miliseconds
+
+			/**
+			 * Decide if you want to show user-friendly notifications in console
+			 * window of the browser.
+			 * @var {Boolean}
+			 */
+			debug: false,
+
+			/**
+			 * DOM element that will be monitored for scroll events.
+			 * @var {String|Object}
+			 */
+			monitoredElement: window,
+
+			/**
+			 * Which DOM element will get scrolled class name.
+			 * @var {String}
+			 */
+			classChangeTarget: 'body',
+
+			/**
+			 * CSS class name added after reaching scrollRange.
+			 * @var {String}
+			 */
+			scrolledClassName: 'is-Scrolled',
+
+			/**
+			 * After how many pixels class name will be changed.
+			 * @var {Number}
+			 */
+			scrollRange: 10,
+
+			/**
+			 * Debounce delay in miliseconds.
+			 * @var {Number}
+			 */
+			debounceTime: 200,
 		};
 
 		this.config = { ...defaults, ...options };
@@ -48,11 +79,11 @@ window.plon.IsScrolled = class {
 			return this;
 		}
 
+		this.debugLog('Initiated.', 'info');
+
 		this.$monitoredElement.on('scroll.plon.isscrolled', this.debounce(this.checkScroll));
 
 		this.checkScroll();
-
-		this.debugLog('Initiated.', 'info');
 	}
 
 

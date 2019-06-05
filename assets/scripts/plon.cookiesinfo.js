@@ -4,112 +4,122 @@
  * PLON Component : CookiesInfo
  *
  * @author			Bartosz Perończyk (peronczyk.com)
- * @modified		2017-09-15
+ * @modified		2019-06-04
  * @repository		https://github.com/peronczyk/plon
  *
  *	================================================================================
  */
 
+window.plon = window.plon || {};
 
-(function($) {
-
-	'use strict';
-
-	/** ----------------------------------------------------------------------------
-	 * PLUGIN DEFAULT CONFIGURATION
-	 */
-
-	var defaults = {
-
-		// Debug mode
-		debug: false,
-
-		// Name of CSS class name, that makes cookies bar visible
-		visibleClassName: 'is-Open',
-
-		// DOM element inside cookies info box, that accepts cookie law
-		acceptButton: 'button',
-
-		// Cookie name stored in visitor's computer
-		cookieName: 'plon/cookiesAccepted',
-
-		// Number of days after which cookies will be expired
-		cookieExpiresAfter: 90,
-	};
-	var cookies = document.cookie.split('; ');
-	var cookieStr, date, expires;
-
+window.plon.cookiesInfo = class {
 
 	/** ----------------------------------------------------------------------------
-	 * SET COOKIE
-	 * To remove cookie just set days to negative value
+	 * Construct
+	 * @param {String} linksSelector
+	 * @param {Object} options
 	 */
 
-	var cookieSet = function(config) {
-		date = new Date();
-		date.setTime(date.getTime() + (config.cookieExpiresAfter * 24 * 60 * 60 * 1000));
-		expires = date.toGMTString();
-		document.cookie = config.cookieName + '=1; expires=' + expires + '; path=/';
-		return true;
-	};
+	constructor(infoBoxSelector, options) {
 
+		// Default configuration values
+		const defaults = {
 
-	/** ----------------------------------------------------------------------------
-	 * GET COOKIE
-	 */
+			/**
+			 * Decide if you want to show user-friendly notifications in console
+			 * window of the broowser.
+			 * @var {Boolean}
+			 */
+			debug: false,
 
-	var cookieGet = function(config) {
-		for (var i = 0; i < cookies.length; i++) {
-			cookieStr = cookies[i].split('=');
-			if (cookieStr[0] === config.cookieName) {
-				console.log(cookieStr[0] + ' ' + cookieStr[1]);
-				return unescape(cookieStr[1]);
-			}
-		}
-		return false;
-	};
+			/**
+			 * Name of CSS class name, that makes cookies bar visible.
+			 * @var {String}
+			 */
+			visibleClassName: 'is-Open',
 
+			/**
+			 * CSS selector for DOM element inside cookies info box,
+			 * that accepts cookie law.
+			 * @var {String}
+			 */
+			acceptButton: 'button',
 
-	/** ----------------------------------------------------------------------------
-	 * SET UP JQUERY PLUGIN
-	 */
+			/**
+			 * Local storage entry name stored in visitor's computer.
+			 * @var {String}
+			 */
+			storageEntryName: 'plonCookiesAccepted',
+		};
 
-	$.fn.cookiesInfo = function(options) {
-		var config = $.extend({}, defaults, options),
-			$that = $(this);
-
-		if (config.debug) console.info('Plugin loaded: cookiesInfo');
+		this.config = { ...defaults, ...options };
+		this.storageEntryAcceptValue = '1';
+		this.$infoBox = $(infoBoxSelector);
 
 		// Check if cookies bar exists in DOM
-		if ($that.length < 1) {
-			if (config.debug) {
-				console.error('[CookiesInfo] Cookies bar not found.');
-			}
-			return $that;
+		if (this.$infoBox.length < 1) {
+			this.debugLog(`Cookies info box not found.`, 'error');
+			return;
 		}
 
-		// Check if cookies law was accepted
-		if (cookieGet(config) !== '1') {
-			$that.addClass(config.visibleClassName);
-			if (config.debug) {
-				console.info('[CookiesInfo] Not accepted, open bar.');
-			}
-		}
-		else if (config.debug) {
-			console.log('[CookiesInfo] Cookies accepted. Bar not shown.');
-		}
+		this.debugLog(`Initiated.`);
 
-		// Accept cookies law
-		$that.on('click', config.acceptButton, function(event) {
-			event.preventDefault();
+		this.acceptState = (window.localStorage.getItem(this.config.storageEntryName) == this.storageEntryAcceptValue);
 
-			if (cookieSet(config)) {
-				$that.removeClass(config.visibleClassName);
-				if (config.debug) console.info('[CookiesInfo] Accepted, close bar.');
-			}
-		});
-
-		return $that;
+		(this.acceptState)
+			? this.closeInfoBox()
+			: this.openInfoBox();
 	};
 
-})(jQuery);
+
+	/** ----------------------------------------------------------------------------
+	 * Open info box.
+	 */
+
+	openInfoBox() {
+		this.debugLog(`Cookies not accepted, open box.`);
+		this.$infoBox
+			.addClass(config.visibleClassName)
+			.on('click', this.config.acceptButton, this.bindAcceptButton);
+	};
+
+
+	/** ----------------------------------------------------------------------------
+	 * Close info box.
+	 */
+
+	closeInfoBox() {
+		this.$infoBox
+			.removeClass(config.visibleClassName)
+			.off('click', this.config.acceptButton, this.bindAcceptButton);
+
+		this.debugLog(`Cookies accepted, info box not shown.`);
+	};
+
+
+	/** ----------------------------------------------------------------------------
+	 * Bind closing action to button.
+	 * @param {Object} event
+	 */
+
+	bindAcceptButton(event) {
+		event.preventDefault();
+		this.debugLog(`Cookies accepted, close info box.`);
+		window.localStorage.setItem(this.config.storageEntryName, this.storageEntryAcceptValue);
+		this.closeInfoBox();
+	}
+
+
+	/** ----------------------------------------------------------------------------
+	 * Debug logging
+	 * @var {String} message
+	 * @var {String} type
+	 */
+
+	debugLog(message, type = 'info') {
+		if (this.config.debug) {
+			console[type]('[PLON / CookiesInfo]', message);
+		}
+	};
+
+};

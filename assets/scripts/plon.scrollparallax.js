@@ -16,7 +16,8 @@ window.plon.Modal = class {
 
 	/** ----------------------------------------------------------------------------
 	 * Construct
-	 * @var {Object} options
+	 * @param {String} layersSelector
+	 * @param {Object} options
 	 */
 
 	constructor(layersSelector, options) {
@@ -50,7 +51,7 @@ window.plon.Modal = class {
 		);
 
 		debugLog(`Initiated. Layers found: ${this.layersData.length}`);
-	}
+	};
 
 
 	/** ----------------------------------------------------------------------------
@@ -72,7 +73,7 @@ window.plon.Modal = class {
 		});
 
 		return layersData;
-	}
+	};
 
 
 	/** ----------------------------------------------------------------------------
@@ -86,7 +87,7 @@ window.plon.Modal = class {
 
 			$elem.css({ transform: `translate3d(0, ${offset}px, 0)` });
 		}
-	}
+	};
 
 
 	/** ----------------------------------------------------------------------------
@@ -108,7 +109,7 @@ window.plon.Modal = class {
 				frameRequested = false;
 			});
 		}
-	}
+	};
 
 
 	/** ----------------------------------------------------------------------------
@@ -119,5 +120,5 @@ window.plon.Modal = class {
 		if (this.config.debug) {
 			console[type]('[PLON / Modal]', message);
 		}
-	}
-}
+	};
+};

@@ -11,47 +11,76 @@
  */
 
 
-(function($) {
+window.plon = window.plon || {};
 
-	'use strict';
+window.plon.Reveal = class {
 
 	/** ----------------------------------------------------------------------------
-	 * PLUGIN DEFAULT CONFIGURATION
+	 * Construct
+	 * @param {String} linksSelector
+	 * @param {Object} options
 	 */
 
-	var defaults = {
-		// Debug mode
-		debug: 0,
+	constructor(options) {
 
-		// data-xxx selector that defines class name to be added to the element,
-		// eg.: data-reveal="js-Reveal--left"
-		selector: 'data-reveal',
+		// Default configuration values
+		const defaults = {
 
-		// Class name added to all elements that will be revealed
-		defaultClassName: 'js-Reveal',
+			/**
+			 * Decide if you want to show user-friendly notifications in console
+			 * window of the broowser.
+			 * @var {Boolean}
+			 */
+			debug: false,
 
-		// Class name thar turns CSS animations off
-		noTransitionClassName: 'u-NoTransition',
+			/**
+			 * data-xxx selector that defines class name to be added to the element,
+			 * eg.: data-reveal="js-Reveal--left"
+			 */
+			selector: 'data-reveal',
 
-		// How many pixels need to be scrolled after element will show
-		diff: 300,
+			// Class name added to all elements that will be revealed
+			defaultClassName: 'js-Reveal',
 
-		// Events namespace
-		eventsNamespace: '.plon.reveal',
+			// Class name thar turns CSS animations off
+			noTransitionClassName: 'u-NoTransition',
+
+			// How many pixels need to be scrolled after element will show
+			diff: 300,
+
+			// Events namespace
+			eventsNamespace: '.plon.reveal',
+		};
+
+		this.config = { ...defaults, ...options };
+		this.$document = $(document);
+
+		this.$elements = $('[' + this.config.selector + ']');
+
+		if (this.$elements.length < 1) {
+			this.debugLog(`No elements found to reveal with selector: [${config.reveal}]`, 'warn');
+			return;
+		}
+
+		this.debugLog(`Initiated. Elements found: ${this.$elements.length}`);
+
+		// Monitor document scrolling
+		$document.on(
+			'scroll' + config.eventsNamespace,
+			this.rafDebounce(this.checkElementsToReveal)
+		);
 	};
 
-	var $document = $(document);
-	var frameRequested = false;
+	prepareRevealElementsInfo() {
 
-	var elementsToReveal = [];
-	var currentElement, i, offset, height;
+	}
 
 
 	/** ----------------------------------------------------------------------------
-	 * MONITOR REVEAL ELEMENTS DISTANCE FROM TOP
+	 * Check each monitored element if it should be revealed.
 	 */
 
-	var checkElementsToReveal = function(config) {
+	checkElementsToReveal() {
 
 		// If array of elements to be animated is not empty check their distance from top
 		if (elementsToReveal.length > 0) {
@@ -66,7 +95,7 @@
 						.removeClass(config.noTransitionClassName)
 						.removeClass(elementsToReveal[i].className);
 
-					if (config.debug) console.info('[PLON / Reveal] Element ' + elementsToReveal[i].num + ' shown');
+						this.debugLog(`Element ${elementsToReveal[i].num} shown`);
 
 					elementsToReveal.splice(i, 1); // Remove animated element from array
 				}
@@ -74,7 +103,9 @@
 		}
 
 		// Turn of scroll monitoring if all elements was animated
-		else $document.off(config.eventsNamespace);
+		else {
+			$document.off(config.eventsNamespace);
+		}
 	};
 
 
@@ -83,24 +114,6 @@
 	 */
 
 	$.reveal = function(options) {
-
-		// Setup configuration
-		var config = $.extend({}, defaults, options);
-
-		if (!config.selector) {
-			console.error('[PLON / Reveal] Selector not defined');
-			return false;
-		}
-
-		if (config.debug) console.info('[PLON] Plugin loaded: Reveal');
-
-		var _self = $('[' + config.selector + ']');
-
-		if (_self.length < 1) {
-			if (config.debug) console.info('[PLON / Reveal] No elements found to reveal with selector: [' + config.reveal + ']');
-			return _self;
-		}
-		else if (config.debug) console.info('[PLON / Reveal] ' + _self.length + ' elements found');
 
 		// Building array of all elements that needs to be animated
 		_self.each(function(i) {
@@ -111,7 +124,7 @@
 
 			// Ignore this element if it's visible in actual viewport
 			if ((offset.top + config.diff) < (window.pageYOffset + window.innerHeight) && (offset.top + currentElement.outerHeight() - config.diff) > window.pageYOffset) {
-				console.info('[PLON / Reveal] Element [' + i + '] ignored becouse it is already in viewport');
+				console.info('[PLON / Reveal] Element [' + i + '] ignored because it is already in viewport.');
 				return;
 			}
 
@@ -130,17 +143,44 @@
 			if (config.debug) console.log('[PLON / Reveal] Element [' + i + '] found, class name - ' + elementsToReveal[i].className + ', ' + elementsToReveal[i].fromTop + 'px from top');
 		});
 
-		// Monitor document scrolling
-		$document.on('scroll' + config.eventsNamespace, function() {
-			if (frameRequested) return;
-			frameRequested = true;
-			requestAnimationFrame(function() {
-				checkElementsToReveal(config);
-				frameRequested = false;
-			});
-		});
+
 
 		return _self;
 	};
 
-}(jQuery));
+
+	/** ----------------------------------------------------------------------------
+	 * Request Animation Frame debounce
+	 * @param {Function} callback
+	 * @returns {Function}
+	 */
+
+	rafDebounce(callback) {
+		let frameRequested = false;
+
+		return () => {
+			if (frameRequested) {
+				return;
+			}
+			frameRequested = true;
+			requestAnimationFrame(() => {
+				callback();
+				frameRequested = false;
+			});
+		}
+	};
+
+
+	/** ----------------------------------------------------------------------------
+	 * Debug logging
+	 * @var {String} message
+	 * @var {String} type
+	 */
+
+	debugLog(message, type = 'info') {
+		if (this.config.debug) {
+			console[type]('[PLON / Reveal]', message);
+		}
+	};
+
+};
