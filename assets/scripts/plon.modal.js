@@ -4,7 +4,7 @@
  * PLON Component : Modal
  *
  * @author     Bartosz Perończyk (peronczyk.com)
- * @modified   2019-05-30
+ * @modified   2019-07-11
  * @repository https://github.com/peronczyk/plon
  *
  * =================================================================================
@@ -19,7 +19,7 @@ window.plon.Modal = class {
 	 * @var {Object} options
 	 */
 
-	constructor(options) {
+	constructor(options = {}) {
 
 		// Default configuration values
 		const defaults = {
@@ -76,6 +76,7 @@ window.plon.Modal = class {
 
 		this.config = { ...defaults, ...options };
 		this.$body = $('body');
+		this.closeCallback;
 
 		if (!this.config.wrapper || !this.config.window || !this.config.content) {
 			this.debugLog(`Configuration error - one of the required options is missing: wrapper, window or content`, 'warn');
@@ -107,6 +108,50 @@ window.plon.Modal = class {
 
 		this.debugLog(`Initiated`);
 	}
+
+
+	/** ----------------------------------------------------------------------------
+	 * Handle clicking on links marked as modal togglers
+	 */
+
+	addClickHandler() {
+		if (!this.config.dataSelector) {
+			this.debugLog(`dataSelector was not provided - component will not react on any clicks.`, 'warn');
+			return;
+		}
+
+		this.$body.on('click.modal.plon', `[${this.config.dataSelector}]`, (event) => {
+			event.preventDefault();
+
+			let $clickedElem = $(event.currentTarget);
+			let modalClickType = $clickedElem.attr(this.config.dataSelector);
+
+			switch (modalClickType) {
+				case 'close':
+					this.closeModal();
+					break;
+
+				case 'dom':
+					this.loadDom($clickedElem.attr('href'), ($clickedElem.data('modal-dom-append') !== 'undefined'));
+					break;
+
+				case 'image':
+					this.loadImage($clickedElem.attr('href'));
+					break;
+
+				case 'title':
+					this.loadTitle($clickedElem);
+					break;
+
+				case 'url':
+					this.loadUrl($clickedElem.attr('href'));
+					break;
+
+				default:
+					this.autoDetectMode($clickedElem);
+			}
+		});
+	};
 
 
 	/** ----------------------------------------------------------------------------
@@ -187,9 +232,17 @@ window.plon.Modal = class {
 			.attr('aria-hidden', 'true')
 			.removeClass($.map(this.config.contentTypeClasses, (elem) => elem).join(' '));
 
-		this.$content.empty();
+		this.$window.on('transitionend.plon.modal', () => {
+			this.$content.empty();
+			this.$window.css({width: ''});
 
-		this.$window.css({width: ''});
+			if (typeof this.closeCallback === 'function') {
+				this.closeCallback();
+				this.closeCallback = null; // Reset callback
+			}
+
+			this.$window.off('transitionend.plon.modal');
+		});
 
 		$(window).trigger('modalclose');
 	};
@@ -207,18 +260,16 @@ window.plon.Modal = class {
 
 	/** ----------------------------------------------------------------------------
 	 * Insert Image
-	 * @param {Object} image
+	 * @param {Object} image - DOM image element
 	 */
 
 	insertImage(image) {
-		let imageWidth  = image.width;
-		let imageHeight = image.height;
-		let $image      = $(image);
+		let $image = $(image);
 
 		$image.wrap('<div></div>').appendTo(this.$content.empty());
 
-		if (imageWidth > imageHeight) {
-			var windowExpectedWidth = imageWidth + this.$content.innerWidth() - this.$content.width();
+		if (image.width > image.height) {
+			let windowExpectedWidth = image.width + this.$content.innerWidth() - this.$content.width();
 
 			$image.css({width: '100%'});
 			this.$window.css({ width: windowExpectedWidth });
@@ -281,7 +332,7 @@ window.plon.Modal = class {
 			.attr('src', imageUrl)
 			.on('load', (event) => {
 				this.debugLog(`Image loaded from: ${imageUrl}`);
-				this.insertImage(this);
+				this.insertImage(image);
 				this.openModal('image');
 				$(window).trigger('modalcontentloaded');
 			})
@@ -296,66 +347,36 @@ window.plon.Modal = class {
 	/** ----------------------------------------------------------------------------
 	 * Loads content from DOM element selected by domId
 	 * @param {String} domId
+	 * @param {Boolean} append - value of data-modal-dom-append
 	 */
 
-	loadDom(domId) {
+	loadDom(domId, append = false) {
 		this.startModal();
-		var $elem = $(domId);
+		let $elem = $(domId); // Modal content source
 
 		if ($elem.length < 1) {
 			this.debugLog(`DOM element "${domId}" not found.`, 'warn');
 			return false;
 		}
 
-		this.insertText($elem.html());
+		// Decide if physically move all DOM contents to modal or just copy text
+		if (append) {
+			let $elementsToMove = $elem.children().not('script');
+			this.$content.append($elementsToMove);
+
+			// Attach callback that will bring back the contents to contents source
+			this.closeCallback = () => {
+				$elem.append($elementsToMove);
+			}
+		}
+		else {
+			this.insertText($elem.html());
+		}
+
 		this.openModal('dom');
 		this.debugLog(`DOM element "${domId}" content loaded.`, 'info');
 
 		return true;
-	};
-
-
-	/** ----------------------------------------------------------------------------
-	 * Handle clicking on links marked as modal togglers
-	 */
-
-	addClickHandler() {
-		if (!this.config.dataSelector) {
-			this.debugLog(`dataSelector was not provided - component will not react on any clicks.`, 'warn');
-			return;
-		}
-
-		this.$body.on('click.modal.plon', `[${this.config.dataSelector}]`, (event) => {
-			event.preventDefault();
-
-			let $clickedElem = $(event.target);
-			let modalClickType = $clickedElem.attr(this.config.dataSelector);
-
-			switch (modalClickType) {
-				case 'close':
-					this.closeModal();
-					break;
-
-				case 'dom':
-					this.loadDom($clickedElem.attr('href'));
-					break;
-
-				case 'image':
-					this.loadImage($clickedElem.attr('href'));
-					break;
-
-				case 'title':
-					this.loadTitle($clickedElem);
-					break;
-
-				case 'url':
-					this.loadUrl($clickedElem.attr('href'));
-					break;
-
-				default:
-					this.autoDetectMode($clickedElem);
-			}
-		});
 	};
 
 
