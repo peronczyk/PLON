@@ -107,7 +107,7 @@ window.plon.cookiesInfo = class {
 		this.debugLog(`Cookies accepted, close info box.`);
 		window.localStorage.setItem(this.config.storageEntryName, this.storageEntryAcceptValue);
 		this.closeInfoBox();
-	}
+	};
 
 
 	/** ----------------------------------------------------------------------------

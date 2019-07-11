@@ -11,86 +11,126 @@
  */
 
 
-(function($) {
+window.plon = window.plon || {};
 
-	'use strict';
+window.plon.ScrollSpy = class {
 
-	/*	----------------------------------------------------------------------------
-	 *	PLUGIN DEFAULT CONFIGURATION
+	/** ----------------------------------------------------------------------------
+	 * Construct
+	 * @param {String} linksSelector
+	 * @param {Object} options
 	 */
 
-	var defaults = {
-			debug		: 0,
-			canvas		: $(window),
-			strength	: 20,
-			scale		: 1.2,
-			perspective	: 600,
-		},
+	constructor(elementsSelector, options) {
 
-		// Other definitions
-		frameRequested	= false,
-		canvasChanged	= false,
-		offsetX, offsetY, canvasWidth, canvasHeight, cursorPos;
+		// Default configuration values
+		const defaults = {
+
+			/**
+			 * Decide if you want to show user-friendly notifications in console
+			 * window of the broowser.
+			 * @var {Boolean}
+			 */
+			debug: false,
+			canvas: window,
+			strength: 20,
+			scale: 1.2,
+			perspective: 600,
+			eventsNamespace: '.plon.tiltit',
+		};
+
+		this.config = { ...defaults, ...options };
+		this.$canvas = $(this.config.canvas);
+		this.canvasWidth;
+		this.canvasHeight;
+		this.$elements = $(elementsSelector);
+
+		if (this.$canvas.length < 1) {
+			this.debugLog(`Canvas element does not exist.`, 'warn');
+			return;
+		}
+
+		if (this.$elements.length < 1) {
+			this.debugLog(`No elements selected.`, 'warn');
+			return;
+		}
+
+		$(window).on(
+			'resize' + this.config.eventsNamespace,
+			this.rafDebounce(this.adjustCanvasSize)
+		);
+		this.adjustCanvasSize();
+
+		// Set default scale transform
+		this.$elements.css({transform: 'scale(' + this.config.scale + ')'});
+
+		this.$canvas.on(
+			'mousemove' + this.config.eventsNamespace,
+			this.rafDebounce(this.adjustElementTilt)
+		);
+	};
 
 
 	/** ----------------------------------------------------------------------------
-	 * SET UP JQUERY PLUGIN
+	 * Adjust element tilt
 	 */
 
-	$.fn.tiltIt = function(options) {
+	adjustElementTilt() {
+		// Decide what mouse position should be taken to transformation calculations
+		let cursorPos = (canvasChanged)
+			? {x: e.offsetX, y: e.offsetY}
+			: {x: e.clientX, y: e.clientY};
 
-		// Default settings
-		var
-			// Setup configuration
-			config = $.extend({}, defaults, options),
+		// Calculate offsets
+		let offsetX = -((canvasWidth / 2) - cursorPos.x) / canvasWidth * config.strength;
+		let offsetY = ((canvasHeight / 2) - cursorPos.y) / canvasHeight * config.strength;
 
-			// Definitions
-			_self = $(this),
+		// Set transformations to tilted element
+		_self.css({transform: `scale(${config.scale}) perspective(${config.perspective}px) translate3d(0px, 0px, 0px) rotate3d(1, 0, 0, ${offsetY}deg) rotate3d(0, 1, 0, ${offsetX}deg)`}
+		);
+	};
 
-			// Method fired on windows resize
-			onResize = function() {
-				canvasWidth		= config.canvas.width();
-				canvasHeight	= config.canvas.height();
-			};
 
-		if (config.debug) console.info('Plugin loaded: tiltIt');
+	/** ----------------------------------------------------------------------------
+	 * Method fired on windows resize
+	 */
 
-		if (options.canvas) canvasChanged = true;
+	adjustCanvasSize() {
+		this.canvasWidth = this.$canvas.width();
+		this.canvasHeight = this.$canvas.height();
+	};
 
-		if (_self.length < 1) {
-			if (config.debug) console.log('tiltIt: no elements selected');
-			return _self;
-		}
 
-		_self.css({transform: 'scale(' + config.scale + ')'}); // Set default scale transform
+	/** ----------------------------------------------------------------------------
+	 * Request Animation Frame debounce
+	 * @param {Function} callback
+	 * @returns {Function}
+	 */
 
-		// React on mouse move
-		config.canvas.on('mousemove.tiltit', function(e) {
+	rafDebounce(callback) {
+		let frameRequested = false;
 
-			if (frameRequested) return;
+		return () => {
+			if (frameRequested) {
+				return;
+			}
 			frameRequested = true;
-
-			requestAnimationFrame(function() {
-
-				// Decide what mouse position should be taken to transformation calculations
-				(!canvasChanged) ? cursorPos = {x: e.clientX, y: e.clientY} : cursorPos = {x: e.offsetX, y: e.offsetY} ;
-
-				// Calculate offsets
-				offsetX = -((canvasWidth / 2) - cursorPos.x) / canvasWidth * config.strength;
-				offsetY = ((canvasHeight / 2) - cursorPos.y) / canvasHeight * config.strength;
-
-				// Set transformations to tilted element
-				_self.css({transform: 'scale(' + config.scale + ') perspective(' + config.perspective + 'px) translate3d(0px, 0px, 0px) rotate3d(1, 0, 0, ' + offsetY + 'deg) rotate3d(0, 1, 0, ' + offsetX + 'deg)'}
-				);
-
+			requestAnimationFrame(() => {
+				callback();
 				frameRequested = false;
 			});
-		});
+		}
+	};
 
-		$(window).on('resize.tiltit', onResize);
-		onResize.call();
 
-		return _self;
-	}
+	/** ----------------------------------------------------------------------------
+	 * Debug logging
+	 */
 
-})(jQuery);
+	debugLog(message, type = 'info') {
+		if (this.config.debug) {
+			console[type]('[PLON / TiltIt]', message);
+		}
+	};
+
+};

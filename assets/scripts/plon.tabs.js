@@ -306,7 +306,7 @@ window.plon.Tabs = class {
 	 * Unbind Keyboard Nav
 	 */
 
-	unbindKeyboardNav() => {
+	unbindKeyboardNav() {
 		this.$document.off(this.config.eventsNameSpace);
 	};
 

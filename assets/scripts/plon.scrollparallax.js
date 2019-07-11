@@ -116,7 +116,7 @@ window.plon.Modal = class {
 	 * Debug logging
 	 */
 
-	debugLog(message, type = 'log') {
+	debugLog(message, type = 'info') {
 		if (this.config.debug) {
 			console[type]('[PLON / Modal]', message);
 		}

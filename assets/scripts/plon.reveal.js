@@ -71,6 +71,8 @@ window.plon.Reveal = class {
 		);
 	};
 
+
+
 	prepareRevealElementsInfo() {
 
 	}
@@ -92,7 +94,7 @@ window.plon.Reveal = class {
 				// Change CSS classes if viewport reached this element
 				if (elementsToReveal[i].fromTop < ($document.scrollTop() + window.innerHeight - config.diff)) {
 					elementsToReveal[i].object
-						.removeClass(config.noTransitionClassName)
+						.removeClass(this.config.noTransitionClassName)
 						.removeClass(elementsToReveal[i].className);
 
 						this.debugLog(`Element ${elementsToReveal[i].num} shown`);
@@ -104,7 +106,7 @@ window.plon.Reveal = class {
 
 		// Turn of scroll monitoring if all elements was animated
 		else {
-			$document.off(config.eventsNamespace);
+			$document.off(this.config.eventsNamespace);
 		}
 	};
 
@@ -113,39 +115,40 @@ window.plon.Reveal = class {
 	 * SET UP JQUERY PLUGIN
 	 */
 
-	$.reveal = function(options) {
+	setupJqueryPlugin() {
+		$.reveal = () => {
 
-		// Building array of all elements that needs to be animated
-		_self.each(function(i) {
-			currentElement = $(this);
-			offset = currentElement.offset();
-			height = currentElement.height();
+			// Building array of all elements that needs to be animated
+			_self.each((num, elem) => {
+				let $currentElement = $(elem);
+				let offset = $currentElement.offset();
 
+				// Ignore this element if it's visible in actual viewport
+				if (
+					(offset.top + this.config.diff) < (window.pageYOffset + window.innerHeight) &&
+					(offset.top + $currentElement.outerHeight() - this.config.diff) > window.pageYOffset
+				) {
+					this.debugLog(`Element [${num}] ignored because it is already in viewport.`);
+					return;
+				}
 
-			// Ignore this element if it's visible in actual viewport
-			if ((offset.top + config.diff) < (window.pageYOffset + window.innerHeight) && (offset.top + currentElement.outerHeight() - config.diff) > window.pageYOffset) {
-				console.info('[PLON / Reveal] Element [' + i + '] ignored because it is already in viewport.');
-				return;
-			}
+				elementsToReveal[num] = {
+					num,
+					object: $currentElement,
+					className: $currentElement.attr(this.config.selector),
+					fromTop: offset.top
+				};
 
-			elementsToReveal[i] = {
-				num			: i,
-				object		: currentElement,
-				className	: currentElement.attr(config.selector),
-				fromTop		: offset.top
-			};
+				$currentElement
+					.addClass(this.config.noTransitionClassName)
+					.addClass(elementsToReveal[num].className)
+					.addClass(this.config.defaultClassName);
 
-			currentElement
-				.addClass(config.noTransitionClassName)
-				.addClass(elementsToReveal[i].className)
-				.addClass(config.defaultClassName);
+				this.debugLog(`Element [${num}] found, class name - ${elementsToReveal[num].className}, ${elementsToReveal[num].fromTop}px from top.`);
+			});
 
-			if (config.debug) console.log('[PLON / Reveal] Element [' + i + '] found, class name - ' + elementsToReveal[i].className + ', ' + elementsToReveal[i].fromTop + 'px from top');
-		});
-
-
-
-		return _self;
+			return _self;
+		};
 	};
 
 

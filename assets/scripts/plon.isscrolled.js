@@ -48,6 +48,12 @@ window.plon.IsScrolled = class {
 			scrolledClassName: 'is-Scrolled',
 
 			/**
+			 * CSS class name added when user scrolls up.
+			 * @var {String}
+			 */
+			scrollingTopClassName: 'is-ScrollingUp',
+
+			/**
 			 * After how many pixels class name will be changed.
 			 * @var {Number}
 			 */
@@ -65,18 +71,19 @@ window.plon.IsScrolled = class {
 		this.$monitoredElement;
 		this.$classChangeTarget;
 		this.$monitoredElement = $(this.config.monitoredElement);
+		this.previousScrollY = 0;
 
 
 		if (!this.$monitoredElement.length) {
 			this.debugLog('Monitored element could not be found.', 'warn');
-			return this;
+			return;
 		}
 
 		this.$classChangeTarget = $(this.config.classChangeTarget);
 
 		if (this.$classChangeTarget.length < 1) {
 			this.debugLog('Class change target could not be found.', 'warn');
-			return this;
+			return;
 		}
 
 		this.debugLog('Initiated.', 'info');
@@ -92,7 +99,10 @@ window.plon.IsScrolled = class {
 	 */
 
 	checkScroll() {
-		if (this.$monitoredElement.scrollTop() > 10) {
+		let currentScrollY = this.$monitoredElement.scrollTop();
+		let isScrollingUp = (currentScrollY < this.previousScrollY);
+
+		if (currentScrollY > 10) {
 			if (this.lastStatus === 0) {
 				this.$classChangeTarget.addClass(this.config.scrolledClassName);
 				this.lastStatus = 1;
@@ -104,6 +114,10 @@ window.plon.IsScrolled = class {
 			this.lastStatus = 0;
 			this.debugLog('Element not scrolled.');
 		}
+
+		this.$classChangeTarget.toggleClass(this.config.scrollingTopClassName, isScrollingUp);
+
+		this.previousScrollY = currentScrollY;
 	}
 
 

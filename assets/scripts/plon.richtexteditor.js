@@ -3,6 +3,9 @@
  *
  * PLON Component : RichTextEditor
  *
+ * This component replaces regular textarea with Rich Text editor, that allows for
+ * simple WYSIWYG text editing.
+ *
  * @author			Bartosz Perończyk (peronczyk.com)
  * @modified		2017-09-15
  * @repository		https://github.com/peronczyk/plon
@@ -12,176 +15,204 @@
 
 window.plon = window.plon || {};
 
-window.plon.RichTextEditor = function(elem, options) {
-
-	'use strict';
+window.plon.ScrollSpy = class {
 
 	/** ----------------------------------------------------------------------------
-	 * DEFINITIONS
+	 * Construct
+	 * @param {String} rteTextareaSelector
+	 * @param {Object} options
 	 */
 
-	var that = this;
+	constructor(rteElemSelector, options) {
 
-	// Default configuration
-	var defaults = {
-		debug: false,
-		classNames: {
-			wrapper	: 'o-Rte',
-			toolbar	: 'o-Rte__Toolbar',
-			editor	: 'o-Rte__Editor',
-			source	: 'o-Rte__Source',
-			sublist	: 'o-Rte__Sublist',
-			hidden	: 'u-Hidden',
-			active	: 'is-Active',
-			disabled: 'is-Disabled',
-		},
-		toolbarElements: [['h1', 'h2', 'code'], 'bold', 'italic', 'underline', 'ul', 'ol', 'link', 'undo', 'redo', 'clearFormatting', 'source'],
-		lang: {
-			styles: 'Styles',
-			h1: 'Header level 1',
-			h2: 'Header level 2',
-			code: 'Code block',
-			bold: 'Bold text',
-			italic: 'Italic text',
-			underline: 'Underlined text',
-			ul: 'Unordered list',
-			ol: 'Ordered list',
-			link: 'Link to online resource',
-			undo: 'Undo last operation',
-			redo: 'Redo last operation',
-			clearFormatting: 'Clear formatting',
-			source: 'Show HTML source code',
+		// Default configuration values
+		const defaults = {
+
+			/**
+			 * Decide if you want to show user-friendly notifications in console
+			 * window of the broowser.
+			 * @var {Boolean}
+			 */
+			debug: false,
+			classNames: {
+				wrapper: 'o-Rte',
+				toolbar: 'o-Rte__Toolbar',
+				editor: 'o-Rte__Editor',
+				source: 'o-Rte__Source',
+				sublist: 'o-Rte__Sublist',
+				hidden: 'u-Hidden',
+				active: 'is-Active',
+				disabled: 'is-Disabled',
+			},
+			toolbarElements: [['h1', 'h2', 'code'], 'bold', 'italic', 'underline', 'ul', 'ol', 'link', 'undo', 'redo', 'clearFormatting', 'source'],
+			lang: {
+				styles: 'Styles',
+				h1: 'Header level 1',
+				h2: 'Header level 2',
+				code: 'Code block',
+				bold: 'Bold text',
+				italic: 'Italic text',
+				underline: 'Underlined text',
+				ul: 'Unordered list',
+				ol: 'Ordered list',
+				link: 'Link to online resource',
+				undo: 'Undo last operation',
+				redo: 'Redo last operation',
+				clearFormatting: 'Clear formatting',
+				source: 'Show HTML source code',
+			}
+		};
+
+		this.config = { ...defaults, ...options };
+		this.textarea;
+
+		// Available toolbar elements and operations binded to them
+		this.toolbarOperations = {
+			bold: {
+				icon: 'Bold',
+				exec: () => this.execCommand('bold'),
+			},
+
+			clearFormatting: {
+				icon: 'Clear-formatting',
+				exec: () => { /** @TODO */ }
+			},
+
+			code: {
+				icon: 'pre',
+				exec: () => this.execCommand('formatBlock', false, 'pre'),
+			},
+
+			h1: {
+				icon: 'Header-1',
+				exec: () => this.execCommand('formatBlock', false, 'h1'),
+			},
+
+			italic: {
+				icon: 'Italic',
+				exec: () => this.execCommand('italic'),
+			},
+
+			link: {
+				icon: 'Link',
+				exec: () => $link.toggleClass(this.config.classNames.active),
+			},
+
+			ol: {
+				icon: 'Ordered-list',
+				exec: () => this.execCommand('insertOrderedList'),
+			},
+
+			redo: {
+				icon: 'Redo',
+				exec: () => this.execCommand('redo'),
+			},
+
+			source: {
+				icon: 'Html',
+				exec: ($button) => {
+
+					// Close
+					if ($button.hasClass(this.config.classNames.active)) {
+
+						// Save changes
+						$input.val(this.$source.val());
+						$editor.html(this.$source.val());
+
+						// Add/remove classes
+						$source.removeClass(this.config.classNames.active);
+						$toolbar.find('button').removeClass(this.config.classNames.disabled);
+						$button.removeClass(this.config.classNames.active);
+					}
+
+					// Open
+					else {
+						$source.addClass(this.config.classNames.active);
+						$toolbar.find('button').addClass(this.config.classNames.disabled);
+						$button
+							.removeClass(this.config.classNames.disabled)
+							.addClass(this.config.classNames.active);
+					}
+				}
+			},
+
+			ul: {
+				icon: 'Unordered-list',
+				exec: () => this.execCommand('insertUnorderedList'),
+			},
+
+			undo: {
+				icon: 'Undo',
+				exec: () => this.execCommand('undo'),
+			},
+
+			underline: {
+				icon: 'Underline',
+				exec: () => this.execCommand('underline'),
+			},
+		};
+
+		this.$rteSourceElements = $(rteElemSelector);
+
+		if (!this.$rteSourceElements.length < 1) {
+			this.debugLog(`Textarea element not found.`, 'warn');
+			return;
+		}
+
+		if (this.$rteSourceElements.prop('nodeName') !== 'TEXTAREA') {
+			this.debugLog(`Element skipped: ${$elem.prop('nodeName')}`);
+			return;
+		}
+
+		this.$rteSourceElements.createEditor();
+	};
+
+
+	/** ----------------------------------------------------------------------------
+	 * Execute command
+	 */
+
+	execCommand(commandName, showDefaultUi = false, valueArgument = null) {
+		let success;
+
+		try {
+			success = document.execCommand(commandName, showDefaultUi, valueArgument);
+		}
+		catch (error) {}
+
+		if (!success) {
+			const message = (this.isCommandSupported(commandName))
+				? 'Unknown error. Is anything selected?'
+				: `Browser does not support command "${commandName}".`
+			this.debugLog(message);
 		}
 	};
 
-	// Setting up configuration
-	var config = $.extend({}, defaults, options);
 
-	// Variables available for constructor
-	this.textarea;
+	/** ----------------------------------------------------------------------------
+	 * Check if provided command is supported by browser.
+	 * @returns {Boolean}
+	 */
 
-	// Common variables definition
-	var $elem, $component, $input, $toolbar, $editor, $source, $link;
-
-	// Available toolbar elements and operations binded to them
-	var operations = {
-
-		bold: {
-			icon: 'Bold',
-			exec: function() {
-				document.execCommand('bold');
-			}
-		},
-
-		clearFormatting: {
-			icon: 'Clear-formatting',
-			exec: function() { /* @TODO */ }
-		},
-
-		code: {
-			icon: 'pre',
-			exec: function() {
-				document.execCommand('formatBlock', false, 'pre');
-			}
-		},
-
-		h1: {
-			icon: 'Header-1',
-			exec: function() {
-				document.execCommand('formatBlock', false, 'h1');
-			}
-		},
-
-		italic: {
-			icon: 'Italic',
-			exec: function() {
-				document.execCommand('italic');
-			}
-		},
-
-		link: {
-			icon: 'Link',
-			exec: function() {
-				$link.toggleClass(config.classNames.active);
-			}
-		},
-
-		ol: {
-			icon: 'Ordered-list',
-			exec: function() {
-				document.execCommand('insertOrderedList');
-			}
-		},
-
-		redo: {
-			icon: 'Redo',
-			exec: function() {
-				document.execCommand('redo');
-			}
-		},
-
-		source: {
-			icon: 'Html',
-			exec: function($button) {
-
-				// Close
-				if ($button.hasClass(config.classNames.active)) {
-
-					// Save changes
-					$input.val($source.val());
-					$editor.html($source.val());
-
-					// Add/remove classes
-					$source.removeClass(config.classNames.active);
-					$toolbar.find('button').removeClass(config.classNames.disabled);
-					$button.removeClass(config.classNames.active);
-				}
-
-				// Open
-				else {
-					$source.addClass(config.classNames.active);
-					$toolbar.find('button').addClass(config.classNames.disabled);
-					$button
-						.removeClass(config.classNames.disabled)
-						.addClass(config.classNames.active);
-				}
-			}
-		},
-
-		ul: {
-			icon: 'Unordered-list',
-			exec: function() {
-				document.execCommand('insertUnorderedList');
-			}
-		},
-
-		undo: {
-			icon: 'Undo',
-			exec: function() {
-				document.execCommand('undo');
-			}
-		},
-
-		underline: {
-			icon: 'Underline',
-			exec: function() {
-				document.execCommand('underline');
-			}
-		},
+	isCommandSupported(commandName) {
+		return document.queryCommandSupported(commandName);
 	};
 
 
+
+
 	/** ----------------------------------------------------------------------------
-	 * HELPER: Create Toolbar
+	 * Create Toolbar
 	 */
 
-	this.createToolbar = function() {
-		var toolbarCode = $('<div/>', {class: config.classNames.toolbar});
+	createToolbar() {
+		let toolbarCode = $('<div/>', { class: this.config.classNames.toolbar });
 
-		for (var key in config.toolbarElements) {
+		this.config.toolbarElements.forEach((elementName) =>{
+			let operationData = this.toolbarOperations[elementName];
 
 			// If it is a list of buttons
-			if (config.toolbarElements[key].constructor === Array) {
+			if (Array.isArray(elementName)) {
 
 				/* @TODO : Finish below code
 				var $subList = $('<ul/>');
@@ -194,29 +225,29 @@ window.plon.RichTextEditor = function(elem, options) {
 			}
 
 			// If its regular button
-			else if (operations[config.toolbarElements[key]]) {
+			else if (operationData) {
 				toolbarCode.append($('<button/>', {
-					class: 'icon-' + operations[config.toolbarElements[key]].icon,
-					title: config.lang[config.toolbarElements[key]],
-					'data-rte-exec': config.toolbarElements[key]
+					class: 'icon-' + operationData.icon,
+					title: this.config.lang[telementName],
+					'data-rte-exec': elementName
 				}));
 			}
-		}
+		});
+
 		return toolbarCode;
 	};
 
 
 	/** ----------------------------------------------------------------------------
-	 * METHOD: Create Editor
+	 * Create Editor
 	 */
 
-	this.createEditor = function() {
-
-		var textareaName = $elem.attr('name'),
-			textareaValue = $elem.val();
+	createEditor() {
+		let textareaName = $elem.attr('name');
+		let textareaValue = $elem.val();
 
 		// Component wrapper
-		$component	= $('<div/>', {class: config.classNames.wrapper});
+		$component = $('<div/>', { class: this.config.classNames.wrapper });
 
 		// Component hidden input
 		$input = $('<input/>', {
@@ -230,13 +261,13 @@ window.plon.RichTextEditor = function(elem, options) {
 
 		// Component editor field
 		$editor = $('<p/>', {
-			class: config.classNames.editor,
+			class: this.config.classNames.editor,
 			contenteditable: true
 		}).html(textareaValue);
 
 		// Component source code
 		$source = $('<textarea/>', {
-			class: config.classNames.source,
+			class: this.config.classNames.source,
 			spellcheck: false
 		}).html(textareaValue);
 
@@ -245,74 +276,63 @@ window.plon.RichTextEditor = function(elem, options) {
 		$elem.replaceWith($component);
 
 		// Set two way binding on hidden input and rich text editor
-		$editor.on('DOMSubtreeModified', function(event) {
-			$input.val(event.currentTarget.innerHTML);
-			$source.val(event.currentTarget.innerHTML);
+		$editor.on('DOMSubtreeModified', (event) => {
+			let inputContent = event.currentTarget.innerHTML;
+
+			$input.val(inputContent);
+			$source.val(inputContent);
 		});
 
 		// Handle focus on editor
-		$component.on('focus blur', function(event) {
-			if (event.type === 'focus') $component.addClass(config.classNames.active);
-			else $component.removeClass(config.classNames.active);
+		$component.on('focus blur', (event) => {
+			$component.toggleClass(config.classNames.active, (event.type === 'focus'));
 		});
 
 		// Handle clicking on toolbar button
-		$toolbar.on('click', 'button', function(event) {
+		$toolbar.on('click', 'button', (event) => {
 			event.preventDefault();
 
-			var $this = $(this),
-				exec = $this.data('rte-exec');
+			let $clickedButton = $(event.currentTarget);
+			let execCommandName = $clickedButton.data('rte-exec');
+			let operationData = this.toolbarOperations[execCommandName];
 
 			// Execute operation
-			if (exec && operations[exec]) operations[exec].exec($this);
+			if (execCommandName && operationData) {
+				operationData.exec($clickedButton);
+			}
 		});
 	};
 
 
 	/** ----------------------------------------------------------------------------
-	 * METHOD: Get Selection
+	 * Get Selection
 	 */
 
-	this.getSelection = function() {
-		return window.getSelection ? window.getSelection() : '';
+	getSelection() {
+		return window.getSelection
+			? window.getSelection()
+			: '';
 	};
 
 
 	/** ----------------------------------------------------------------------------
-	 * METHOD: Get Selection Text
+	 * Get Selection Text
 	 */
 
-	this.getSelectionText = function() {
+	getSelectionText() {
 		return that.getSelection().toString();
 	};
 
 
 	/** ----------------------------------------------------------------------------
-	 * METHOD: Init
+	 * Debug logging
+	 * @var {String} message
+	 * @var {String} type
 	 */
 
-	this.init = function() {
-
-		$elem = $(elem);
-		if (!$elem.length) {
-			if (config.debug) console.log('RichTextEditor: Textarea element not found');
-			return false;
+	debugLog(message, type = 'info') {
+		if (this.config.debug) {
+			console[type]('[PLON / ScrollSpy]', message);
 		}
-
-		if ($elem.prop('nodeName') !== 'TEXTAREA') {
-			if (config.debug) console.log('RichTextEditor: Element skipped: ' + $elem.prop('nodeName'));
-			return false;
-		}
-
-		that.createEditor();
 	};
-
-
-	/** ----------------------------------------------------------------------------
-	 * INITIATE COMPONENT
-	 */
-
-	if (this.init() && config.debug) {
-		console.info('[PLON] RichTextEditor initiated');
-	}
 };

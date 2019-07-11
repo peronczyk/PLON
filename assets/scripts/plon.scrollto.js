@@ -4,7 +4,7 @@
  * PLON Component : ScrollTo
  *
  * @author			Bartosz Perończyk (peronczyk.com)
- * @modified		2019-04-24
+ * @modified		2019-07-11
  * @repository		https://github.com/peronczyk/plon
  *
  * =================================================================================
@@ -63,17 +63,18 @@ window.plon.ScrollTo = class {
 		this.$htmlAndBody = $('html,body');
 		this.$document = $(document);
 
-		this.$links.on('click', (event) => this.linkClickReaction(event));
+		this.$document.on('click', this.$links, this.handleLinksClick);
 
 		this.debugLog(`Initiated. Links found: ${this.$links.length}`, 'info');
 	}
 
 
 	/** ----------------------------------------------------------------------------
-	 * React on click event
+	 * React on click event.
+	 * @param {Object} event - jquery click event
 	 */
 
-	linkClickReaction(event) {
+	handleLinksClick(event) {
 		event.preventDefault();
 
 		let $clickedElement = $(event.currentTarget)[0];
@@ -92,6 +93,16 @@ window.plon.ScrollTo = class {
 			return;
 		}
 
+		this.scrollToElement($scrollTarget);
+	}
+
+
+	/** ----------------------------------------------------------------------------
+	 * Scroll viewport to the start of provided element.
+	 * @param {jQuery} $scrollTarget
+	 */
+
+	scrollToElement($scrollTarget) {
 		let offsetTop  = $scrollTarget.offset().top + this.config.shift;
 		let scrolled   = $(window).scrollTop();
 		let scrollTime = Math.sqrt(Math.abs(offsetTop - scrolled)) * this.config.speed;
